@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Proyectos de Playas Artificiales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .directive-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            border: 1px solid #4ade80; /* green-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-umbrella-beach"></i> MEA2T16: PROYECTOS DE PLAYAS ARTIFICIALES <i class="fas fa-hard-hat"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-water"></i></div>
+                <h2>1. PROYECTOS DE PLAYAS ARTIFICIALES</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-cogs mr-2 text-blue-600"></i>Actuaciones en la Costa</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-shield-alt text-blue-500 icon"></i>La <strong><u>protección</u></strong> de la costa supone <u>fijar la línea de costa</u> y <u>detener la recesión</u>.</li>
+                    <li><i class="fas fa-sync-alt text-green-500 icon"></i>La <strong><u>regeneración</u></strong> supone <u>recuperar las condiciones</u> en que se encontraba la playa antes de iniciarse la erosión o incluso mejorarlas.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-stream text-gray-600 icon"></i>Las defensas se clasifican en:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p><i class="fas fa-leaf text-green-500 icon"></i><strong><u>Blandas</u>:</strong></p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ No se emplean estructuras.</li>
+                                            <li>▫️ La flexibilidad de las soluciones hace que puedan ser alteradas sin gran deterioro del entorno y siendo más acordes con la situación medioambiental preexistente.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                 <li>
+                                     <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p><i class="fas fa-hard-hat text-red-500 icon"></i><strong><u>Duras</u>:</strong></p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ Suponen un tratamiento <strong>rígido</strong> de la costa mediante estructuras que retienen arena.</li>
+                                             <li>▫️ Son soluciones más agresivas con el medioambiente y menos parecidas a la situación preexistente.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-fill-drip mr-2 text-yellow-600"></i>Alimentación Artificial de Arena</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>El <strong><u>objetivo</u></strong> es <u>crear o mejorar las características</u> de una playa, proporcionando un <u>elemento de protección</u> contra temporales, <u>reduciendo la energía del oleaje</u> y ofreciendo una <u>playa de sacrificio</u>.</li>
+                     <li>Resuelve el <strong><u>déficit de arena</u></strong> sin riesgo de efectos negativos, pero <u>no elimina las causas erosivas</u>, por lo que debe acompañarse de <strong><u>alimentaciones periódicas</u></strong>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-clipboard-list text-blue-600 icon"></i><u>Aspectos fundamentales</u></strong> a la hora de planificar y diseñar una alimentación de playa son:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <i class="fas fa-search-location text-blue-500 icon"></i><strong><u>Estudio del tramo de costa</u></strong> a regenerar con un conocimiento profundo de su dinámica litoral.</li>
+                               <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <i class="fas fa-gem text-yellow-600 icon"></i><strong><u>Elección del material de aportación</u>:</strong></p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ Debe garantizar la <strong>estabilidad del relleno</strong> con un tamaño medio igual o superior al existente.</li>
+                                             <li>▫️ Estar disponible en <strong>cantidad suficiente</strong> a una distancia económicamente viable.</li>
+                                             <li>▫️ Que sea <strong>aceptada por los usuarios</strong> desde el punto de vista estético.</li>
+                                              <li>▫️ Que tenga un <strong>impacto ambiental admisible</strong>.</li>
+                                              <li>▫️ La <strong>zona de préstamo</strong> puede ser <u>marina</u> (preferible por volumen y facilidad de gestión) o <u>terrestre</u>.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <i class="fas fa-truck-loading text-orange-600 icon"></i><strong><u>Técnicas de emplazamiento del relleno</u>:</strong></p>
+                                    </div>
+                                     <div class="collapsible-content hidden">
+                                         <ul class="nested-list">
+                                            <li>▫️ Puede hacerse por <strong>transporte terrestre, bombeo directo o por by-pass</strong>.</li>
+                                            <li>▫️ El emplazamiento puede ser en la <strong>parte más interior, en las dunas, en la berma, a lo largo de todo el perfil o en una berma sumergida</strong>.</li>
+                                            <li>▫️ Una vez depositada la arena, el oleaje se encarga de <u>restaurar el equilibrio</u>.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-anchor mr-2 text-gray-700"></i>Soluciones de Rigidización</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Se pueden utilizar distintos tipos de estructuras junto con la alimentación para <strong><u>retardar el desgaste del relleno</u></strong> y reducir costes de mantenimiento.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-water text-blue-500 icon"></i><u>Espigones</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Son <strong>estructuras lineales</strong> de baja cota construidas <strong>perpendicularmente a la costa</strong>.</li>
+                                <li>▪️ Su propósito principal es <strong><u>atrapar y retener la arena</u></strong> que se mueve en sentido longitudinal.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-wave-square text-cyan-500 icon"></i><u>Diques exentos</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Son <strong>estructuras lineales separadas de la costa</strong> y generalmente paralelas a ella.</li>
+                                 <li>▪️ Si se generan <strong>tómbolos</strong>, se convierten en barrera total al transporte.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-umbrella-beach text-yellow-500 icon"></i><u>Playas sustentadas o colgadas</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Se crean por medio de <strong>estructuras submarinas de baja cota</strong> que impiden el movimiento “offshore” del sedimento.</li>
+                                 <li>▪️ Son <u>relativamente baratas</u> y <u>poco intrusivas</u>, pero pueden suponer un peligro para bañistas.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-project-diagram text-purple-600 icon"></i><u>Muros y revestimientos</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ Son estructuras utilizadas para <strong>proteger áreas interiores</strong> frente a la inundación y el ataque del oleaje.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li><p><i class="fas fa-balance-scale-right text-red-600 icon"></i>Desde el punto de vista medioambiental, la comparación resulta <strong><u>muy favorable a la alimentación</u></strong>, ya que la rigidización tiene efectos negativos para el paisaje y la ecología.</p></li>
+                      <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-cogs text-gray-800 icon"></i><u>Soluciones mixtas</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ Son <strong>combinaciones de las anteriores</strong>, combinando efectos positivos y minimizando impactos negativos.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 2 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-map-marked-alt"></i></div>
+                <h2>2. FORMAS DE PLAYA EN PLANTA</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-swatchbook mr-2"></i>Morfología de la Playa</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Cuando el <strong><u>transporte sólido longitudinal es dominante</u></strong>, la morfología de la playa es característica según la componente principal del transporte:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Si es la de <strong><u>oblicuidad</u></strong>, la morfología es la de <strong><u>playa rectilínea abierta</u></strong> (si no está limitada) o <strong><u>playa apoyada</u></strong> (si existe un obstáculo).</li>
+                               <li>▪️ Si además de la oblicuidad son importantes las de <strong><u>sobreelevación y variación angular</u></strong>, la morfología es de <strong><u>playa con planta curvilínea y cóncava</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-ruler-combined text-blue-500 icon"></i><u>Espiral logarítmica</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                               <li>▪️ Propuesta por Silvester.</li>
+                               <li>▪️ Describe la forma en planta de <strong><u>playas encajadas entre dos salientes</u></strong> en una costa con dirección predominante del oleaje.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-chart-pie text-green-500 icon"></i><u>Forma parabólica</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                               <li>▪️ Propuesta por Hsu-Evans.</li>
+                                <li>▪️ Proporciona un <strong><u>buen ajuste para una playa larga rectilínea</u></strong> controlada por un único saliente.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+         <!-- Main Card 3 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-flask"></i></div>
+                <h2>3. LA GRANULOMETRÍA DE LA ARENA COMO CONDICIONANTE</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Selección y Efectos del Material</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>En la elección del material de préstamo deben tenerse en cuenta las características de la <strong><u>arena nativa</u></strong> en la zona donde se realizará el relleno (<strong><u>muestra maestra</u></strong>).</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Las muestras de los posibles préstamos deben ser <strong><u>comparadas con la muestra maestra</u></strong> en lo que respecta a:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Distribución granulométrica, composición química, porcentajes de origen orgánico e inorgánico, forma, resistencia y color.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>El proceso de selección realizado por la dinámica marina hará que la zona rellenada tome un <strong><u>aspecto similar a la playa original</u></strong>, pero <u>perdiendo una parte del volumen</u>.</li>
+                    <li>Las fracciones de arena del relleno <strong><u>más gruesas</u></strong> que la nativa, tenderán a mantenerse y provocarán un <strong><u>aumento de la pendiente</u></strong>.</li>
+                     <li>En general, arenas <strong><u>similares a la nativa o ligeramente más gruesas</u></strong> son las que se eligen para las realimentaciones.</li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-calculator mr-2"></i>Factores de Cálculo</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-fill-drip text-yellow-600 icon"></i><u>Factor de sobrerrelleno (R<sub>A</sub>)</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                               <li>▪️ Definido por James como el nº estimado de m³ de préstamo para producir 1 m³ de relleno, para tener en cuenta las <strong><u>pérdidas por transporte transversal</u></strong>.</li>
+                               <li>▪️ Se puede obtener de un ábaco en función de la relación entre las desviaciones típicas y la diferencia del diámetro medio del material.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-undo-alt text-blue-600 icon"></i><u>Factor de realimentación (R<sub>J</sub>)</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Definido por James como la relación entre el volumen necesario anualmente y el volumen inicial.</li>
+                                <li>▪️ Representa las <strong><u>pérdidas anuales de arena por transporte longitudinal</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>Los factores de sobrerrelleno y realimentación no están relacionados matemáticamente y se basan en descripciones simples, por lo que deben ser utilizados como <strong><u>indicativos</u></strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 4 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-leaf"></i></div>
+                <h2>4. ASPECTOS AMBIENTALES DE LA REGENERACIÓN DE PLAYAS</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Impacto Ambiental y Gestión</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>La Dirección General de la costa y el mar publicó en 2010 la <strong><u>Instrucción Técnica para la gestión ambiental</u></strong> de las extracciones marinas.</li>
+                     <li>La <strong><u>comunidad pelágica</u></strong> es la que vive en las aguas marinas, y la <strong><u>bentónica</u></strong> es la que habita el fondo del mar.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Los principales <strong><u>aspectos ambientales</u></strong> a considerar están ligados a:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Los recursos naturales, liberación de sustancias, influencia en la dinámica marina, afección a la biosfera, avifauna, calidad de las aguas, energía o ruido, hábitats, equilibrios ecológicos, paisaje, y grado de aceptación social.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>Los proyectos deben <strong><u>identificar los posibles impactos</u></strong>, valorándolos, proponiendo medidas correctoras, y elaborando un programa de seguimiento y control ambiental.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Las <strong><u>actividades susceptibles de generar impactos</u></strong> se pueden dividir según las fases del Proyecto:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <strong>Fase previa:</strong> sondeos marinos.</li>
+                                <li>▪️ <strong>Fase de construcción:</strong> explotación del substrato, construcción de diques, dragado, relleno, vertidos accidentales.</li>
+                                 <li>▪️ <strong>Fase de funcionamiento:</strong> muros de contención, diques, rellenos artificiales, creación de un nuevo perfil y línea de costa.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

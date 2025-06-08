@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Utilización del DPM-T</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+         /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-umbrella-beach"></i> MEA2T4: UTILIZACIÓN DEL DPM-T <i class="fas fa-swimmer"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-book-open"></i></div>
+                <h2>1. UTILIZACIÓN DEL DPM-T. DISPOSICIONES GENERALES</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-gavel mr-2 text-blue-600"></i>Principios Generales de Utilización</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>La <span class="law-pill">ley de Costas</span> establece que la utilización del DPM-T será <strong><u>libre, pública y gratuita</u></strong> para los <strong><u>usos comunes</u></strong> y acordes con su naturaleza que no requieran obras ni instalaciones y que se realicen conforme a las normas.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Los usos con <strong><u>circunstancias especiales</u></strong> de intensidad, peligrosidad o rentabilidad y los que requieran la ejecución de obras e instalaciones solo podrán ampararse en la existencia de:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <strong><u>Reserva</u></strong>.</li>
+                                <li>▪️ <strong><u>Adscripción</u></strong>.</li>
+                                <li>▪️ <strong><u>Autorización</u></strong>.</li>
+                                <li>▪️ <strong><u>Concesión</u></strong>, según la reglamentación vigente.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>No podrá invocarse ningún derecho en virtud de <strong><u>usucapión</u></strong>, cualquiera que sea el tiempo transcurrido.</li>
+                    <li><span class="pill pill-red">Solo se podrá permitir</span> la ocupación del DPM-T para instalaciones que por su naturaleza <strong><u>no puedan tener otra ubicación</u></strong>.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-umbrella-beach mr-2 text-yellow-700"></i>Utilización y Ocupación de las Playas</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>La <span class="law-pill">Ley</span> y el <span class="law-pill">Reglamento de Costas</span> regulan de forma pormenorizada la utilización de las playas, a las que dividen en <span class="pill pill-gray"><strong>urbanas</strong></span> y <span class="pill pill-gray"><strong>naturales</strong></span>, según el carácter urbanizado o rural de los terrenos contiguos y su grado de protección ambiental, cuya asignación corresponde a las CCAA.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><strong><u>Disposiciones Generales de las Playas</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ Las playas <strong><u>no serán de uso privado</u></strong>.</li>
+                                <li>▪️ Las instalaciones permitidas serán de <strong><u>libre acceso público</u></strong>, salvo que por razones justificadas se autoricen otras formas de uso.</li>
+                                <li>▪️ Las edificaciones de servicio de playa se ubicarán <strong><u>preferentemente fuera de ella</u></strong> o adosados al límite, si el MITECO no ve posible otra ubicación.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-star mr-2 text-yellow-500"></i><u>Eventos de interés general con repercusión turística</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Podrán celebrarse en <strong>playas urbanas</strong> cumpliendo ciertos requisitos.</li>
+                                 <li>▪️ La administración local debe solicitar <strong>autorización</strong>, con informe favorable de la comunidad autónoma, acompañada de una memoria técnica.</li>
+                                <li>▪️ El título que se otorgue fijará las condiciones de la ocupación y establecerá la <strong>garantía</strong> a depositar por el promotor.</li>
+                                <li>▪️ Una vez terminado el evento se procederá de manera inmediata al <strong>levantamiento de las instalaciones y a la limpieza</strong> del terreno ocupado.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-tree mr-2 text-green-600"></i><u>Ocupaciones en Tramos Naturales de Playas</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Establecimientos expendedores de comidas y bebidas: ≤70 m², parte cerrada ≤20 m², instalaciones de temporada y <strong>desmontables</strong> en todos sus elementos.</li>
+                                <li>▪️ Distancia entre ellos ≥300 m, y la suma de superficies (ΣS) ≤10% de la playa en pleamar.</li>
+                                 <li>▪️ Todas las conducciones de servicio deben ser subterráneas, con el saneamiento conectado a la red si existe y en todo caso sin afectar a la arena de la playa o a las aguas de baño.</li>
+                                 <li>▪️ Tras la retirada el beneficiario del título está obligado a dejar la playa como estaba antes de la ocupación.</li>
+                                 <li>▪️ La distribución de los establecimientos será propuesta por el ayuntamiento.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-city mr-2 text-gray-600"></i><u>Ocupaciones en Tramos Urbanos de Playas</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Solo se autorizarán si no es posible fuera de la playa, en el límite de ella o a una distancia ≥70 m de la línea de pleamar si el ancho lo permite.</li>
+                                <li>▪️ Además de lo permitido en las playas naturales se podrán disponer instalaciones destinadas a “<strong><u>chiringuitos</u></strong>” con S≤200 m² (parte cerrada ≤150 m² y resto con terraza cerrada con elementos desmontables y permeables a la vista). Se podrá añadir 70 m² de ocupación abierta y desmontable más aseo ≤30 m².</li>
+                                 <li>▪️ Se situarán a una distancia mínima de 150 m, que se podrá rebajar hasta los 100 m para instalaciones desmontables.</li>
+                                 <li>▪️ Siempre que la superficie cerrada >20 m² deberán contar con <strong>título concesional</strong> aun siendo desmontables.</li>
+                                 <li>▪️ Las conducciones deberán ser como en las playas naturales.</li>
+                                 <li>▪️ La suma de superficies (ΣS) ≤50% de la playa en pleamar.</li>
+                                 <li>▪️ La distribución de los establecimientos será propuesta por la administración autonómica competente en ordenación litoral o homogéneamente a lo largo de la playa.</li>
+                                 <li>▪️ Estas limitaciones de superficie y distancias no serán aplicables a edificaciones que hayan revertido al DPM-T y sobre los que el MITECO ha decidido su mantenimiento por sus características singulares.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                         <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><strong><i class="fas fa-swimmer mr-2 text-blue-500"></i><u>Instalaciones para actividades deportivas de carácter náutico federado</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Solo se podrán disponer en <strong>tramos urbanos</strong> de playa para lo que se otorgarán concesiones y autorizaciones.</li>
+                                <li>▪️ Las instalaciones se ubicarán preferentemente fuera de la playa, y cuando no sea posible se situarán en los extremos de la playa adosadas al límite.</li>
+                                <li>▪️ Los usos permitidos serán los estrictamente necesarios para la actividad deportiva náutica, con instalaciones adaptadas al entorno con S≤300 m² excluyendo la zona de varada.</li>
+                                 <li>▪️ Deberán contar con informe de la Federación deportiva correspondiente, del órgano competente de la administración autonómica y de la autoridad portuaria (plazo <span class="pill pill-blue">1 mes</span>, silencio positivo).</li>
+                                 <li>▪️ La zona varada no puede impedir el uso público y debe dejar una <strong>franja libre de ≥15m</strong> desde la orilla en pleamar. Además, debe hacerse a través de un canal debidamente señalizado que deberá ser informado por Puertos del Estado.</li>
+                                 <li>▪️ Las conducciones deberán ser como en las playas naturales y urbanas.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 2 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-hard-hat"></i></div>
+                <h2>2. PROYECTOS Y OBRAS EN EL DPM-T. ESTUDIOS COMPLEMENTARIOS</h2>
+            </div>
+             <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-drafting-compass mr-2"></i>Proyecto Básico</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Para que la administración competente resuelva sobre la ocupación o utilización del DPM-T se redactará un <strong><u>Proyecto Básico</u></strong> en el que se fijarán las características de las instalaciones y obras y la extensión de la zona de DPM-T a ocupar o utilizar.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><u>Contenido del Proyecto Básico</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Memoria justificativa y descriptiva con anejos.</li>
+                               <li>▪️ Planos que incluyan el deslinde y la zona a ocupar.</li>
+                               <li>▪️ Información fotográfica.</li>
+                               <li>▪️ Presupuesto.</li>
+                               <li>▪️ Determinación de posible afección a espacios de la Red Natura 2000 o cualquier otro protegido.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>El proyecto básico se someterá a <strong><u>información pública</u></strong> (<span class="pill pill-blue">20 días</span>) salvo por razones de seguridad o que esté relacionado con la defensa nacional.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-cogs mr-2"></i>Contenido del Proyecto y Estudios Complementarios</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><u>Contenido del Proyecto</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Deberá prever la adaptación de las obras al entorno y, en su caso, la influencia de la obra sobre la costa.</li>
+                                 <li>▪️ Contendrá una evaluación de los posibles efectos del <strong><u>cambio climático</u></strong> sobre los terrenos.</li>
+                                 <li>▪️ Cuando contenga actuaciones en el mar o zona marítimo-terrestre, deberá contener un <strong><u>Estudio básico de la dinámica litoral</u></strong>.</li>
+                                 <li>▪️ Para la creación y regeneración de playas se deberá considerar prioritariamente la actuación sobre terrenos colindantes, la atenuación de barreras, la aportación artificial de áridos, y obras sumergidas.</li>
+                                 <li>▪️ Los proyectos incluirán declaración expresa de que se cumple con la <span class="law-pill">ley de Costas</span>.</li>
+                                 <li>▪️ La tramitación incluirá informes de C.A., Ayuntamiento, Capitanías Marítimas, MITECO y Ministerio de Defensa.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><u>Estudio complementario de Evaluación de los efectos del cambio climático</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ Incluirá la consideración de cualquier modificación de las dinámicas costeras (nivel del mar, oleaje, temporales) en el periodo de concesión o para obras de protección un mínimo de 50 años.</li>
+                                <li>▪️ Se deberán considerar las medidas de adaptación de la costa al cambio climático definidas en la <span class="law-pill">ley 2/2013</span>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><u>Estudio complementario Básico de dinámica litoral</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Comprenderá: estudio de capacidad de transporte litoral, balance sedimentario, evolución de la línea de costa, dinámicas resultantes de los efectos del cambio climático, recursos disponibles de áridos, plan de seguimiento de las actuaciones previstas, propuesta para la minimización de la incidencia y posibles medidas correctoras.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 3 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-key"></i></div>
+                <h2>3. RESERVAS, ADSCRIPCIONES, AUTORIZACIÓN Y CONCESIONES</h2>
+            </div>
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-lock mr-2 text-red-600"></i>Reservas</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                   <li>La AGE podrá reservarse la utilización total o parcial de ciertas pertenencias del DPM-T exclusivamente para el cumplimiento de fines de su competencia (realización de estudios o para obras, instalaciones o servicios).</li>
+                   <li>Su duración se limitará al tiempo necesario para el cumplimiento de los fines y prevalecerá frente a cualquier otra utilización.</li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-link mr-2 text-purple-600"></i>Adscripciones</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                   <li>La <span class="law-pill">ley 2/2013</span> regula las adscripciones de terreno de DPM-T a las CCAA para la construcción de nuevos puertos y vías de transporte de su titularidad.</li>
+                   <li>Los proyectos deberán ser informados favorablemente por la AGE en cuanto a la delimitación del dominio público, usos previstos y medidas necesarias para su protección.</li>
+                   <li>La aprobación definitiva de los proyectos llevará implícita la adscripción del dominio público.</li>
+                   <li>En la zona de servicio portuaria de los bienes adscritos se podrán permitir usos comerciales y de restauración siempre que no se perjudique el DPM-T, ni la actividad portuaria y se ajusten al planeamiento.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-file-alt mr-2 text-yellow-600"></i>Autorizaciones</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                   <li>Estarán sujetas a previa autorización administrativa las actividades con circunstancias especiales de intensidad, peligrosidad o rentabilidad, y la ocupación con <strong><u>instalaciones desmontables</u></strong> o bienes muebles.</li>
+                    <li>Se otorgarán con carácter personal e intransferible intervivos (salvo el caso de vertidos) y no serán inscribibles en el Registro.</li>
+                    <li>El plazo de vencimiento no podrá exceder de <span class="pill pill-blue"><strong>4 años</strong></span>.</li>
+                     <li>Para extracciones de áridos y dragados será necesaria la evaluación de sus efectos sobre el DPM-T, quedando prohibidas las extracciones para la construcción (salvo creación y regeneración de playas).</li>
+                     <li>Las autorizaciones en DPMT las concede el MITECO a través de los Servicios Periféricos de Costas.</li>
+                     <li>Las autorizaciones de <strong><u>servicios de temporada</u></strong> en playas que solo requieran instalaciones desmontables serán otorgadas a los Ayuntamientos.</li>
+                      <li>Está <strong><u>prohibido el vertido</u></strong> de residuos sólidos y escombros al mar, su ribera y la zona de servidumbre de protección, salvo rellenos autorizados.</li>
+                      <li>Todos los vertidos requerirán autorización de la C.A. (plazo no superior a 30 años), que se otorgará con sujeción a la legislación estatal y autonómica.</li>
+                      <li>Las autorizaciones de vertido de instalaciones recogidas en el <span class="law-pill">RDL 1/2016</span> se regulan por ella y las concederá el órgano competente de la CA.</li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-signature mr-2 text-green-600"></i>Concesiones</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                   <li>Toda ocupación con obras <strong><u>no desmontables</u></strong> está sujeta a previa concesión, o cuando sean desmontables pero requieran un plazo de ocupación >4 años.</li>
+                    <li>El plazo máximo con prórrogas incluidas es de <span class="pill pill-blue"><strong>75 años</strong></span>.</li>
+                    <li>El concesionario tendrá <strong><u>derecho al uso privativo</u></strong>, garantizando el libre acceso de las autoridades competentes.</li>
+                    <li>La competencia para otorgamiento es del MITECO, salvo en dominio público adscrito a las CCAA.</li>
+                     <li>Serán inscribibles en el Registro y transmisibles por actos intervivos (si el adquirente cumple las condiciones) y mortis causa (causahabientes tienen 4 años para subrogarse).</li>
+                     <li>Para la determinación de los plazos de concesión se tendrá en cuenta la adecuación al medio, el interés para el DPM-T, su ubicación y el contenido del estudio económico-financiero.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

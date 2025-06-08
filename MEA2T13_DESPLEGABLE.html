@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Efectos del Cambio Climático en el Litoral</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .directive-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            border: 1px solid #4ade80; /* green-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-temperature-high"></i> MEA2T13: LOS EFECTOS DEL CAMBIO CLIMÁTICO SOBRE EL LITORAL <i class="fas fa-water"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-chart-line"></i></div>
+                <h2>1. EFECTOS DEL CAMBIO CLIMÁTICO</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-exclamation-triangle mr-2 text-red-600"></i>Factores de Degradación del Litoral</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <p>La <strong><u>urbanización desmesurada</u></strong> de las últimas décadas, la <strong><u>construcción de infraestructuras</u></strong> en el litoral y la <strong><u>disminución del caudal sólido</u></strong> de los ríos ha modificado la línea de costa, <u>destruyendo dunas</u> y cordones litorales, <u>desecando marismas</u> y lagunas costeras, y <u>aumentando la erosión</u>.</p>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>A estas presiones hay que añadir la amenaza del <strong><u>cambio climático</u></strong>, directamente asociada con:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li><i class="fas fa-water text-blue-500 icon"></i>La <strong><u>subida del nivel del mar</u></strong>.</li>
+                                <li><i class="fas fa-thermometer-half text-orange-500 icon"></i>El <strong><u>aumento de la temperatura</u></strong>.</li>
+                                <li><i class="fas fa-flask-potion text-red-500 icon"></i>La <strong><u>acidificación</u></strong>.</li>
+                                <li><i class="fas fa-wind text-gray-500 icon"></i><strong><u>Cambios en los oleajes y mareas meteorológicas</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-map-marked-alt mr-2 text-blue-500"></i>Impactos en el Litoral Español</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-globe-europe text-gray-600 icon"></i>El aumento del nivel del mar <strong><u>no es igual</u></strong> a lo largo de todas las costas del mundo.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-chart-bar text-blue-600 icon"></i>En España, los estudios determinan tasas de aumento entre <span class="pill pill-blue">2 y 3 mm/año</span>. Considerando un escenario tendencial de aumento a 2040 (<span class="pill pill-blue">aprox. 6 cm</span>):</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <strong><u>Cornisa cantábrico-atlántica y norte de Canarias</u>:</strong> retrocesos medios de <span class="pill pill-red">3 m</span>.</li>
+                                <li>▪️ <strong><u>Golfo de Cádiz</u>:</strong> retrocesos de <span class="pill pill-red">2 m</span>.</li>
+                                <li>▪️ <strong><u>Resto de las fachadas</u>:</strong> retrocesos medios entre <span class="pill pill-red">1 y 2 m</span>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-house-damage text-red-700 icon"></i>Los <strong><u>sistemas costeros</u></strong> (deltas, estuarios, playas, etc.) experimentarán <strong><u>impactos adversos</u></strong> como:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <strong><u>Inundación costera</u></strong> y <strong><u>erosión</u></strong> debido a la subida del nivel del mar y cambios en el oleaje.</li>
+                               <li>▪️ La subida del nivel del mar potenciará los <strong><u>eventos extremos de inundación</u></strong>, aumentando su intensidad y frecuencia.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li><i class="fas fa-tint text-cyan-600 icon"></i>En cuanto a la <strong><u>intrusión salina</u></strong>, los mayores impactos se esperan en el <strong>Ebro</strong> por la combinación del aumento del nivel del mar con una posible reducción de caudales.</li>
+                     <li><i class="fas fa-leaf text-green-600 icon"></i>Entre las consecuencias más relevantes se encuentra la <strong><u>pérdida de praderas de Posidonia oceánica</u></strong> o la <strong><u>pérdida de humedales</u></strong>.</li>
+                     <li><i class="fas fa-anchor text-gray-800 icon"></i>Los <strong><u>puertos e infraestructuras</u></strong> localizadas en la costa sufrirán <strong><u>alteraciones en sus condiciones de operatividad</u></strong>.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 2 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-shield-alt"></i></div>
+                <h2>2. ADAPTACIÓN DE LA COSTA A LOS EFECTOS DEL CAMBIO CLIMÁTICO</h2>
+            </div>
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-sitemap mr-2"></i>Estrategia de Adaptación</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-file-alt text-blue-600 icon"></i>La <strong><u>Dirección General de la Costa y el Mar</u></strong> aprobó en 2017 la <strong><u>Estrategia de Adaptación al Cambio Climático de la Costa Española</u></strong>.</li>
+                    <li><i class="fas fa-seedling text-green-600 icon"></i>La Estrategia <strong><u>prioriza</u></strong>, en la medida de lo posible, las <strong><u>medidas de adaptación basadas en soluciones naturales</u></strong>.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-clipboard-list text-gray-600 icon"></i>Para clasificar las diferentes opciones se utiliza la propuesta del <strong><u>IPCC</u></strong>, que ordena las mismas en las siguientes categorías:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <strong><u>Ingenieriles</u>:</strong> obras de protección, regeneración de playas y dunas, adaptación de infraestructuras.</li>
+                                <li>▪️ <strong><u>Tecnológicas</u>:</strong> elaboración de diagnósticos, monitorización de indicadores, introducción de cultivos con tolerancia a aguas salobres.</li>
+                                <li>▪️ <strong><u>Ecosistémicas</u>:</strong> restauración y conservación de humedales y dunas, conservación de la biodiversidad.</li>
+                                <li>▪️ <strong><u>Educativas</u>:</strong> concienciación e integración en programas educativos, formación y capacitación técnica, creación de redes.</li>
+                                 <li>▪️ <strong><u>Institucionales</u>:</strong> elaboración de mapas de peligrosidad, planes de gestión, protocolos de evacuación, diversificación de actividades, etc.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 3 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-chart-area"></i></div>
+                <h2>3. EVALUACIÓN DE RIESGO DE INUNDACIÓN EN ZONAS COSTERAS</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-balance-scale mr-2"></i>Marco Legal y Fases</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li><i class="fab fa-teamspeak text-blue-600 icon"></i>La Unión Europea aprobó en 2007 la <span class="directive-pill">Directiva relativa a la evaluación y gestión de los riesgos de inundación</span>.</li>
+                     <li><i class="fas fa-landmark text-gray-700 icon"></i>Su transposición al ordenamiento jurídico español se hizo mediante el <span class="law-pill">Real Decreto 903/2010</span>.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-list-ol text-blue-600 icon"></i>Contemplaba <strong><u>tres fases</u></strong>:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ol class="list-decimal list-inside mt-2 ml-4 space-y-2">
+                               <li><strong><u>Evaluación preliminar</u></strong> de los riesgos de inundación con la definición de las áreas de riesgo potencial significativo.</li>
+                               <li><strong><u>Elaboración de los mapas</u></strong> de peligrosidad y riesgo de cada una de esas áreas.</li>
+                               <li><strong><u>Desarrollo de los Planes de Gestión</u></strong> del Riesgo de Inundación (PGRI).</li>
+                            </ol>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-water mr-2"></i>Causas de la Inundación Marítima</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Las <strong><u>causas principales</u></strong> son:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p><i class="fas fa-moon text-yellow-500 icon"></i><strong><u>Marea astronómica</u>:</strong> producida por la atracción que ejercen los astros (fundamentalmente la Luna y el Sol). El efecto combinado con la rotación de la Tierra hace que se manifieste como una sucesión de pleamares y bajamares cada 12,5 h aprox.</p>
+                                   </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                           <li>▫️ La <strong><u>carrera de marea</u></strong> es mayor cuando los tres astros están alineados (<strong><u>marea viva</u></strong>).</li>
+                                        </ul>
+                                    </div>
+                               </li>
+                               <li><i class="fas fa-cloud-showers-heavy text-gray-500 icon"></i><strong><u>Marea meteorológica</u>:</strong> se produce porque en el mar existe una diferencia de presión barométrica, se produce una fuerza que tiende a mover la masa de agua desde el punto de mayor presión hasta el de menor.</li>
+                               <li><i class="fas fa-wave-square text-cyan-500 icon"></i><strong><u>Oleaje y run-up</u>:</strong> el elemento que puede causar las mayores inundaciones es el oleaje, cuando las olas rompen y la lámina de agua se desplaza sobre la playa hasta alcanzar un nivel máximo.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li><i class="fas fa-database text-gray-600 icon"></i>Los <strong><u>datos utilizados</u></strong> en la primera fase se obtuvieron de <strong>Puertos del Estado</strong> y el <strong>IGN</strong>.</li>
+                     <li><i class="fas fa-map-marked-alt text-red-600 icon"></i>Los <strong><u>mapas de peligrosidad</u></strong> deben contener: extensión previsible de la inundación; caudales y velocidades máximas; y régimen de oleaje y mareas.</li>
+                     <li><i class="fas fa-user-friends text-purple-600 icon"></i>Los <strong><u>mapas de riesgo</u></strong> deben determinar la afección sobre: número de habitantes; tipo de actividad económica; instalaciones industriales; depuradoras; zonas protegidas e infraestructuras.</li>
+                     <li><i class="fas fa-file-shield text-green-600 icon"></i>Los <strong><u>Planes de Gestión del Riesgo de Inundación (PGRI)</u></strong> deben incluir: las conclusiones, los mapas, los objetivos, un resumen de planes existentes, sistemas de información y un resumen de los programas de medidas preventivas y paliativas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 4 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-cloud-sun-rain"></i></div>
+                <h2>4. EFECTOS DEL CAMBIO CLIMÁTICO SOBRE LA INUNDACIÓN COSTERA</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-sitemap mr-2"></i>Plan Nacional de Adaptación (PNACC)</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-flag text-yellow-500 icon"></i>El <strong><u>Plan Nacional de Adaptación al Cambio Climático (PNACC) 2021-2030</u></strong>, coordinado por la Oficina Española de Cambio Climático, constituye el instrumento de planificación básico para promover la acción coordinada y coherente.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-exclamation-circle text-red-600 icon"></i>En el marco del PNACC, se ha concluido que la combinación del aumento del nivel del mar y los cambios en los eventos extremos <strong><u>incrementan los riesgos de inundación costera</u></strong> debidos a:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ La <strong><u>inundación permanente</u></strong> por la subida del nivel del mar, especialmente en zonas bajas.</li>
+                               <li>▪️ La <strong><u>inundación ocasional</u></strong> por eventos extremos que se pueden presentar con mayor intensidad y frecuencia.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+         <!-- Main Card 5 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-hard-hat"></i></div>
+                <h2>5. LAS INFRAESTRUCTURAS COSTERAS ANTE LOS IMPACTOS DEL CAMBIO CLIMÁTICO</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-tools mr-2"></i>Análisis y Diseño de Medidas de Adaptación</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-chart-pie text-blue-600 icon"></i>Las medidas de adaptación consisten en la <strong><u>reducción de la exposición</u></strong> a la inundación. La solución más adecuada dependerá de un <strong><u>análisis multicriterio</u></strong>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-tasks text-gray-600 icon"></i>Para ello se deben:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Desarrollar <strong><u>herramientas de análisis de riesgos</u></strong>.</li>
+                                <li>▪️ Fomentar iniciativas de adaptación y <strong><u>soluciones basadas en la naturaleza</u></strong>.</li>
+                                 <li>▪️ Considerar los <strong><u>riesgos costeros</u></strong> en la planificación territorial, de infraestructuras y urbanística.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-hammer text-orange-600 icon"></i>Las <strong><u>intervenciones podrán incluir</u></strong>:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <strong><u>Restauraciones ambientales</u></strong> de espacios naturales.</li>
+                                <li>▪️ <strong><u>Demoliciones</u></strong> de elementos artificiales deteriorados, vulnerables o perjudiciales.</li>
+                                <li>▪️ <strong><u>Intervenciones sobre infraestructuras</u></strong> en riesgo para aumentar su resiliencia.</li>
+                                 <li>▪️ <strong><u>Reubicación de infraestructuras</u></strong> y edificaciones en riesgo o cambios en el uso de suelo.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+         <!-- Main Card 6 -->
+         <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-leaf"></i></div>
+                <h2>6. HUELLA DE CARBONO Y REDUCCIÓN DE EMISIONES</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-smog mr-2"></i>Huella de Carbono de los Proyectos</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-shoe-prints text-gray-500 icon"></i>La <strong><u>huella de carbono</u></strong> de los proyectos mide la totalidad de <strong><u>gases de efecto invernadero (GEI)</u></strong> emitidos durante su <strong><u>ciclo completo de vida</u></strong> (desde su gestación hasta su desmantelamiento final), para después convertir los resultados a equivalentes de CO2.</li>
+                    <li><i class="fas fa-cogs text-green-600 icon"></i>Las <strong><u>medidas para la reducción de emisiones</u></strong> de las infraestructuras deben mejorar la <strong><u>eficiencia de todas las fases</u></strong> de su ciclo de vida: planificación, proyecto, construcción, conservación y explotación.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Las Fuentes Naturales de Sedimentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .directive-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            border: 1px solid #4ade80; /* green-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-mountain"></i> MEA2T17: LAS FUENTES NATURALES DE SEDIMENTOS <i class="fas fa-water"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-info-circle"></i></div>
+                <h2>1. LAS FUENTES NATURALES DE SEDIMENTOS</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-stream mr-2 text-blue-600"></i>Fuentes Sedimentarias Principales</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <p class="mt-4">Las <strong><u>tres fuentes sedimentarias principales</u></strong> son las redes fluviales, los acantilados y los procedentes de seres vivos marinos (concha, corales, etc.).</p>
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-water text-cyan-600 icon"></i><strong><u>Redes fluviales</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Son las <strong><u>más comunes</u></strong> en los litorales continentales, haciéndose notar muchas veces muy lejos del lugar de descarga.</li>
+                                <li>▪️ Hoy en día se han visto grandemente <strong><u>mermadas</u></strong> por la masiva regulación de dichas redes mediante embalses y forestación de las montañas susceptibles de ser erosionadas.</li>
+                                <li>▪️ Los <strong><u>cauces cortos y torrenciales</u></strong> serán fuente de <strong>materiales gruesos</strong> como gravas y bolos.</li>
+                                <li>▪️ Los <strong><u>cauces amplios de ríos caudalosos</u></strong> serán fuente de <strong>materiales finos</strong> como limos y arcillas.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-mountain text-gray-600 icon"></i><strong><u>Acantilados</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Son frecuentes pero sus campos de actuación y aportación son <strong><u>más reducidos</u></strong>.</li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ La erosión en acantilados es combinación de <strong><u>cuatro acciones</u></strong>:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li><i class="fas fa-wave-square text-blue-400 icon"></i><strong><u>Mecánica</u>:</strong> debida a la energía del oleaje (la más importante).</li>
+                                            <li><i class="fas fa-flask-potion text-red-400 icon"></i><strong><u>Química</u>:</strong> del agua del mar sobre calizas, basaltos y granitos.</li>
+                                            <li><i class="fas fa-bug text-green-400 icon"></i><strong><u>Biológica</u>:</strong> causada por organismos vivos que taladran las rocas potenciando la erosión química.</li>
+                                            <li><i class="fas fa-thermometer-half text-orange-400 icon"></i><strong><u>Física</u>:</strong> debida a procesos de dilatación-contracción por congelación del agua o cristalización de sales.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-fish text-orange-500 icon"></i><strong><u>Seres vivos marinos</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Es importante en <strong><u>aguas templadas</u></strong> con gran cantidad de materia orgánica que facilita el desarrollo de los seres bivalvos.</li>
+                               <li>▪️ También en <strong><u>costas protegidas</u></strong> por frentes coralíferos.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 2 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-map-marked-alt"></i></div>
+                <h2>2. LAS ZONAS DE PRÉSTAMO PARA ALIMENTACIÓN ARTIFICIAL</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-cogs mr-2 text-yellow-700"></i>Criterios de Selección</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>La arena de préstamo para una alimentación artificial puede provenir de un <strong><u>yacimiento marino o terrestre</u></strong>, si bien generalmente se prefiere regenerar con material de <strong><u>procedencia marina</u></strong> por menor contenido en finos; mejor graduación y forma de los granos; color y textura más adecuados; y los grandes volúmenes requeridos, que limitan la procedencia terrestre por la capacidad de los yacimientos y por las dificultades de transporte.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-ruler-combined text-blue-500 icon"></i><u>Criterios granulométricos</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                               <li>▪️ Como norma general, el <strong><u>tamaño medio del material de aportación</u></strong> ha de ser <strong><u>igual o superior</u></strong> al del material nativo para que el relleno de arena sea estable.</li>
+                               <li>▪️ Cuanto más grueso sea el material de aportación, mayor pendiente de la playa sumergida, mayor anchura de la playa seca y menores pérdidas de material, por lo que las realimentaciones futuras son también menores.</li>
+                               <li>▪️ La idoneidad de un yacimiento se analiza determinando el <strong><u>factor de sobrellenado</u></strong> y el <strong><u>factor de realimentación</u></strong> a partir de los ábacos de James, que permiten obtener el volumen de arena necesario y evaluar económicamente el coste de la regeneración.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-palette text-purple-500 icon"></i><u>Criterios estéticos</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                               <li>▪️ Se debe tender a la utilización de arenas con <strong><u>tonalidades similares</u></strong> a las de la playa primitiva, textura fina y reducida angulosidad.</li>
+                               <li>▪️ Las tonalidades más aceptadas por los usuarios son los <strong><u>colores dorados y blancos</u></strong>, no debiendo emplear colores grises o marrones, salvo que guarden una estética adecuada con el entorno a regenerar.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-check-double mr-2 text-green-600"></i>Requisitos para Zonas de Préstamo Marinas</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <p>Una zona de préstamo marina para alimentación ha de cumplir además los siguientes requisitos:</p>
+                <ul>
+                    <li><i class="fas fa-ruler-vertical text-blue-500 icon"></i>Estar situado a una <strong><u>profundidad superior a la de asomeramiento</u></strong> (2 veces la profundidad de cierre) para no afectar al transporte de sedimentos.</li>
+                    <li><i class="fas fa-leaf text-green-500 icon"></i>No invadir una <strong><u>pradera de Posidonia oceánica</u></strong>.</li>
+                    <li><i class="fas fa-cubes text-yellow-500 icon"></i>Disponibilidad de material adecuado en <strong><u>cantidad suficiente</u></strong> a una distancia económicamente viable.</li>
+                    <li><i class="fas fa-gem text-teal-500 icon"></i>Proporcionar arena de <strong><u>calidad adecuada sin elementos contaminantes</u></strong> y con pocos finos.</li>
+                    <li><i class="fas fa-shield-alt text-gray-500 icon"></i>Suponer un <strong><u>impacto ambiental admisible</u></strong> tanto en la zona de extracción como en la zona de vertido.</li>
+                </ul>
+            </div>
+        </div>
+
+         <!-- Main Card 3 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-seedling"></i></div>
+                <h2>3. ASPECTOS AMBIENTALES DE LA EXTRACCIÓN</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Instrucción Técnica y Aspectos a Considerar</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                     <li>La <strong><u>DGCM del MITECO</u></strong> publicó en 2010 la <strong><u>Instrucción Técnica</u></strong> para la gestión ambiental de las extracciones marinas, donde se establece que se deberá realizar un <strong><u>estudio de las principales características</u></strong> existentes en la zona de extracción.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Dicho estudio deberá incluir:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <strong><u>Hidrodinámica</u>:</strong> Para evaluar la dispersión del material resuspendido y la afección derivada de la pluma de extracción.</li>
+                                <li>▪️ <strong><u>Plancton</u>:</strong> Estudio de las principales comunidades planctónicas para evitar que zonas con alta productividad puedan verse afectadas.</li>
+                                <li>▪️ <strong><u>Comunidades bentónicas</u>:</strong> Las extracciones afectan de forma directa (eliminando la comunidad) e indirecta (aumento de turbidez y deposición).</li>
+                                <li>▪️ <strong><u>Comunidades pelágicas</u>:</strong> Las extracciones pueden producir el espantamiento temporal de estas especies, evitando que accedan a sus zonas de alimentación o reproducción.</li>
+                                <li>▪️ <strong><u>Recursos pesqueros y marisqueros</u>:</strong> Se evaluarán los recursos, utilizando medios de extracción que eviten el aumento de la turbidez y evitando la incidencia sobre áreas de reproducción.</li>
+                                <li>▪️ <strong><u>Infraestructuras</u>:</strong> Se incluirá un inventario y se establecerán medidas para su no afectación.</li>
+                                <li>▪️ <strong><u>Zonas de interés arqueológico</u>:</strong> Se incluirá un inventario y, en caso de detectarse un yacimiento, se prohibirá la extracción.</li>
+                                <li>▪️ <strong><u>Espacios protegidos</u>:</strong> Se incluirá un análisis de los espacios protegidos existentes en el entorno.</li>
+                                <li>▪️ <strong><u>Instalaciones acuícolas</u>:</strong> Se incluirá un análisis de las instalaciones existentes y un estudio de los efectos del dragado sobre ellas.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-ruler-combined mr-2"></i>Directrices para Caracterización del Material de Dragado</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>La <strong><u>Comisión Interministerial de Estrategias Marinas</u></strong> aprobó en 2021 la última versión de las <strong><u>Directrices</u></strong> para la caracterización del material de dragado y su reubicación en aguas del DPMT.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Establecen los contenidos que debe incluir todo proyecto de dragado desde el punto de vista ambiental:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ El <u>procedimiento</u> para la adquisición de las muestras.</li>
+                                 <li>▪️ Las <u>determinaciones y ensayos</u> necesarias para su caracterización.</li>
+                                  <li>▪️ La <u>clasificación del material</u> dragado en categorías.</li>
+                                   <li>▪️ El <u>procedimiento</u> para evaluar las diferentes opciones de gestión.</li>
+                                    <li>▪️ Las <u>condiciones a cumplir</u> para el vertido al mar.</li>
+                                     <li>▪️ El <u>desarrollo de los programas</u> de vigilancia ambiental.</li>
+                                      <li>▪️ Un <u>análisis de los permisos</u> necesarios.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>Quedan <strong><u>excluidos</u></strong> del ámbito de aplicación la extracción de materiales con el fin exclusivo de regeneración de playas, aunque las Directrices podrán aplicarse con carácter orientativo.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 4 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-binoculars"></i></div>
+                <h2>4. MÉTODOS DE PROSPECCIÓN SUBMARINA</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-cogs mr-2"></i>Equipos y Técnicas</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-satellite-dish text-blue-500 icon"></i><u>Equipos Geofísicos</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                               <li>▪️ <strong><u>Ecosondas</u>:</strong> Se emplean para realizar campañas batimétricas. Pueden ser de haz simple o multihaz. Las de alta frecuencia tienen gran precisión pero en profundidades reducidas. Las de baja frecuencia tienen menor precisión pero se pueden emplear en grandes profundidades.</li>
+                                <li>▪️ <strong><u>Sonar de barrido lateral</u>:</strong> Se emplea para determinar la topografía del fondo marino. La imagen que se obtiene se parece a una fotografía aérea continua.</li>
+                                 <li>▪️ <strong><u>Perfilador sísmico de fondos</u>:</strong> Se emplea para determinar la estratigrafía. Funciona emitiendo ondas sísmicas. La onda es reflejada en la interfaz de separación de estratos.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-map-pin text-red-500 icon"></i><u>Otros Métodos de Prospección</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <strong><u>Gravimetría</u>:</strong> se deposita en el fondo marino un aparato que realiza una pequeña explosión. Con la información obtenida se puede definir la existencia de fallas o de cavidades.</li>
+                               <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ <strong><u>Sondeos y Muestreo</u>:</strong></p>
+                                   </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                           <li>▫️ <strong>Cucharas:</strong> mecanismo bivalvo que se cierra al tirar de un cable.</li>
+                                           <li>▫️ <strong>Toma-muestras por gravedad:</strong> actúan penetrando en el terreno por la acción de su propio peso.</li>
+                                           <li>▫️ <strong>Toma-muestras por vibración (vibrocores):</strong> tubería metálica que se hinca en el terreno por medio de vibraciones.</li>
+                                           <li>▫️ <strong>Toma-muestras a rotación:</strong> equipos compactos que permiten prospecciones de hasta 10-20 m.</li>
+                                        </ul>
+                                    </div>
+                               </li>
+                               <li>
+                                   <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ <strong><u>Ensayos in situ</u>:</strong></p>
+                                   </div>
+                                   <div class="collapsible-content hidden">
+                                       <ul class="nested-list">
+                                          <li>▫️ La tendencia actual se decanta hacia su uso dadas las dificultades de extracción de muestras de calidad suficientemente inalteradas.</li>
+                                          <li>▫️ Se emplean la prospección por medio de <strong>penetrómetros dinámicos, el ensayo de molinete, el piezocono, y el presiómetro</strong>.</li>
+                                        </ul>
+                                   </div>
+                               </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

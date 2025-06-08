@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Obras Portuarias (I)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .directive-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            border: 1px solid #4ade80; /* green-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-hard-hat"></i> MEA2T19: OBRAS PORTUARIAS (I) <i class="fas fa-anchor"></i></h1>
+        </header>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-book"></i></div>
+                <h2>1. OBRAS DE ABRIGO Y PORTUARIAS (I)</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Definición, Caracterización y Factores de Proyecto</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <p><i class="fas fa-file-alt text-purple-600 icon"></i>Para realizar el diseño y proyecto de estructuras portuarias y costeras se utilizan las <strong><u>Recomendaciones para Obras Marítimas (ROM)</u></strong> que definen un conjunto de <u>criterios técnicos</u> que, <u>sin tener carácter vinculante</u> o normativo, <u>orientan a proyectistas, directores y constructores</u> de obras portuarias hacia la obtención de los niveles de calidad y garantía.</p>
+                    </li>
+                    <li><i class="fas fa-map-marked-alt text-blue-500 icon"></i>El <strong><u>ámbito de aplicación</u></strong> de estas recomendaciones será el proyecto, construcción y explotación de todas las obras marítimas y portuarias cualquiera que sea su clase o destino, siempre y cuando se encuentren en el <strong><u>litoral español</u></strong> y estén afectadas por los mismos oleajes que las fuentes de información disponibles analizadas.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-exchange-alt text-yellow-600 icon"></i>Hasta la reciente publicación de la <span class="law-pill">ROM 0.0</span>, para definir las acciones a considerar en obras marítimas se utilizaba la <span class="law-pill">ROM 02.90</span>.</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ La <span class="law-pill">ROM 0.0</span> es una recomendación de carácter <strong><u>mucho más genérico</u></strong> que la <span class="law-pill">ROM 02.90</span>, quedándose ésta como un <u>caso particular</u> de la <span class="law-pill">ROM 0.0</span>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-cogs mr-2 text-gray-700"></i>ROM 02.90 vs ROM 0.0</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-ruler-combined mr-2"></i><span class="law-pill">ROM 02.90</span>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Para el dimensionamiento de una obra marítima se ha de definir el <strong><u>período de retorno (T)</u></strong> del temporal para obtener las acciones de cálculo sobre la estructura.</li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                         <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ El periodo de retorno tanto en la fase de construcción como en su fase de servicio se obtiene a partir de:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ La <strong><u>vida útil (n)</u></strong>.</li>
+                                            <li>▫️ El <strong><u>riesgo máximo admisible (E)</u></strong>, que es dependiente del <u>modo de fallo</u> de la estructura (gradual o instantáneo), la <u>posibilidad de pérdida de vidas humanas</u> y la <u>repercusión económica</u> en caso de inutilización.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                 <li>▪️ <u>Fase de construcción</u>: E = 1 - e<sup>-(n/T)</sup>.</li>
+                                 <li>▪️ <u>Fase de servicio</u>: E = 1 - (1 - 1/T)<sup>n</sup> (<strong>Teoría de Leo Borgmann</strong>).</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-calculator mr-2"></i><span class="law-pill">ROM 0.0</span>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       ▪️ Se establecen los siguientes <strong><u>índices</u></strong>:
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ <strong><u>IRE (Índice de Repercusión Económica)</u>:</strong> define la <strong><u>vida útil</u></strong> de la obra.</li>
+                                            <li>▫️ <strong><u>ISA (Índice de Repercusión Social y Ambiental)</u>:</strong> define la <strong><u>probabilidad de fallo</u></strong>.</li>
+                                        </ul>
+                                    </div>
+                               </li>
+                               <li>▪️ En este caso únicamente se contempla la <strong><u>fase de servicio</u></strong>.</li>
+                               <li>▪️ Se utiliza también la fórmula de Leo Borgmann, pero sustituyendo el riesgo por la <strong><u>Probabilidad de fallo</u></strong>: P<sub>f</sub> = 1 - (1 - 1/T)<sup>n</sup>.</li>
+                               <li>
+                                   <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ <u>En función del IRE</u>, las obras marítimas se clasifican en obras con:</p>
+                                   </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                           <li>▫️ Repercusión económica <strong>baja</strong> (<span class="pill pill-green">IRE < 5</span>, vida útil 15 años).</li>
+                                           <li>▫️ <strong>Media</strong> (<span class="pill pill-yellow">5 < IRE < 20</span>, vida útil 25 años).</li>
+                                           <li>▫️ <strong>Alta</strong> (<span class="pill pill-red">IRE > 20</span>, vida útil 50 años).</li>
+                                           <li>▫️ <strong>IRE = (CRD + CRI) / C<sub>0</sub></strong>, donde CRD es el coste de reconstrucción, CRI es el coste por inutilización y C<sub>0</sub> es un coste de referencia fijado en 3 M€.</li>
+                                        </ul>
+                                    </div>
+                               </li>
+                                <li>
+                                   <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ <u>El ISA</u> = ISA1 + ISA2 + ISA3 (<u>posibilidad de pérdida de vidas humanas</u>, <u>daños en medio ambiente y patrimonio</u>, y <u>alarma social</u>). En función del ISA, las obras marítimas se clasifican en:</p>
+                                   </div>
+                                   <div class="collapsible-content hidden">
+                                       <ul class="nested-list">
+                                           <li>▫️ Obras <strong>sin repercusión</strong> social y ambiental (<span class="pill pill-green">ISA < 5</span>).</li>
+                                            <li>▫️ Con repercusión <strong>baja</strong> (<span class="pill pill-yellow">5 < ISA < 20</span>).</li>
+                                             <li>▫️ <strong>Alta</strong> (<span class="pill pill-red">20 < ISA < 30</span>).</li>
+                                              <li>▫️ <strong>Muy alta</strong> (<span class="pill pill-red">ISA > 30</span>).</li>
+                                       </ul>
+                                   </div>
+                               </li>
+                               <li>▪️ Además, con estos dos valores, IRE e ISA, se define el <strong><u>método que hay que aplicar para el cálculo</u></strong> de la obra (seguridad global, coeficientes parciales, etc.).</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li><i class="fas fa-check-circle text-green-600 icon"></i>Con ambos datos y aplicando la teoría de Leo Borgmann se obtiene el <strong><u>periodo de retorno</u></strong> para determinar las acciones que solicitarán la nueva estructura.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-exclamation-triangle"></i></div>
+                <h2>2. ESTADOS LÍMITE ÚLTIMOS. PERÍODOS DE RETORNO</h2>
+            </div>
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>El <strong><u>estado límite</u></strong> se podría definir como el <u>estado de proyecto</u> en el que la obra en su conjunto, o en alguno de sus elementos, queda <strong><u>fuera de servicio</u></strong> por incumplimiento de los requisitos de seguridad, de servicio y de explotación especificados en el proyecto.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Los <strong><u>estados límites</u></strong> se clasifican en:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li><i class="fas fa-skull-crossbones text-red-600 icon"></i><strong><u>Últimos (ELU)</u>:</strong> incluyen los modos de fallo que provocan una <strong><u>pérdida de capacidad estructural</u></strong>.</li>
+                               <li><i class="fas fa-tools text-yellow-600 icon"></i><strong><u>De servicio (ELS)</u>:</strong> incluyen los modos de fallo que inducen una <strong><u>pérdida de funcionalidad</u></strong>.</li>
+                               <li><i class="fas fa-power-off text-orange-600 icon"></i><strong><u>Operativos (ELO)</u>:</strong> incluyen los modos de parada que provocan la <strong><u>pérdida de explotación</u></strong> por causa de los agentes del medio físico, sin fallo estructural o funcional.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>El <strong><u>periodo de retorno (T)</u></strong>, se puede definir como el <strong><u>tiempo medio</u></strong> que transcurre entre dos excedencias consecutivas de un valor de la variable considerada. También se define como el intervalo medio de tiempo en que el <strong><u>valor extremo</u></strong> de la misma se supera una sola vez.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-database"></i></div>
+                <h2>3. BASES DE DATOS. CLIMA MARÍTIMO</h2>
+            </div>
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>El estudio de <strong><u>clima marítimo</u></strong> se puede realizar en base a <strong><u>4 fuentes de datos</u></strong> de oleaje:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>
+                                   <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p><strong><i class="fas fa-eye text-blue-500 icon"></i><u>Datos visuales de oleaje del NCDC</u>:</strong></p>
+                                   </div>
+                                   <div class="collapsible-content hidden">
+                                       <ul class="nested-list">
+                                           <li>▫️ Son observaciones tomadas por barcos en ruta, barcos meteorológicos, observaciones de boyas, etc.</li>
+                                           <li>▫️ La <u>altura de ola</u> suministrada se asemeja a la altura de ola significante <strong>H<sub>1/3</sub></strong>.</li>
+                                           <li>▫️ Los <u>principales inconvenientes</u> son: heterogeneidad en la toma de datos; procesado de los mismos; y baja densidad en zonas poco transitadas.</li>
+                                           <li>▫️ La <u>gran ventaja</u> reside en la <strong>cantidad y extensión de las observaciones</strong>, además de proporcionar datos direccionales.</li>
+                                       </ul>
+                                   </div>
+                               </li>
+                                <li>
+                                   <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p><strong><i class="fas fa-satellite-dish text-cyan-500 icon"></i><u>Datos de oleaje direccionales de la red de boyas de Puertos del Estado</u>:</strong></p>
+                                   </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                           <li>▫️ La Red de Boyas en Aguas Profundas está formada por 13 boyas Seawatch y 3 Wavescan con sensor de oleaje direccional.</li>
+                                           <li>▫️ Los instrumentos están ubicados en profundidades entre 200 y 800 metros.</li>
+                                       </ul>
+                                   </div>
+                               </li>
+                                <li><strong><i class="fas fa-desktop text-purple-500 icon"></i><u>Datos procedentes de modelado numérico de predicción</u></strong> (proyecto español WANA y proyectos europeos WASA e HIPOCAS).</li>
+                                <li><strong><i class="fas fa-water text-gray-500 icon"></i><u>Datos de mareas</u></strong> (red REDMAR de Puertos del Estado desde 1992 y datos del IEO desde 1944).</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>En España son de aplicación las <strong><u>Recomendaciones para obras marítimas <span class="law-pill">ROM 0.3-91 OLEAJE</span></u></strong>.</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Incluyen un Anejo para la <strong><u>caracterización y previsión aproximada del Clima Marítimo</u></strong> en el litoral español.</li>
+                                <li>
+                                   <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ Se establece una <strong><u>zonificación del litoral español en 10 áreas</u></strong> diferenciadas (Bilbao-Gijón, Coruña, etc.), definidas en base a características climáticas homogéneas.</p>
+                                   </div>
+                                </li>
+                               <li>▪️ Se incluyen las relaciones de <strong><u>caracterización del oleaje</u></strong> en cada una de las áreas definidas (distribución conjunta altura/dirección, análisis estadístico unidimensional y bidimensional, etc.).</li>
+                               <li>▪️ Se presentan gráficamente los resultados en formato de <strong><u>Atlas de Clima Marítimo</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-chart-bar"></i></div>
+                <h2>4. ANÁLISIS ESTADÍSTICO DEL OLEAJE</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p>Los regímenes de oleaje se clasifican en <strong><u>dos tipos</u></strong>:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <strong><u>Régimen medio</u>:</strong> se utiliza para <strong><u>regeneración de playas</u></strong>.</li>
+                               <li>▪️ <strong><u>Régimen extremal</u>:</strong> se utiliza para el <strong><u>diseño de diques</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-bolt text-red-500 icon"></i><u>Régimen Extremal</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ A la hora de dimensionar una estructura, es necesario estimar la <strong><u>altura de ola significante</u></strong> para un cierto periodo de retorno.</li>
+                               <li>▪️ Para determinarla se necesita modelar el comportamiento estadístico de los valores de la serie, para lo cual se seleccionan aquellos <strong><u>máximos relativos</u></strong> suficientemente alejados (<strong>población extremal</strong>).</li>
+                                <li>▪️ Esta población se ajusta a una función de distribución de probabilidad (<strong><u>Weibull</u></strong> en general).</li>
+                                <li>▪️ La <span class="law-pill">ROM 0.3-91</span> define el régimen extremal como la función de distribución de los valores extremos del oleaje.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-sliders-h text-blue-500 icon"></i><u>Régimen Medio</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Se puede definir como el conjunto de <strong><u>estados de oleaje que más probablemente se pueden encontrar</u></strong>.</li>
+                                <li>▪️ La distribución elegida para describir el régimen medio de las series de oleaje es también <strong><u>Weibull</u></strong> en general.</li>
+                                <li>▪️ Está directamente relacionado con las <strong><u>condiciones medias de operatividad</u></strong> de una determinada actividad.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

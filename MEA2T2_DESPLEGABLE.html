@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Bienes de Dominio Público Marítimo-Terrestre</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-landmark"></i> MEA2T2: LOS BIENES DE DOMINIO PÚBLICO MARÍTIMO-TERRESTRE <i class="fas fa-water"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-sitemap"></i></div>
+                <h2>1. LOS BIENES DE DPM-T. CLASIFICACIÓN Y DEFINICIONES</h2>
+            </div>
+            
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-th-list mr-2 text-blue-600"></i>Clasificación de Bienes de DPM-T Estatal</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <p>Son bienes de DPM-T estatal según la legislación de costas los siguientes:</p>
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-water mr-2 text-blue-500"></i><strong>La ribera del mar y de las rías</strong>, que incluye:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ La <strong>zona marítimo-terrestre</strong>, comprendida entre la <span class="pill pill-blue">línea de bajamar máxima viva equinoccial</span> y el límite hasta donde alcanzan las olas en los <span class="pill pill-red">mayores temporales conocidos</span> o, cuando lo supere, la <span class="pill pill-blue">línea de pleamar máxima viva equinoccial</span>.</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ Esta zona se extiende también por las <strong>márgenes de los ríos</strong> hasta donde se haga sensible el efecto de las mareas.</li>
+                                            <li>▫️ Se consideran incluidas en esta zona los <strong>terrenos bajos que se inundan</strong> por el flujo y reflujo de las mareas, las olas o la filtración del agua del mar.</li>
+                                            <li>▫️ <span class="pill pill-red">No serán DPM-T</span> los terrenos inundados artificial y controladamente (cuando los terrenos no queden comunicados con el mar de manera permanente o queden comunicados de manera controlada) por obras realizadas a tal efecto, salvo que sean navegables.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                     <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ Las <strong>playas</strong>, con sus escarpes, bermas y dunas hasta el límite que resulte necesario para garantizar la estabilidad de la playa y la defensa de la costa.</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                         <ul class="nested-list">
+                                            <li>▫️ En este sentido no se consideran las dunas relictas ni las estabilizadas, salvo mejor evidencia científica.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><i class="fas fa-water mr-2 text-cyan-600"></i><strong>El mar territorial y las aguas interiores</strong> con su lecho y subsuelo.</li>
+                    <li><i class="fas fa-gem mr-2 text-teal-600"></i><strong>Los recursos naturales</strong> de la zona económica y la plataforma continental.</li>
+                    <li><i class="fas fa-hard-hat mr-2 text-orange-600"></i>Los <strong>terrenos ganados al mar</strong> como consecuencia de obras y los desecados en su ribera.</li>
+                    <li><i class="fas fa-mountain mr-2 text-gray-600"></i>Los <strong>acantilados</strong> con inclinación igual o mayor de 60º en contacto con el mar, o con el DPM-T, hasta su coronación.</li>
+                    <li><i class="fas fa-dot-circle mr-2 text-yellow-600"></i>Los <strong>islotes</strong> en aguas interiores y mar territorial.</li>
+                    <li><i class="fas fa-arrows-alt-h mr-2 text-purple-600"></i>Los <strong>terrenos colindantes</strong> con la ribera del mar que se adquieren para su incorporación al DPM-T.</li>
+                    <li><i class="fas fa-building mr-2 text-gray-700"></i>Las <strong>obras e instalaciones</strong> construidas por el Estado en dicho dominio.</li>
+                    <li><i class="fas fa-lightbulb mr-2 text-yellow-500"></i>Las obras e instalaciones de <strong>iluminación de costas y señalización marítima</strong> construidas por el Estado cualquiera que sea su localización, así como los servicios afectados al servicio de las mismas.</li>
+                    <li><i class="fas fa-anchor mr-2 text-gray-800"></i>Los <strong>puertos e instalaciones portuarias</strong> de titularidad estatal.</li>
+                    <li><i class="fas fa-dot-circle mr-2 text-green-600"></i>Las <strong>islas que estén formadas o se formen por causas naturales</strong> en el mar territorial, en aguas interiores o en ríos hasta donde se hagan sensibles las mareas, salvo que sean de propiedad privada, en cuyo caso serán de DPM-T cualquiera de los elementos descritos anteriormente.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-book-open mr-2 text-blue-600"></i>Definiciones</h3>
+            </div>
+             <div class="collapsible-content hidden">
+                <ul>
+                    <li><strong>Albufera:</strong> cuerpo de aguas costeras separadas del mar por una franja de tierra.</li>
+                    <li><strong>Berma:</strong> parte casi horizontal de la playa interior al escarpe.</li>
+                    <li><strong>Dunas:</strong> depósitos sedimentarios constituidos por montículos de arena, tengan o no vegetación, que se alimentan de arena transportada por acción del mar, del viento marino o por otras causas.</li>
+                    <li><strong>Escarpe:</strong> escalón vertical de la playa formado por la erosión de la berma.</li>
+                    <li><strong>Estero:</strong> caños en una marisma.</li>
+                    <li><strong>Marisma:</strong> terreno muy llano y bajo que se inunda periódicamente por el flujo y reflujo de las mareas o filtración de agua de mar.</li>
+                    <li><strong>Marjal:</strong> terreno bajo cubierto por un manto de agua que da soporte a abundante vegetación.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 2 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-shield-alt"></i></div>
+                <h2>2. PREVALENCIA DEL DPM-T. POTESTADES DE LA ADMINISTRACIÓN</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-balance-scale mr-2 text-yellow-700"></i>Prevalencia del DPM-T</h3>
+            </div>
+             <div class="collapsible-content hidden">
+                <ul>
+                    <li>Los bienes de DPM-T son <span class="pill pill-red">inalienables</span>, <span class="pill pill-red">imprescriptibles</span> e <span class="pill pill-red">inembargables</span>.</li>
+                    <li>No se admitirán más derechos que los de uso y aprovechamiento adquiridos de acuerdo con la ley.</li>
+                    <li>Carecen de todo valor frente al dominio público las detentaciones privadas por prolongadas que sean en el tiempo y aunque aparezcan amparadas por asientos en el Registro de la Propiedad.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+             <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-user-shield mr-2 text-blue-600"></i>Potestades de la Administración</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li>Tiene el derecho y el deber de <strong>investigar</strong> la situación de los bienes que se presuman pertenecientes al DPM-T, a cuyo efecto podrá recabar todos los datos que considere necesarios y practicar el correspondiente deslinde.</li>
+                    <li>Tendrá la facultad de <strong>recuperación posesoria</strong>, de oficio y en cualquier tiempo sobre dichos bienes.</li>
+                    <li>No se admitirán interdictos contra las resoluciones dictadas por la AGE en ejercicio de competencias definidas en la ley de Costas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 3 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-drafting-compass"></i></div>
+                <h2>3. EL DESLINDE DEL DPM-T. PROCEDIMIENTO</h2>
+            </div>
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-cogs mr-2"></i>Criterios Técnicos para Fijar el DPM-T</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li>El <strong>límite hasta donde alcanzan las olas en los mayores temporales conocidos</strong> es aquel que es alcanzado en 5 ocasiones en un periodo de 5 años, salvo que mejor evidencia científica demuestre otro criterio.</li>
+                    <li>Las <strong>variaciones del nivel del mar por mareas</strong> incluirán los efectos superpuestos de las astronómicas y de las meteorológicas, pero no de origen sísmico o de resonancia.</li>
+                    <li>Se considerarán necesarias para garantizar la estabilidad de la playa y la defensa de la costa las <strong>dunas de evolución, primarias y secundarias</strong>, pero no las dunas relictas y estabilizadas, salvo casos excepcionales en que se demuestre que son necesarias.</li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-map-marker-alt mr-2"></i>Determinación del DPM-T y su Límite</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong>Determinación del DPM-T:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Para determinarlo se practicará por la AGE el oportuno <strong>deslinde</strong>.</li>
+                                <li>▪️ Una vez practicado deberá <strong>inscribir los bienes</strong>.</li>
+                                <li>▪️ El MITECO llevará el <strong>archivo de los deslindes</strong> que será público.</li>
+                                <li>▪️ En los <strong>puertos</strong> y sus instalaciones se practicará el deslinde del DPM-T.</li>
+                                <li>▪️ Las líneas de deslinde se publicarán en la <strong>sede electrónica del MITECO</strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong>Determinación del Límite del DPM-T:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ El deslinde determinará el <strong>límite interior del DPM-T</strong> que será el que se amojonará.</li>
+                                <li>▪️ Cuando no coincida con el límite interior de la ribera del mar, también se fijará en el plano el de ésta.</li>
+                                <li>▪️ En el mismo plano se señalará siempre el límite interior de la <strong>zona de servidumbre de protección</strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong>Procedimiento de Deslinde:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                            <ol class="list-decimal list-inside mt-2 ml-4 space-y-2">
+                               <li>El expediente se incoará <strong>de oficio</strong> por la administración o a <strong>petición de interesado</strong>.</li>
+                               <li>El plazo para notificar la resolución será de <span class="pill pill-blue">24 meses</span>.</li>
+                               <li>Serán <strong>oídos</strong> los propietarios colindantes y demás personas que acrediten la condición de interesados.</li>
+                               <li>Se solicitará <strong>informe a la Comunidad Autónoma y Ayuntamiento</strong> correspondiente, que será emitido en el plazo de <span class="pill pill-blue">1 mes</span>.</li>
+                               <li>Cuando el deslinde afecte al dominio público portuario estatal, el <strong>MITMS tiene 2 meses de plazo</strong> para informar. Si hay discrepancias entre el MITMS y el MITECO, decide el Consejo de Ministros.</li>
+                            </ol>
+                        </div>
+                    </li>
+                    <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong>Efectos de la Incoación del Expediente:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ Faculta a la administración para tomar datos, incluso en terrenos privados, sin perjuicio de indemnizaciones.</li>
+                                <li>▪️ Constará en el Registro de la Propiedad.</li>
+                                <li>▪️ Suspende el otorgamiento de concesiones y autorizaciones.</li>
+                            </ul>
+                        </div>
+                    </li>
+                 </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-sync-alt mr-2"></i>Revisión de Deslindes y Situaciones Especiales</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Los deslindes se <strong>revisarán</strong> cuando se altere la configuración del DPM-T. Los titulares de terrenos que tras la revisión se incorporen al DPM-T pasarán a ser titulares de un derecho de ocupación y aprovechamiento mediante una concesión que se otorgará de oficio por la administración durante un plazo de <span class="pill pill-blue">75 años</span>, respetando los usos y aprovechamientos existentes sin obligación de abonar canon.</li>
+                    <li>Los titulares de construcciones que, tras la revisión del deslinde, se incorporen al DPMT o a la zona de servidumbre de protección podrán realizar <strong>obras de reparación, mejora, consolidación y modernización</strong> siempre que no impliquen aumento de volumen, ni altura, ni superficie y supongan una mejora energética de 2 letras o hasta la letra B, y un ahorro de agua. En caso de que las construcciones afecten a la zona de tránsito para hacer obras se deberá previamente emitir informe favorable que garantice que la servidumbre de tránsito está garantizada (plazo <span class="pill pill-blue">2 meses</span>, silencio administrativo es positivo). En los otros casos de obras en construcciones en la servidumbre de protección basta declaración responsable.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>En las zonas en <strong>regresión grave</strong> de retroceso de la línea de orilla:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ No podrán otorgarse nuevos títulos de ocupación del DPM-T, salvo en casos excepcionales y por periodos menores de 5 años cuando no se prevean inundaciones.</li>
+                               <li>▪️ Las construcciones amparadas por derecho de ocupación se mantendrán mientras el mar no les alcance, en caso contrario se extinguirá el derecho.</li>
+                               <li>▪️ Los terrenos declarados en situación de regresión grave podrán ser objeto de actuaciones de protección para las que se podrán imponer contribuciones especiales.</li>
+                               <li>▪️ La declaración de situación de regresión grave se hará por Orden Ministerial, previo informe de la C.A. Se puede revocar por Orden Ministerial si desaparecen las circunstancias.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>La <strong>línea exterior de los paseos marítimos</strong> construidos con la autorización de la AGE entre la entrada en vigor de las leyes 22/1988 y 2/2013 tendrá la consideración de línea interior de la ribera del mar, pudiendo desafectarse los terrenos situados al interior.</li>
+                    <li>Se <strong>excluyen del DPM-T</strong> los terrenos correspondientes a los núcleos de población enumerados en el anexo de la ley 2/2013.</li>
+                    <li>Aquellas personas que, en el momento de entrada en vigor de la Ley 22/1988 eran propietarios con título inscrito en el Registro de la Propiedad de terrenos que pasaron a formar parte del DPM-T, o sus causahabientes, serán <strong>reintegrados en el dominio</strong> de los bienes que por aplicación de la Ley 2/2013 dejen de formar parte del DPM-T, una vez revisados los correspondientes deslindes.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 4, 5, 6 -->
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon-bg"><i class="fas fa-binoculars"></i></div>
+                    <h2>4. ESTUDIOS PARA JUSTIFICACIÓN</h2>
+                </div>
+                <div class="collapsible-trigger">
+                    <i class="fas fa-chevron-right collapsible-icon"></i>
+                    <p class="m-0 font-semibold">Las fases a seguir son:</p>
+                </div>
+                <div class="collapsible-content hidden">
+                     <ol class="list-decimal list-inside mt-2 space-y-2">
+                        <li>Recopilación de la información existente tanto científica como administrativa.</li>
+                        <li>Definición de la línea probable de deslinde.</li>
+                        <li>Visita de campo para revisar si la línea probable se ajusta a la realidad de la zona.</li>
+                        <li>Estudio justificativo del deslinde.</li>
+                        <li>Nueva visita de campo para comprobación minuciosa de la delimitación.</li>
+                        <li>Propuesta definitiva que se trazará con todos los datos obtenidos y que servirá de base para la incoación del expediente de deslinde.</li>
+                    </ol>
+                </div>
+            </div>
+             <div class="card">
+                <div class="card-header">
+                    <div class="icon-bg"><i class="fas fa-folder-open"></i></div>
+                    <h2>5. PROYECTO Y EFECTOS</h2>
+                </div>
+                 <div class="collapsible-trigger">
+                     <i class="fas fa-chevron-right collapsible-icon"></i>
+                     <p class="m-0 font-semibold"><strong>El proyecto de deslinde comprenderá:</strong></p>
+                </div>
+                 <div class="collapsible-content hidden">
+                     <ul class="nested-list">
+                        <li>▪️ <strong>Memoria</strong> con descripción de las actuaciones practicadas y con la justificación de la línea de deslinde propuesta.</li>
+                        <li>▪️ <strong>Planos topográficos</strong> a escala no inferior a 1:1.000 con la poligonal de deslinde y las delimitaciones indicadas, recogido también en planos catastrales.</li>
+                        <li>▪️ <strong>Pliego de Condiciones</strong> para el replanteo y amojonamiento del deslinde.</li>
+                        <li>▪️ <strong>Presupuesto estimado</strong>.</li>
+                     </ul>
+                 </div>
+                <div class="collapsible-trigger mt-4">
+                    <i class="fas fa-chevron-right collapsible-icon"></i>
+                    <p class="m-0 font-semibold"><strong>El deslinde aprobado declara:</strong></p>
+                </div>
+                 <div class="collapsible-content hidden">
+                     <ul class="nested-list">
+                        <li>▪️ La posesión y la titularidad dominical a favor del Estado, dando lugar al amojonamiento y sin que las inscripciones del Registro de la Propiedad puedan prevalecer frente a la naturaleza demanial de los bienes deslindados.</li>
+                        <li>▪️ Levantamiento de la suspensión del otorgamiento de concesiones y autorizaciones en el DPM-T y en su zona de servidumbre de protección.</li>
+                        <li>▪️ Cancelación de las notas marginales practicadas en el Registro de la Propiedad con motivo del deslinde.</li>
+                        <li>▪️ El amojonamiento se hará mediante la colocación de hitos que permitan identificar sobre el terreno el límite interior del DPM-T.</li>
+                    </ul>
+                 </div>
+            </div>
+        </div>
+         <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-exchange-alt"></i></div>
+                <h2>6. INMATRICULACIÓN, AFECTACIÓN Y DESAFECTACIÓN</h2>
+            </div>
+             <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-lg font-bold text-gray-700"><i class="fas fa-file-import mr-2"></i>Inmatriculación de Fincas Colindantes</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                   <li>Cuando el expediente de deslinde esté aprobado se podrán inmatricular fincas o inscribir en exceso de cabida cuando la finca intersecte con la zona de servidumbre de protección.</li>
+                   <li>La D.G. de la costa y el mar trasladará a la D.G. de los Registros y del Notariado la representación georreferenciada en la cartografía catastral tanto de la línea de DPM-T como de las servidumbres de tránsito y protección.</li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-lg font-bold text-gray-700"><i class="fas fa-check-circle mr-2"></i>Afectación y Desafectación</h3>
+            </div>
+             <div class="collapsible-content hidden">
+                <ul>
+                   <li>Los terrenos del Estado colindantes con el DPM-T o emplazados en su zona de influencia que resulten necesarios para la protección o utilización de dicho dominio serán <strong>afectados</strong> al uso propio del mismo.</li>
+                   <li>Solo podrán <strong>desafectarse</strong> en caso de declaración de innecesariedad del MITECO motivada y excepcional, que solo procederá en aquellos supuestos en que resulte inviable la recuperación de los terrenos o la utilización de los mismos para la protección y utilización del DPM-T.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

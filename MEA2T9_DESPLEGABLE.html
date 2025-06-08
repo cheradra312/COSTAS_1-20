@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Biodiversidad y Conservación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '�';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .directive-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            border: 1px solid #4ade80; /* green-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-leaf"></i> MEA2T9: BIODIVERSIDAD Y CONSERVACIÓN DE ECOSISTEMAS MARINOS Y COSTEROS <i class="fas fa-fish"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-seedling"></i></div>
+                <h2>1. BIODIVERSIDAD Y CONSERVACIÓN</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-globe-europe mr-2 text-blue-600"></i>Biodiversidad Marina en España</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>España es uno de los países europeos con <strong><u>mayor biodiversidad marina</u></strong>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Esto es gracias a:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Sus diferentes <strong>condiciones oceanográficas y biogeográficas</strong>.</li>
+                                <li>▪️ La extraordinaria <strong>variedad de hábitats costeros</strong> existentes (rías, marismas, lagunas litorales, extensas costas acantiladas, playas y conjuntos insulares de extensión muy variable).</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>En las últimas décadas se han intensificado notablemente las <strong><u>investigaciones</u></strong> en botánica y zoología marinas. En aguas de nuestra plataforma continental se han descrito, hasta el momento:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Cerca de <strong>1.000 especies vegetales</strong>.</li>
+                                <li>▪️ Más de <strong>7.500 animales</strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>Sin embargo, todavía existen <strong><u>grupos importantes muy poco estudiados</u></strong>, sobre todo entre los invertebrados.</li>
+                     <li>Por ello resulta necesario <strong><u>incrementar el conocimiento</u></strong> del medio marino en España, de forma que, sobre éste, se fundamente y desarrolle una <strong><u>política completa de conservación</u></strong> de la biodiversidad marina.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-tasks mr-2 text-yellow-700"></i>Líneas de Trabajo en Conservación</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Las principales líneas de trabajo que actualmente se desarrollan pueden englobarse en <strong><u>dos tipos principales</u></strong>:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <strong><i class="fas fa-map-marked-alt mr-2 text-green-600"></i><u>Las actividades dirigidas a la protección de espacios marinos</u> de alto valor ecológico:</strong></p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ Desarrollo de la <span class="directive-pill">Red Natura 2000</span> y la elaboración de los correspondientes instrumentos de gestión.</li>
+                                            <li>▫️ Declaración de <strong>Áreas Marinas Protegidas</strong> (figura recogida en la <span class="law-pill">Ley 42/2007 del Patrimonio Natural y de la Biodiversidad</span>).</li>
+                                            <li>▫️ Su inclusión, junto a otras figuras de protección, en la <strong>Red de Áreas Marinas Protegidas de España (RAMPE)</strong>.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <strong><i class="fas fa-paw mr-2 text-orange-600"></i><u>Las destinadas a la protección de la biodiversidad</u>, especies y hábitats marinos, propiamente dicha:</strong></p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ Desarrollo de <strong>planes de recuperación</strong>.</li>
+                                            <li>▫️ <strong>Planes y estrategias de conservación</strong> de especies amenazadas.</li>
+                                            <li>▫️ <strong>Estrategias de lucha</strong> contra las principales amenazas para la biodiversidad.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Por otro lado, destacan las actividades relacionadas con la <strong><u>creación y mejora del conocimiento</u></strong> sobre la biodiversidad marina, y las encaminadas hacia la <strong><u>correcta planificación</u></strong> del espacio y de los recursos naturales, destacando:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ El <strong><u>Inventario Español del Patrimonio Natural y de la Biodiversidad</u></strong> y, como parte integrante de éste, la información relativa a:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ El Inventario Español de Hábitats y Especies Marinos.</li>
+                                            <li>▫️ El Catálogo Español de Hábitats en Peligro de Desaparición.</li>
+                                            <li>▫️ El Listado de Especies Silvestres en Régimen de Protección Especial.</li>
+                                            <li>▫️ El Catálogo Español de Especies Amenazadas.</li>
+                                            <li>▫️ El Inventario Español de Espacios Naturales Protegidos, <span class="directive-pill">Red Natura 2000</span> y Áreas protegidas por instrumentos internacionales.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>▪️ El <strong><u>Plan Estratégico Estatal del Patrimonio Natural y de la Biodiversidad</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 2 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-water"></i></div>
+                <h2>2. LAS ZONAS HÚMEDAS COSTERAS</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Definición y Beneficios</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Se consideran <strong><u>zonas húmedas costeras</u></strong> aquellas extensiones de agua marina cuya <strong><u>profundidad en marea baja no excede de 6 m</u></strong>.</li>
+                    <li>Son ecosistemas en los que entran en <strong><u>contacto, en mayor o menor medida, el agua de origen continental con el agua marina</u></strong>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Entre los <strong><u>beneficios</u></strong> que ofrecen los humedales de forma indirecta, deben citarse:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <strong>Control</strong> de las inundaciones.</li>
+                                <li>▪️ <strong>Retención</strong> de nutrientes, sedimentos y sustancias tóxicas.</li>
+                                <li>▪️ <strong>Estabilización</strong> de la línea costera.</li>
+                                <li>▪️ Elevada <strong>productividad</strong> de biomasa.</li>
+                                 <li>▪️ <strong>Estabilización</strong> de microclimas (suavización de extremos en climas áridos y semiáridos).</li>
+                                 <li>▪️ Posible papel en la <strong>mitigación del cambio climático</strong>.</li>
+                                 <li>▪️ Proporcionan <strong>recursos hídricos y minerales, vegetales y forestales, de caza, pesca y marisqueo, de pastos y agrícolas</strong>.</li>
+                                 <li>▪️ Capaces de albergar una importante <strong>diversidad biológica</strong>.</li>
+                                 <li>▪️ Enorme <strong>patrimonio cultural y natural</strong> ligado a estos sistemas.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>La conservación de los humedales se ha de basar en caracterizar y gestionar adecuadamente su <strong><u>funcionamiento hidrológico natural</u></strong>.</li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-thumbtack mr-2"></i>Tipos de Zonas Húmedas Costeras</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <p>Son zonas húmedas costeras las rías, estuarios, deltas, marismas, albuferas, marjales, esteros y las lagunas costeras.</p>
+                <ul>
+                     <li><strong><u>Rías</u>:</strong> valles fluviales permanentemente inundados por las aguas del mar.</li>
+                     <li><strong><u>Estuarios</u>:</strong> zona de desembocadura de un río amplio y profundo en el mar en la que se mezclan las aguas dulces y saladas debido a la acción de las mareas.</li>
+                     <li><strong><u>Deltas</u>:</strong> son depósitos aluviales que se desarrollan invadiendo el espacio marino. Sobre ellos, los cauces van abriendo canales de desembocadura variables en su disposición y evolución temporal.</li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><strong><u>Marismas</u>:</strong> terrenos muy llanos y bajos que se inundan periódicamente por el flujo y reflujo de las mareas o infiltración de agua de mar, completamente vegetados por especies halófilas. Estas llanuras están recorridas por multitud de canales (<strong>Caños y Esteros</strong>).</p>
+                         </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                 <li>▪️ <u>Alta marisma</u>: corresponde a la zona supramareal y que solo se inunda en las mareas vivas (2 veces al mes), surcada por canales meandriformes con vegetación tipo espartina y salicornia.</li>
+                                 <li>▪️ <u>Marisma baja</u>: corresponde a la llanura intermareal que se inunda dos veces al día durante la pleamar y se caracteriza por tener una red de drenaje de tipo arborescente.</li>
+                             </ul>
+                        </div>
+                    </li>
+                     <li><strong><u>Albuferas</u>:</strong> cuerpos de aguas costeras separados físicamente del mar por una franja de tierra denominada restinga.</li>
+                     <li><strong><u>Marjales</u>:</strong> terreno bajo cubierto por un manto de agua que da soporte a abundante vegetación.</li>
+                     <li><strong><u>Lagunas costeras</u>:</strong> cuerpos de agua interior de poca profundidad, con un eje longitudinal paralelo a la costa, que tienen comunicación con el mar a través de una boca o de un canal y están limitados por algún tipo de barrera física o hidrodinámica. En su porción más interna, pueden existir desembocaduras de ríos.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-balance-scale mr-2"></i>Instrumentos Legales y Estratégicos</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                     <li><strong><i class="fas fa-globe mr-2"></i><u>Convenio de Ramsar (1971)</u>:</strong> Fue el primero de los tratados internacionales de la época moderna que se refería específicamente a la conservación de la naturaleza, y, actualmente, sigue siendo el único que centra su interés en las zonas húmedas. Existen cerca de <strong>40 humedales costeros españoles</strong> inscritos en la lista.</li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-landmark mr-2"></i><u>Ámbito Comunitario</u>:</strong></p>
+                         </div>
+                         <div class="collapsible-content hidden">
+                              <ul class="nested-list">
+                                 <li>▪️ Las <span class="directive-pill">directivas Aves y Hábitats</span> son el marco de referencia en la conservación de la naturaleza en general.</li>
+                                  <li>▪️ La <span class="directive-pill">Red europea Natura 2000</span> es el eje de la política comunitaria de conservación de la naturaleza.</li>
+                             </ul>
+                        </div>
+                    </li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-flag-usa mr-2"></i><u>Nivel Estatal</u>:</strong></p>
+                         </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                 <li>▪️ <span class="law-pill">Ley 42/2007</span>: Obligación de elaborar un <strong>Inventario Nacional de Humedales</strong>.</li>
+                                 <li>▪️ Reglamentos de la <span class="law-pill">ley de Aguas</span>: Establecen una definición de humedal y la necesidad de su <strong>inventario y delimitación</strong> para su protección y restauración.</li>
+                                 <li>▪️ <span class="law-pill">Ley 22/1988</span>: Determina las zonas de DPMT incluyendo los humedales de influencia mareal, recogiendo la necesidad de asegurar su <strong>protección, conservación y restauración</strong>.</li>
+                                 <li>▪️ El <strong><u>Comité de Humedales de la Comisión Estatal para el Patrimonio Natural y la Biodiversidad</u></strong> es el órgano de coordinación entre la Administración Central del Estado y las Comunidades Autónomas en todo lo que se refiere a conservación y uso racional de humedales.</li>
+                             </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+         <!-- Main Card 3 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-wind"></i></div>
+                <h2>3. LAS ZONAS DUNARES COSTERAS</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Definición y Evolución Normativa</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                     <li>Las dunas costeras se pueden definir como <strong><u>montículos de arena</u></strong> que se forman en torno a algún obstáculo, generalmente vegetal, y que se alimentan de arena transportada desde la playa alta (backshore) por los vientos marinos costeros.</li>
+                     <li>Constituyen efectivas <strong><u>reservas de áridos</u></strong> y una <strong><u>barrera frente a las olas</u></strong> de temporal.</li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>A efectos de la determinación del DPM-T, el Reglamento General de Costas define distintos <strong><u>tipos de dunas</u></strong>:</p>
+                         </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                 <li>▪️ <strong><u>Duna en desarrollo o embrionaria</u>:</strong> duna con muy pequeña cobertura vegetal.</li>
+                                 <li>▪️ <strong><u>Duna en desplazamiento o evolución</u>:</strong> duna poco o nada vegetada, formada por arena suelta, que avanza desde la costa hacia tierra adentro por la acción del viento marino.</li>
+                                 <li>▪️ <strong><u>Duna primaria</u>:</strong> duna con cobertura parcial de vegetación.</li>
+                                 <li>▪️ <strong><u>Duna secundaria</u>:</strong> duna no estabilizada o en desplazamiento con cobertura de vegetación herbácea que puede alcanzar hasta el 100% y/o vegetación leñosa arbustiva o arbórea que puede alcanzar hasta el 75% de su superficie.</li>
+                                 <li>▪️ <strong><u>Duna estabilizada</u>:</strong> duna estable, colonizada por vegetación leñosa arbustiva o arbórea, en más del 75% de su superficie.</li>
+                                 <li>▪️ <strong><u>Duna relicta</u>:</strong> duna formada en otro tiempo geológico que ha quedado aislada tierra adentro o colgada sobre una costa rocosa, sin vinculación con ninguna playa.</li>
+                             </ul>
+                        </div>
+                    </li>
+                     <li>Las dos últimas (<strong><u>estabilizada y relicta</u></strong>) <strong><u>no forman parte del DPMT</u></strong>, salvo mejor evidencia científica.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 4 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-water"></i></div>
+                <h2>4. LAS ZONAS DE FANERÓGAMAS MARINAS</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Importancia y Tratamiento</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                     <li>Las <strong><u>angiospermas marinas</u></strong> representan una fracción muy pequeña del total de la flora vascular. Son <strong><u>plantas de origen terrestre</u></strong> adaptadas secundariamente al medio marino y que presentan, en su mayoría, una gran uniformidad de aspecto. Las angiospermas marinas son plantas clonales, de hojas planas y acintadas, con un sistema de rizomas y raíces muy bien desarrollado.</li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Dentro de la flora mundial de angiospermas marinas se pueden distinguir unas nueve regiones. En las costas españolas nos encontramos a caballo entre dos <strong><u>regiones biogeográficas</u></strong>:</p>
+                         </div>
+                         <div class="collapsible-content hidden">
+                              <ul class="nested-list">
+                                 <li>▪️ <strong>Región mediterránea:</strong> encontramos típicamente las especies <i>Posidonia oceánica, Cymodocea nodosa</i>, así como también <i>Zostera noltii</i> y <i>Zostera marina</i> y, más recientemente, <i>Halophila stipulacea</i> introducida a través del Canal de Suez.</li>
+                                 <li>▪️ <strong>Región templada del Atlántico Norte:</strong> son comunes la <i>Zostera marina</i> y <i>Zostera noltii</i>, y <i>Cymodocea nodosa</i> en las costas del suroeste ibérico. Las Islas Canarias estarían al límite de ambas floras con una fuerte influencia tropical.</li>
+                             </ul>
+                        </div>
+                    </li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-seedling mr-2 text-green-500"></i>Especies Destacadas:</strong></p>
+                         </div>
+                         <div class="collapsible-content hidden">
+                              <ul class="nested-list">
+                                 <li>▪️ <strong><i>Cymodocea nodosa</i>:</strong> es una especie de <strong>crecimiento rápido</strong> que crece tanto en bahías poco profundas como a lo largo de la costa hasta unos 25 m de profundidad. Se encuentra sobre sedimentos limosos o arenosos.</li>
+                                 <li>▪️ <strong><i>Zostera noltii</i>:</strong> habita típicamente en <strong>zonas intermareales</strong> en las costas atlánticas, si bien permanece permanentemente sumergida a profundidades de 0 a 5 m en el Mediterráneo. Se encuentra sobre sustrato limoso o fangoso.</li>
+                                 <li>▪️ <strong><i>Zostera marina</i>:</strong> forma <strong>praderas extensas</strong> desde la zona intermareal hasta la infralitoral sobre sustrato limoso o arenoso. Es la especie <strong>más común</strong> y extendida de nuestras costas atlánticas.</li>
+                                  <li>
+                                      <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                          <p>▪️ <strong><i><u>Posidonia oceánica</u></i>:</strong> es una especie <strong>endémica del Mediterráneo</strong>, que cubre aproximadamente el 60% del fondo marino del litoral mediterráneo hasta los 40 m de profundidad. Las praderas de <i>Posidonia oceánica</i> son <strong>elementos esenciales de protección preferente</strong> (<span class="directive-pill">Directiva Hábitats 92/43</span>).</p>
+                                      </div>
+                                      <div class="collapsible-content hidden">
+                                          <ul class="nested-list">
+                                              <li>
+                                                   <div class="collapsible-trigger">
+                                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                                        <p>▫️ <strong><u>Características</u>:</strong></p>
+                                                  </div>
+                                                  <div class="collapsible-content hidden">
+                                                      <ul class="nested-list">
+                                                          <li>- longevidad milenaria (2 a 5 mil años)</li>
+                                                          <li>- necesita luz y aguas transparentes</li>
+                                                          <li>- crecimiento horizontal lento (5cm/año)</li>
+                                                          <li>- crecimiento vertical lento (1cm/año)</li>
+                                                          <li>- no soporta erosiones persistentes</li>
+                                                          <li>- reproducción lenta</li>
+                                                          <li>- cementa el sustrato arenoso (pseudoarrecifes)</li>
+                                                          <li>- resistente a cambios mensuales pero no anuales</li>
+                                                          <li>- estabilización de perfiles de playa por el armado del sustrato y por el follaje</li>
+                                                          <li>- caída de hojas en Otoño (10 a 20 t/ha)</li>
+                                                          <li>- cimiento del ecosistema litoral ya que permite el abrigo de numerosas especies</li>
+                                                      </ul>
+                                                  </div>
+                                              </li>
+                                          </ul>
+                                      </div>
+                                </li>
+                             </ul>
+                        </div>
+                    </li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-balance-scale mr-2"></i><u>Tratamiento Legal</u>:</strong></p>
+                         </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                 <li>▪️ La <span class="law-pill">Ley 41/2010 de protección del Medio Marino</span> y la <span class="law-pill">Ley 42/2007 del Patrimonio Natural y la biodiversidad</span> velan por su conservación.</li>
+                                 <li>▪️ Las praderas de <i>Posidonia oceánica</i> están también protegidas por la <strong>legislación de varias comunidades autónomas</strong>.</li>
+                                 <li>▪️ Dentro del marco internacional, la <span class="directive-pill">Directiva marco sobre la estrategia marina de 2008</span> establece que los Estados miembros deben adoptar las medidas necesarias para lograr o mantener un <strong>buen estado medioambiental</strong> del medio marino a más tardar en el año 2020.</li>
+                             </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+�

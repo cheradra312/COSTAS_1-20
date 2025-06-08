@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Régimen Económico-Financiero del DPM-T</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-coins"></i> MEA2T5: EL RÉGIMEN ECONÓMICO-FINANCIERO DE LA UTILIZACIÓN DEL DPM-T <i class="fas fa-euro-sign"></i></h1>
+        </header>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-calculator"></i></div>
+                <h2>1. CÁNONES, FIANZAS Y RESCATES</h2>
+            </div>
+            <p class="mb-6 italic">El régimen económico-financiero de la utilización del Dominio Público Marítimo-Terrestre viene definido en los títulos IV de la <span class="law-pill">Ley 22/1988 de Costas</span> y del <span class="law-pill">Reglamento General de Costas aprobado por el Real Decreto 876/2014</span>.</p>
+            
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-file-invoice-dollar mr-2 text-green-600"></i>Cánones</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Toda ocupación o aprovechamiento del DPM-T en virtud de una concesión o autorización, cualquiera que fuere la administración otorgante, devengará el correspondiente <strong><u>canon en favor de la Administración del Estado</u></strong>, sin perjuicio de los que sean exigibles por aquélla.</li>
+                    <li>Están <strong>obligados al pago del canon</strong> los titulares de las concesiones y autorizaciones.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-sitemap mr-2"></i>Base Imponible del Canon de Ocupación:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>
+                                     <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <u>Por ocupación de bienes de DPM-T</u>: La valoración será el <strong>mayor valor de los tres siguientes</strong>:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ El valor catastral.</li>
+                                            <li>▫️ El comprobado por la administración a efectos de cualquier tributo.</li>
+                                            <li>▫️ El precio de terrenos contiguos con un aprovechamiento similar, incrementado con beneficios netos anuales (medios de 10 años o periodo de concesión si es menor) que no se considerarán inferiores al 20% de la inversión a realizar por el solicitante.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>▪️ <u>Para ocupaciones de infraestructuras de interés general</u> (saneamiento, etc.): La valoración será de <span class="pill pill-blue">0,006 €/m²</span>, incrementada en los rendimientos que sea previsible obtener en la utilización de dicho dominio.</li>
+                                <li>▪️ <u>En ocupaciones de obras e instalaciones ya existentes</u>: La base imponible se obtendrá sumando a la valoración del bien ocupado y el beneficio previsible, el <strong>valor material</strong> de dichas obras o instalaciones teniendo en cuenta su amortización.</li>
+                                <li>▪️ <u>Para ocupaciones en el mar territorial</u>: La valoración será de <span class="pill pill-blue">0,006 €/m²</span> más el beneficio. Si estas ocupaciones se destinan a la investigación o explotación de recursos mineros y energéticos el canon es de <span class="pill pill-blue">0,006 €/m²</span>.</li>
+                                <li>▪️ <u>En el caso de cultivos marinos</u>: La base imponible es la suma del valor de bienes ocupados (<span class="pill pill-blue">0,006 €/m²</span>) y de los rendimientos previsibles (0,4 €/m² en mar territorial, 0,16 €/m² en ribera, y 5 €/m² para estructuras de tomas de agua).</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><strong><i class="fas fa-hand-holding-usd mr-2"></i>Base Imponible del Canon de Aprovechamiento:</strong> Será el valor de los materiales aprovechados a precios de mercado.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-percentage mr-2"></i>Tipo de Gravamen Anual:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <span class="pill pill-green">8%</span> sobre base imponible de <strong>ocupación</strong>.</li>
+                                <li>▪️ <span class="pill pill-green">100%</span> sobre base imponible de <strong>aprovechamiento</strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><p><strong><i class="fas fa-ship mr-2"></i>Canon en Puertos Deportivos/Pesqueros (CCAA):</strong> En el canon de ocupación que devenguen las concesiones que las CCAA otorguen en DPM-T adscrito, se estimará el beneficio como un valor que en ningún caso podrá ser inferior al <span class="pill pill-green">3,33%</span> del importe de la inversión.</p></li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-tags mr-2"></i>Reducciones del Canon:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ En un 90% en las <strong>ocupaciones destinadas al uso público gratuito</strong>.</li>
+                                <li>▪️ En un 75% en títulos otorgados a <strong>entidades náutico-deportivas para desarrollo de actividades no lucrativas</strong>.</li>
+                                 <li>▪️ Con objeto de incentivar mejores prácticas medioambientales en acuicultura, el canon se reducirá en un 40% para <strong>concesiones adheridas al EMAS</strong> y 25% para las con <strong>certificado ISO 14001</strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-university mr-2"></i>Exenciones:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ Están exentas del pago del canon de ocupación:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ Las CCAA.</li>
+                                            <li>▫️ Las entidades locales.</li>
+                                            <li>▫️ Las entidades de derecho público dependientes de ellas.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <u>Condiciones</u>:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ En las concesiones o autorizaciones que se les otorguen para el ejercicio de sus competencias.</li>
+                                            <li>▫️ Siempre que no sea objeto de explotación lucrativa.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="far fa-calendar-alt mr-2"></i>Devengo del Canon:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Tendrá carácter <strong>anual</strong> y se producirá con el <strong>otorgamiento de la concesión o autorización</strong>.</li>
+                                <li>▪️ Será exigible en la cuantía que corresponda y en los plazos que se señalen en las condiciones del título.</li>
+                                <li>▪️ En el caso de <strong>aprovechamiento</strong>, el devengo se producirá cuando el aprovechamiento se lleve a cabo.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-tint-slash mr-2"></i>Canon de Vertidos Contaminantes:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Los vertidos contaminantes autorizados se gravarán con un canon que será el resultado de multiplicar la <strong>carga contaminante</strong> del vertido por el <strong>valor que se asigne a la unidad</strong>.</li>
+                                <li>▪️ El canon será percibido por la <strong>Comunidad Autónoma</strong> otorgante.</li>
+                                <li>▪️ Se destinará a actuaciones de <strong>saneamiento y mejora</strong> de la calidad de las aguas del mar.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-plus-circle mr-2 text-blue-600"></i>Contribuciones Especiales</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Podrán imponerse cuando de la ejecución de obras en el DPM-T resulte un beneficio especial para personas físicas o jurídicas (titulares de derechos, propietarios de fincas, etc.).</li>
+                    <li>La base imponible se fijará en el RD, no pudiendo exceder del <span class="pill pill-red">50%</span> del coste total de las obras.</li>
+                    <li>Se repartirá entre los sujetos pasivos beneficiados según criterios objetivos: superficies de fincas y concesiones, plazo restante de concesión, y los que determine el RD.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-handshake mr-2 text-yellow-600"></i>Fianzas</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Los peticionarios de concesiones y autorizaciones acreditarán una <strong>fianza provisional del 2%</strong> del presupuesto y un <strong>5% para la fianza definitiva</strong>.</li>
+                     <li>Si el interesado desistiera de la petición o renunciara al título, perderá la fianza.</li>
+                    <li>En el caso de vertidos, la administración competente podrá exigir una fianza complementaria equivalente al canon de vertido de un semestre.</li>
+                    <li>La fianza definitiva será devuelta al año de la aprobación del reconocimiento de las obras en caso de concesión o autorización superior al año y, si es inferior, al vencimiento.</li>
+                     <li>El derecho a devolución de la fianza prescribirá a los <span class="pill pill-blue">5 años</span> del momento en que se puede solicitar.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-times-circle mr-2 text-red-600"></i>Rescates</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>La valoración de las concesiones en caso de rescate total o parcial se atendrá a las siguientes reglas:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Se indemnizará por el valor de las obras no amortizadas incluidas en el acta de reconocimiento y por la pérdida de beneficios en el año en curso debidamente justificados.</li>
+                               <li>▪️ No se tendrán en cuenta las obras realizadas sin autorización, que pasarán al dominio público sin indemnización.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-gavel"></i></div>
+                <h2>2. EL RÉGIMEN SANCIONADOR EN EL DPM-T</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-exclamation-triangle mr-2"></i>Infracciones, Sanciones y Responsabilidad</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Las infracciones se clasifican en <strong><u>leves</u></strong> y <strong><u>graves</u></strong>.</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                 <li>
+                                     <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <strong><u>Se consideran infracciones graves:</u></strong></p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li><i class="fas fa-bomb mr-2 text-red-700"></i>La alteración de los hitos de los deslindes.</li>
+                                            <li><i class="fas fa-hand-paper mr-2 text-red-700"></i>La ocupación o la utilización sin el debido título administrativo del DPM-T siempre que se hubiera desatendido el requerimiento expreso de la administración para cesar en la conducta abusiva.</li>
+                                            <li><i class="fas fa-hard-hat mr-2 text-red-700"></i>La ejecución no autorizada de obras o instalaciones en el DPM-T, así como el aumento de superficie, volumen o altura sobre lo autorizado.</li>
+                                            <li><i class="fas fa-tractor mr-2 text-red-700"></i>La extracción no autorizada de áridos.</li>
+                                            <li><i class="fas fa-road-barrier mr-2 text-red-700"></i>La interrupción de los accesos públicos al mar y de la servidumbre de tránsito.</li>
+                                            <li><i class="fas fa-building-shield mr-2 text-red-700"></i>La realización de construcciones no autorizadas en las zonas de servidumbre de protección y tránsito y de acceso al mar.</li>
+                                            <li><i class="fas fa-tint-slash mr-2 text-red-700"></i>El vertido no autorizado de aguas residuales.</li>
+                                            <li><i class="fas fa-file-excel mr-2 text-red-700"></i>El falseamiento de la información facilitada a la administración.</li>
+                                            <li><i class="fas fa-plus-one mr-2 text-red-700"></i>La comisión de 2 o más infracciones leves en 2 años.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                 <li>
+                                     <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <strong><u>Se consideran infracciones leves:</u></strong></p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li><i class="fas fa-sign-in-alt mr-2 text-yellow-700"></i>La ocupación o la utilización del DPM-T sin título administrativo que no sea infracción grave.</li>
+                                            <li><i class="fas fa-leaf mr-2 text-yellow-700"></i>Los vertidos, cultivos, plantaciones o talas en el DPM-T sin título administrativo.</li>
+                                            <li><i class="fas fa-house-damage mr-2 text-yellow-700"></i>Las acciones u omisiones que causen daños a los bienes del DPM-T.</li>
+                                            <li><i class="fas fa-file-alt mr-2 text-yellow-700"></i>El incumplimiento de las condiciones de los títulos administrativos.</li>
+                                            <li><i class="fas fa-ad mr-2 text-yellow-700"></i>La publicidad no autorizada.</li>
+                                            <li><i class="fas fa-user-shield mr-2 text-yellow-700"></i>La obstrucción a las funciones de policía.</li>
+                                            <li><i class="fas fa-book-reader mr-2 text-yellow-700"></i>En general, el incumplimiento de las determinaciones de la ley y el reglamento que no sean graves.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="far fa-clock mr-2"></i>Plazo de Prescripción:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                 <li>▪️ <u>Infracciones:</u> Leves <span class="pill pill-blue">6 meses</span>, Graves <span class="pill pill-blue">2 años</span>, desde su consumación.</li>
+                                 <li>▪️ <u>Sanciones:</u> Leves <span class="pill pill-blue">1 año</span>, Graves <span class="pill pill-blue">2 años</span>.</li>
+                                 <li>▪️ Se establecerá la obligación de <strong>restituir</strong> el estado de las cosas al estado anterior. Esta obligación prescribe a los <span class="pill pill-blue">15 años</span> desde que la admón. la imponga, e incluye la obligación de devolver el beneficio obtenido ilícitamente.</li>
+                             </ul>
+                        </div>
+                    </li>
+                      <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-euro-sign mr-2"></i>Imposición de Multas:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                 <li>▪️ Corresponderá a la administración competente. Si es la del Estado, estarán facultados: Jefe del servicio periférico (hasta 60.000 €), Director General (hasta 300.000 €), Ministro (hasta 1,2 M€), Consejo de Ministros (>1,2 M€).</li>
+                                 <li>▪️ Las CCAA podrán multar hasta 1,2 M€ en materia de vertidos.</li>
+                                 <li>▪️ Los alcaldes en materia de competencia municipal hasta 12.000 €.</li>
+                                 <li>▪️ Si una misma persona comete varias infracciones se sancionan todas, pero si un hecho constituye 2 o más infracciones, se sanciona solo la más grave.</li>
+                                 <li>▪️ Las sanciones impuestas por infracciones graves, una vez firmes, se harán públicas en el B.O.C.A. correspondiente con carácter trimestral.</li>
+                             </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-cogs mr-2"></i>Procedimientos y Medios de Ejecución</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Advertida la existencia de una posible infracción, el órgano competente incoará al presunto infractor expediente sancionador y le notificará el pliego de cargos para que formule alegaciones.</li>
+                     <li>La resolución se comunicará en un plazo máximo de <span class="pill pill-blue">12 meses</span>; si se supera, el procedimiento caduca.</li>
+                    <li>Cuando se trate de obras ilegales el órgano competente ordenará su <strong>paralización</strong> y cuando se trate de instalaciones en explotación dispondrá su <strong>suspensión</strong>, en ambos casos precintando la zona y si fuera necesario con la intervención de la fuerza pública.</li>
+                     <li>Si se trata de una instalación de depuración de vertidos que no fuera procedente paralizarse, podrá proceder a la <strong>ejecución subsidiaria</strong> a costa del titular.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

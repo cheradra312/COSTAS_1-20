@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: El Transporte Sólido Litoral</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .directive-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            border: 1px solid #4ade80; /* green-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-wind"></i> MEA2T12: EL TRANSPORTE SÓLIDO LITORAL <i class="fas fa-sand-clock"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-water"></i></div>
+                <h2>1. EL TRANSPORTE SÓLIDO LITORAL</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Conceptos Generales</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-cube mr-2 text-gray-500"></i>Para estudiar la evolución de un tramo de costa se define un <strong><u>volumen de control</u></strong> que se ajusta en general a la <strong><u>unidad fisiográfica</u></strong>.</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <u>Unidad fisiográfica</u>: tramo de costa en el cual los sedimentos disponibles tienen su <strong><u>fuente y sumidero en él</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><i class="fas fa-arrow-down mr-2 text-blue-400"></i>Tradicionalmente se ha supuesto que la <strong><u>aportación de sedimentos</u></strong> a través de la sección mar adentro es <strong><u>despreciable</u></strong>, siempre que se sitúe en profundidades suficientemente grandes (<span class="pill pill-blue">h/L > 0,2</span>), siendo <u>preponderante en la zona de rotura</u>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-cogs mr-2 text-purple-600"></i>Los <strong><u>mecanismos principales</u></strong> de generación de transporte sólido son:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Los debidos a la <strong><u>oblicuidad del oleaje en rotura</u></strong> (es el <u>más común</u> y se produce en amplias zonas del litoral donde el oleaje alcanza la zona sin obstáculos).</li>
+                                <li>▪️ El <strong><u>gradiente de sobreelevación de altura de ola</u></strong> a lo largo de un frente (producido por la <u>difracción</u> motivada por la existencia de obstáculos).</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><i class="fas fa-stream mr-2 text-cyan-500"></i>La <strong><u>corriente longitudinal</u></strong> generada por el movimiento del agua en la zona próxima a la playa es la <u>responsable del transporte de sedimentos</u> paralelo a la línea de costa.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-exchange-alt mr-2 text-green-600"></i>La determinación del <strong><u>transporte sólido longitudinal</u></strong> supone definir la <u>cantidad total de un sedimento</u> que ha atravesado una sección de la costa en un cierto periodo de tiempo (generalmente un año).</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Teniendo en cuenta el signo de los volúmenes, se obtiene el <strong><u>transporte neto</u></strong>.</li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                         <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        ▪️ Analizado en dos secciones, determina el <strong><u>balance sedimentario</u></strong>:
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li><i class="fas fa-equals text-green-500 icon"></i>Si el transporte es igual: el tramo está en <strong><u>equilibrio</u></strong>.</li>
+                                            <li><i class="fas fa-arrow-down text-blue-500 icon"></i>Si el transporte disminuye: hay <strong><u>sedimentación</u></strong>.</li>
+                                            <li><i class="fas fa-arrow-up text-red-500 icon"></i>Si el transporte aumenta: hay <strong><u>erosión</u></strong>.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 2 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-calculator"></i></div>
+                <h2>2. DISTINTAS FORMULACIONES</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-cogs mr-2"></i>Mecanismos y Fórmulas</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-sort-amount-down-alt mr-2 text-gray-500"></i>El transporte de sedimento a lo largo de la playa se puede efectuar mediante <strong><u>dos formas</u></strong>:</p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ Transporte por <strong><u>suspensión</u></strong>.</li>
+                                <li>▪️ Transporte por <strong><u>arrastre en el fondo</u></strong> (suele ser el <u>preponderante</u>).</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-flask mr-2 text-blue-500"></i>La formulación más empleada es la denominada “<strong><u>fórmula del CERC</u></strong>” (Coastal Engineering Research Center):</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Basada en la hipótesis de que el transporte de sedimentos es <strong><u>proporcional a la componente longitudinal del flujo de energía</u></strong> del oleaje incidente.</li>
+                                <li>▪️ Proporciona la <strong><u>capacidad máxima de transporte</u></strong> debido al oleaje en el supuesto de que existiera <u>aporte ilimitado de material</u> (<strong>transporte potencial</strong>).</li>
+                                <li>▪️ Supone como hipótesis la existencia de <strong><u>batimetría recta y paralela</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-weight-hanging mr-2 text-gray-700"></i>El valor del <strong><u>peso de sedimento sumergido</u></strong> transportado longitudinalmente es <strong><u>proporcional al flujo de energía</u></strong> paralelo a la costa.</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ A su vez, el <u>volumen de material transportado</u> depende del peso transportado, la densidad del sedimento y de la porosidad del sedimento.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><i class="fas fa-wave-square mr-2 text-cyan-600"></i>La fórmula del transporte sólido longitudinal del CERC viene expresada en función de la <u>altura y oblicuidad del oleaje en rotura</u>. Sin embargo, generalmente se cuenta con datos de oleaje tomados fuera de la zona de rotura.</li>
+                    <li><i class="fas fa-project-diagram mr-2 text-purple-600"></i>Para poder aplicar la fórmula, será necesario conocer la <strong><u>transformación del oleaje</u></strong> debido a la <strong><u>refracción</u></strong> y el <strong><u>asomeramiento</u></strong> al acercarse a la costa mediante la <span class="law-pill">ley de Snell</span> y la <span class="law-pill">conservación del flujo de energía</span>.</li>
+                </ul>
+            </div>
+        </div>
+
+         <!-- Main Card 3 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-chart-area"></i></div>
+                <h2>3. EVOLUCIÓN DE LA LÍNEA DE COSTA. MODELOS</h2>
+            </div>
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-desktop mr-2"></i>Modelos de Línea de Costa</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-code mr-2 text-gray-700"></i>Un <strong><u>modelo de línea de costa</u></strong> es un <u>modelo de predicción numérica</u> basado en la <strong><u>ecuación de continuidad del sedimento</u></strong> y en una ecuación para el <strong><u>transporte longitudinal de sedimentos</u></strong>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-directions mr-2 text-blue-500"></i>El movimiento de sedimentos causado por el oleaje puede ser clasificado en <strong><u>dos tipos</u></strong>, según su dirección:</p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ <strong><u>Transporte longitudinal</u></strong>, a lo largo de la línea de costa.</li>
+                                <li>▪️ <strong><u>Transporte transversal</u></strong>, perpendicular a ella.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><i class="fas fa-map-signs mr-2 text-green-600"></i>Salvo en determinados casos, a largo plazo el transporte transversal está <strong><u>confinado en una franja de costa</u></strong>. Para predicciones a largo plazo, la mayor parte de la información del cambio de la línea de costa viene dada por el <strong><u>transporte longitudinal</u></strong>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-arrows-alt-h mr-2 text-gray-500"></i>El <strong><u>cambio de línea de costa</u></strong> en un intervalo de tiempo podrá ser calculado a partir de las diferencias en el caudal de transporte longitudinal, suponiendo que el <u>perfil de la playa se mueve paralelamente a sí mismo</u>.</p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                               <li>▪️ En el modelo más general, será necesario tener en cuenta la <strong><u>interacción entre el modelo de oleaje y el de línea de costa</u></strong>, pues aquél modifica las características del oleaje a medida que cambia la línea de costa.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-ban mr-2 text-red-500"></i>Limitaciones del Modelo:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                               <li>▪️ Solo debe ser utilizado para la predicción espacial a <strong><u>gran escala de tiempos</u></strong>.</li>
+                               <li>▪️ Es especialmente adecuado para determinar el efecto de <strong><u>espigones, diques exentos, aportaciones puntuales de sedimento</u></strong>, etc.</li>
+                               <li>▪️ <u>No puede describir</u> la formación del perfil de playa ni los cambios estacionales que involucren transporte transversal.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-cogs mr-2"></i>Procedimiento para la aplicación de los modelos:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ol class="list-decimal list-inside mt-2 ml-4 space-y-2">
+                               <li><i class="fas fa-database text-blue-500 mr-2"></i>Recopilación y análisis de los <u>datos disponibles</u> de oleaje y perfil de playa.</li>
+                               <li><i class="fas fa-water text-cyan-500 mr-2"></i>Propagación del oleaje (<u>altura y dirección en el punto de rotura</u>).</li>
+                               <li><i class="fas fa-calculator text-yellow-600 mr-2"></i>Cálculo del <u>caudal de transporte longitudinal</u> de sedimentos.</li>
+                               <li><i class="fas fa-chart-line text-green-500 mr-2"></i>Cálculo del <u>cambio de la línea de costa</u> mediante la ecuación de la conservación del sedimento.</li>
+                               <li><i class="fas fa-sync-alt text-purple-500 mr-2"></i>Calculada la nueva línea de costa, <u>se vuelve a empezar</u> modificando las condiciones de contorno, dándose por terminada la iteración cuando se alcanza un equilibrio.</li>
+                            </ol>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 4 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-umbrella-beach"></i></div>
+                <h2>4. EL PERFIL DE PLAYA. FORMULACIONES TEÓRICAS</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-ruler mr-2"></i>Definición y Perfil de Equilibrio</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                     <li><i class="fas fa-wave-square mr-2"></i>Se define <strong><u>perfil de playa</u></strong> como la variación de la profundidad (h) con la distancia a la línea de costa (x): <strong>h = f(x)</strong>.</li>
+                     <li><i class="fas fa-chart-pie mr-2"></i>Todos los perfiles de playa presentan una forma <strong><u>cóncava hacia arriba</u></strong>.</li>
+                     <li><i class="fas fa-balance-scale mr-2"></i>Esta regularidad ha permitido el desarrollo de expresiones y la introducción del concepto de <strong><u>perfil de equilibrio</u></strong>, que es aquel que <u>no presentará ningún cambio neto</u> con el tiempo.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-list-ul mr-2"></i>Un conocimiento cuantitativo de las características es fundamental. Algunas de estas características son bien conocidas, tal como indica Dean:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Los perfiles de equilibrio son <u>cóncavos hacia arriba</u>.</li>
+                               <li>▪️ <u>Tamaños pequeños de grano</u> están asociados a pendientes suaves y <u>grandes</u> a pendientes pronunciadas.</li>
+                               <li>▪️ El <u>frente de playa</u> es plano.</li>
+                               <li>▪️ <u>Ondas peraltadas</u> dan lugar a pendientes más suaves y presentan tendencia a la <u>formación de barras</u>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-flask mr-2 text-blue-500"></i>Una de las formulaciones más aplicada es la propuesta por <strong><u>Bruun</u></strong>:</p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ <strong>h(x) = A x<sup>2/3</sup></strong>, donde A es un parámetro de escala que depende, principalmente, de las características sedimentarias.</li>
+                                <li>▪️ <u>Dean extendió la aplicación</u> de esa expresión a la zona de rompientes.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><i class="fas fa-exclamation-circle mr-2 text-red-500"></i>Existen muchos modelos de diferentes autores (Vellinga, Bodge, Larson) que demuestran la <u>dificultad de formular un modelo global</u> aplicable a todo tipo de playas.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 5 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-exchange-alt"></i></div>
+                <h2>5. VARIACIONES DEL PERFIL</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-chart-bar mr-2"></i>Tipos de Perfil</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-arrows-alt mr-2"></i>El perfil de las playas cambia constantemente como respuesta a los cambios del <strong><u>transporte transversal de sedimentos</u></strong> que produce la dinámica marina, especialmente el oleaje.</li>
+                    <li><i class="fas fa-map-signs mr-2"></i>Los cambios más notorios son los asociados a los desplazamientos de las <strong><u>barras</u></strong> y el avance o retroceso de la <strong><u>berma</u></strong>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-columns mr-2"></i>De entre las múltiples formas posibles, existen <strong><u>dos extremas</u></strong>:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>
+                                   <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ <strong><u>Perfil disipativo</u>:</strong></p>
+                                  </div>
+                                   <div class="collapsible-content hidden">
+                                       <ul class="nested-list">
+                                           <li>▫️ Característico de playas de <u>arena fina y niveles de energía elevados</u>.</li>
+                                           <li>▫️ El frente de playa no puede ser distinguido de la terraza de bajamar y la zona intermareal tiene un <u>talud ligeramente cóncavo</u>.</li>
+                                            <li>▫️ La playa sumergida suele presentar una o varias <u>barras longitudinales</u>, con senos y crestas poco marcados.</li>
+                                       </ul>
+                                    </div>
+                                </li>
+                                 <li>
+                                     <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ <strong><u>Perfil reflejante</u>:</strong></p>
+                                    </div>
+                                     <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ Se presenta en playas de <u>arenas medias a gruesas, con niveles de energía bajos</u>.</li>
+                                            <li>▫️ En este caso, el borde de la berma marca claramente el inicio del frente de playa. Suele existir un <u>escalón en la parte inferior</u>.</li>
+                                            <li>▫️ En la <u>playa sumergida no se aprecian barras</u>.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="far fa-calendar-alt mr-2"></i>Estos perfiles se asocian a las estaciones:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <strong><u>Perfil de Invierno</u>:</strong> Tras una temporada de temporales, las playas alcanzan una posición de cuasi-equilibrio que se aproxima bastante a la de las playas disipativas.</li>
+                               <li>▪️ <strong><u>Perfil de Verano</u>:</strong> Tras largos períodos de calma, más frecuentes en los meses estivales, la playa recupera un perfil cercano al reflejante.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+         <!-- Main Card 6 -->
+         <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-ruler-vertical"></i></div>
+                <h2>6. LA PROFUNDIDAD DE CIERRE</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Concepto y Aplicación</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-anchor mr-2"></i>Dentro de los estudios de Largo Plazo de estabilidad de playas es usual utilizar la denominada “<strong><u>profundidad de cierre</u></strong>” (o punto neutro o punto de Cornaglia), como un <strong><u>límite de aplicación del perfil de equilibrio</u></strong>.</li>
+                    <li><i class="fas fa-arrows-alt-v mr-2"></i>Esta profundidad está relacionada con el transporte de sedimentos y se aplica a la posición mar adentro en la cual las <strong><u>variaciones verticales del perfil a lo largo del tiempo son despreciables</u></strong>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-chart-line mr-2"></i>Un aspecto importante a destacar es que el concepto de profundidad de cierre es un <strong><u>concepto estadístico</u></strong> que define una condición media anual.</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ En periodos de tiempo más cortos, por ejemplo, un verano, la profundidad de cierre <u>puede ser mucho menor</u>.</li>
+                                <li>▪️ Por contra, si examinamos cuál es el valor de la profundidad de cierre con datos de un número elevado de años, se observa que dicho valor <strong><u>aumenta con el número de años</u></strong>, al ser mayor la probabilidad de ocurrencia de eventos de temporal más importantes.</li>
+                                <li>▪️ No obstante, este aumento es <strong><u>lento y asintótico</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

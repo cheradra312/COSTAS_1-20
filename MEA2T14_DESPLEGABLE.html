@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Las Estrategias Marinas en España</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .directive-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            border: 1px solid #4ade80; /* green-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-sitemap"></i> MEA2T14: LAS ESTRATEGIAS MARINAS EN ESPAÑA <i class="fas fa-water"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-compass"></i></div>
+                <h2>1. LAS ESTRATEGIAS MARINAS EN ESPAÑA</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Marco General y Objetivos</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Las <strong><u>Estrategias Marinas</u></strong>, instrumento de planificación del medio marino creado al amparo de la <span class="directive-pill">Directiva marco sobre la estrategia marina 2008/56</span>, tienen como principal objetivo, la consecución del <strong><u>Buen Estado Ambiental</u></strong> de nuestros mares a más tardar en 2020.</li>
+                    <li>La <strong><u>transposición de dicha directiva</u></strong> al sistema normativo español se recoge en la <span class="law-pill">Ley 41/2010 de Protección del Medio Marino</span>, que en su título II se refiere a las estrategias marinas.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-globe-europe mr-2 text-blue-500"></i>La directiva establece <strong><u>4 regiones marinas</u></strong> (Mar Báltico, Océano Atlántico Nororiental, Mar Mediterráneo y Mar Negro) divididas en <strong><u>8 subregiones marinas</u></strong>.</p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                               <li>▪️ Las aguas españolas están incluidas en la <strong><u>Región Atlántico Nororiental</u></strong> (Subregión Golfo de Vizcaya y costas ibéricas, y Subregión macaronésica) y en la <strong><u>Región Mediterránea</u></strong> (Subregión Mediterráneo Occidental).</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-map-marked-alt mr-2 text-yellow-600"></i>La <span class="law-pill">Ley de Protección del Medio Marino</span> establece <strong><u>5 demarcaciones marinas</u></strong> en base a las particularidades hidrológicas, oceanográficas y biogeográficas de cada zona. Para garantizar una <u>planificación adecuada</u> de cada una de ellas se ha de elaborar una estrategia marina.</p>
+                        </div>
+                    </li>
+                     <li><i class="fas fa-landmark text-gray-700 icon"></i>La <span class="law-pill">Ley de Protección del Medio Marino</span> establece el <strong><u>régimen jurídico</u></strong> que rige la adopción de las medidas necesarias para lograr o mantener el buen estado ambiental del medio marino, a través de su planificación, conservación, protección y mejora.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-bullseye mr-2 text-green-600"></i>Los <strong><u>objetivos específicos</u></strong> de las estrategias marinas son:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <strong><u>Proteger y preservar</u></strong> el medio marino, incluyendo su biodiversidad, <strong><u>evitar su deterioro</u></strong> y <strong><u>recuperar los ecosistemas marinos</u></strong> en las zonas que se hayan visto afectados negativamente.</li>
+                               <li>▪️ <strong><u>Prevenir y reducir</u></strong> los vertidos al medio marino, con miras a <strong><u>eliminar progresivamente su contaminación</u></strong>, para velar por que no se produzcan impactos o riesgos graves para la biodiversidad marina, los ecosistemas marinos, la salud humana o los usos permitidos del mar.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-tasks mr-2 text-purple-600"></i>Fases y Ciclos de las Estrategias Marinas</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>El desarrollo de las estrategias marinas se debe realizar atendiendo a las siguientes <strong><u>fases</u></strong>:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ol class="list-decimal list-inside mt-2 ml-4 space-y-2">
+                               <li>Una <strong><u>evaluación inicial</u></strong> de las aguas marinas, que comprenda un análisis del estado ambiental actual, de los principales impactos y presiones, así como del análisis económico, social y del coste que supone el deterioro del medio marino.</li>
+                               <li>La <strong><u>definición del buen estado ambiental</u></strong>, de acuerdo a los 11 descriptores, para cada demarcación marina.</li>
+                               <li>La propuesta de <strong><u>objetivos ambientales</u></strong> e indicadores asociados para las aguas marinas, con objeto de orientar el proceso hacia la consecución del buen estado ambiental.</li>
+                               <li>El establecimiento de <strong><u>Programas de seguimiento</u></strong> coordinados, para evaluar permanentemente el estado ambiental.</li>
+                               <li>La elaboración y puesta en marcha de <strong><u>Programas de medidas</u></strong>, necesarios para lograr o mantener el buen estado ambiental.</li>
+                            </ol>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-sync-alt mr-2"></i><u>Ciclos de Planificación</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>
+                                   <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ <strong><u>Primer Ciclo (2012-2018)</u>:</strong></p>
+                                   </div>
+                                   <div class="collapsible-content hidden">
+                                       <ul class="nested-list">
+                                           <li>▫️ Aprobado por el <span class="law-pill">Real Decreto 1365/2018</span>, tras haber sido sometidas al <u>trámite de evaluación ambiental estratégica</u> y a consultas.</li>
+                                           <li>▫️ Las 3 primeras fases se completaron en <strong>2012</strong>, la cuarta en <strong>2014</strong> y la quinta en <strong>2015</strong>, de acuerdo con el calendario previsto.</li>
+                                       </ul>
+                                   </div>
+                               </li>
+                                <li>
+                                   <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ <strong><u>Segundo Ciclo (2018-2024)</u>:</strong></p>
+                                   </div>
+                                   <div class="collapsible-content hidden">
+                                       <ul class="nested-list">
+                                            <li>▫️ Evaluación, BEA y objetivos se completaron en <strong>2019</strong>.</li>
+                                            <li>▫️ Programas de seguimiento en <strong>2020</strong>.</li>
+                                            <li>▫️ Programa de medidas en <strong>2022</strong>.</li>
+                                            <li>▫️ Todas las fases fueron sometidas a <u>consulta pública</u>.</li>
+                                            <li>▫️ Este segundo ciclo está <strong><u>pendiente de aprobación</u></strong> mediante real decreto.</li>
+                                       </ul>
+                                   </div>
+                               </li>
+                                <li>▪️ Todos los elementos se deben <strong><u>actualizar al menos cada seis años</u></strong> a partir de su establecimiento inicial.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-users-cog mr-2 text-gray-700"></i>Órganos de Coordinación</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><strong><i class="fas fa-landmark mr-2"></i><u>Comisión Interministerial de Estrategias Marinas (CIEM)</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Creada por el <span class="law-pill">Real Decreto 715/2012</span>, para <u>facilitar la coordinación nacional</u> de aplicación de las estrategias marinas.</li>
+                               <li>▪️ Sus principales funciones están destinadas a la <u>elaboración, aplicación y seguimiento</u> de la planificación del medio marino.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><strong><i class="fas fa-users mr-2"></i><u>Comités de Seguimiento de las estrategias marinas</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Creados en 2014 por Orden Ministerial, estableciéndose su <u>composición, funciones y régimen de funcionamiento</u>.</li>
+                                 <li>▪️ Se define <u>un Comité para cada una</u> de las demarcaciones marinas.</li>
+                                <li>▪️ Tienen por objeto la <strong><u>coordinación entre la Administración General del Estado y las comunidades autónomas</u></strong> en materia de estrategias marinas.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 2 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-check-circle"></i></div>
+                <h2>2. EL BUEN ESTADO AMBIENTAL DEL MEDIO MARINO</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-clipboard-check mr-2"></i>Descriptores Ambientales y Fases de Aplicación</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li>Los <strong><u>descriptores ambientales</u></strong> son un conjunto de características que permiten <u>evaluar cualitativamente el estado ambiental</u> y determinar lo que se considera un <u>Buen Estado Ambiental</u>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Para <strong><u>aplicar o evaluar cada descriptor</u></strong>, las fases son las siguientes:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ol class="list-decimal list-inside mt-2 ml-4 space-y-2">
+                               <li><strong><u>Determinación de los componentes básicos</u></strong> que lo integran (ej: especies de peces, aves, etc. para el descriptor "biodiversidad").</li>
+                               <li><strong><u>Determinación de las potenciales presiones</u></strong> a las que puede verse sometido un componente (ej: amenazas, especies invasoras, contaminación, etc.).</li>
+                               <li><strong><u>Evaluación del estado</u></strong> en función de los indicadores propios de cada presión (ej: cuánto se pesca, nivel de contaminación, etc.).</li>
+                               <li><strong><u>Definición de lo que se considera un buen estado ambiental</u></strong> para cada indicador y descriptor.</li>
+                               <li><strong><u>Establecimiento de las medidas necesarias</u></strong> para conseguir el buen estado ambiental.</li>
+                            </ol>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Los <strong><u>11 descriptores del Buen Estado Ambiental</u></strong>, establecidos por la Directiva son:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li><i class="fas fa-paw icon text-green-600"></i>Biodiversidad.</li>
+                                <li><i class="fas fa-frog icon text-purple-600"></i>Especies alóctonas.</li>
+                                <li><i class="fas fa-fish icon text-blue-600"></i>Especies explotadas comercialmente.</li>
+                                <li><i class="fas fa-project-diagram icon text-gray-600"></i>Redes tróficas.</li>
+                                <li><i class="fas fa-vial icon text-green-400"></i>Eutrofización.</li>
+                                <li><i class="fas fa-layer-group icon text-brown-600"></i>Integridad de los fondos marinos.</li>
+                                <li><i class="fas fa-water icon text-cyan-600"></i>Alteraciones de las condiciones hidrográficas.</li>
+                                <li><i class="fas fa-flask icon text-red-600"></i>Contaminantes y sus efectos.</li>
+                                <li><i class="fas fa-drumstick-bite icon text-orange-600"></i>Contaminantes en los productos de la pesca.</li>
+                                <li><i class="fas fa-trash icon text-gray-500"></i>Basuras marinas.</li>
+                                <li><i class="fas fa-volume-up icon text-yellow-600"></i>Energía, incluido ruido submarino.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>Para su desarrollo, la Comisión Europea aprobó una <strong><u>Decisión en 2017</u></strong> sobre los <u>criterios y las normas aplicables</u> al buen estado ambiental, en que basar la aplicación de las estrategias marinas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 3 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-tasks"></i></div>
+                <h2>3. PROGRAMAS DE SEGUIMIENTO Y PROGRAMAS DE MEDIDAS</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-chart-line mr-2"></i>Programas de Seguimiento</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                     <li>La <span class="law-pill">Ley 41/2010</span> establece que, sobre la base de la evaluación inicial, el Ministerio debe <strong><u>elaborar y aplicar programas de seguimiento coordinados</u></strong> para <u>evaluar permanentemente el estado ambiental</u> del medio marino.</li>
+                     <li>Los programas de seguimiento se elaboraron en <strong>2014</strong>, basándose en una <u>amplia discusión científico-técnica</u> y tomando como referencia <u>programas existentes</u> de otras directivas u obligaciones.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Además, se han tenido en cuenta los <strong><u>convenios internacionales OSPAR y Barcelona</u></strong>:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Parte de las aguas de la región Atlántico Noreste quedan recogidas en el <strong><u>Convenio OSPAR</u></strong>, que ha trabajado en la elaboración de listas de indicadores.</li>
+                                <li>▪️ En la región mediterránea, el <strong><u>Convenio de Barcelona</u></strong> planteó para el bienio 2014-2015 un <u>acuerdo sobre indicadores comunes</u> y diseñó un programa de seguimiento.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-clipboard-list mr-2"></i>Programas de Medidas</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>La <span class="law-pill">Ley 41/2010</span> establece que el Ministerio, en colaboración con las CCAA y otras Administraciones, elaborará un <strong><u>programa de medidas</u></strong> para cada demarcación, que incluirá las <u>medidas necesarias para lograr o mantener un buen estado ambiental</u>.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>El programa definirá las <strong><u>actuaciones a llevar a cabo</u></strong>, que podrán ser:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <u>Normas aplicables</u> a las actividades.</li>
+                                 <li>▪️ <u>Directrices</u> sobre los usos del medio marino.</li>
+                                  <li>▪️ <u>Proyectos</u> de actuación.</li>
+                                   <li>▪️ <u>Restricciones</u> geográficas o temporales de usos.</li>
+                                    <li>▪️ <u>Medidas de control</u> y reducción de la contaminación, entre otras.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>Los programas de medidas del <strong><u>primer ciclo</u></strong> se diseñaron en 2015 y concluyeron en 2017, mientras que los de <strong><u>segundo ciclo</u></strong> han sido aprobados en 2022.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Limitaciones a la Propiedad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-ban"></i> MEA2T3: LIMITACIONES A LA PROPIEDAD <i class="fas fa-house-damage"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-shield-alt"></i></div>
+                <h2>1. LIMITACIONES POR PROTECCIÓN DEL DPM-T</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-gavel mr-2 text-blue-600"></i>Sujeción General</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Los terrenos colindantes con el DPM-T están sujetos a <strong>limitaciones y servidumbres</strong>, prevaleciendo sobre la interposición de cualquier acción.</li>
+                    <li>Las servidumbres serán <span class="pill pill-red">imprescriptibles</span>.</li>
+                    <li>Se exceptúan de esta sujeción los terrenos expresamente declarados de interés para la <strong>seguridad y defensa nacional</strong>.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-scroll mr-2 text-yellow-700"></i>Normas de Protección (Orden Ministerial)</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Mediante Orden Ministerial se dictarán normas para la protección de determinados tramos de costa.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong>Contenido y Proceso:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Contendrán planos para la identificación del ámbito afectado y asegurar su eficacia.</li>
+                                <li>▪️ Los tramos de costa se referirán a unidades fisiográficas relativas a la dinámica litoral.</li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <strong>Antes de aprobación definitiva:</strong></p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ Se someterán a informe de las CCAA y Ayuntamientos afectados.</li>
+                                            <li>▫️ Podrán formular objeciones (en <span class="pill pill-blue">1 mes</span>) que se deriven de sus instrumentos de ordenación aprobados o en tramitación.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>▪️ Si hay discrepancias entre administraciones, se abre un periodo de consulta de <span class="pill pill-blue">3 meses</span>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 2 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-road"></i></div>
+                <h2>2. SERVIDUMBRES DE PROTECCIÓN, TRÁNSITO Y ACCESO AL MAR</h2>
+            </div>
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Objetivo y Tipos de Servidumbre</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>El <strong>objetivo</strong> de las zonas de servidumbre es la protección del DPM-T, comprendiendo:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ La defensa de su integridad y de sus fines.</li>
+                                <li>▪️ La preservación de sus características y elementos naturales.</li>
+                                <li>▪️ La prevención de perjudiciales consecuencias de obras e instalaciones.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Las <strong>servidumbres legales</strong> son:</p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ Servidumbre de protección.</li>
+                                 <li>▪️ Servidumbre de tránsito.</li>
+                                  <li>▪️ Servidumbre de acceso al mar.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-shield-alt mr-2 text-green-600"></i>Servidumbre de Protección</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-ruler-horizontal mr-2"></i>Anchura:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Recae sobre una zona de <span class="pill pill-blue">100 m</span> medida tierra adentro desde el límite interior de la ribera del mar.</li>
+                                <li>▪️ La extensión podrá ser <strong>ampliada</strong> por la AGE (con acuerdo de CA y Ayuntamiento) hasta un máximo de otros 100 m cuando sea necesario para asegurar la efectividad de la servidumbre.</li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <strong>En las márgenes de los ríos</strong>, hasta donde sean sensibles las mareas:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                           <li>▫️ La extensión podrá <strong>reducirse</strong> por la AGE (con acuerdo de C.A. y Ayuntamiento) hasta un mínimo de <span class="pill pill-blue">20 m</span>, siempre que esté a más de 500 m de la desembocadura.</li>
+                                           <li>▫️ No podrá aplicarse dicha reducción en zonas sujetas a cualquier régimen de protección, zonas con playas o arenas, o zonas con vegetación halófila.</li>
+                                           <li>▫️ La servidumbre será como mínimo 5 veces la anchura del cauce, hasta un máximo de 100 m.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-check-circle mr-2 text-green-500"></i><i class="fas fa-ban mr-2 text-red-500"></i>Usos Permitidos y Prohibidos:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <u>Sin autorización</u>: Se pueden realizar cultivos y plantaciones.</li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <u>En los primeros 20 m</u>:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ Se podrán depositar temporalmente objetos o materiales arrojados por el mar y realizar operaciones de salvamento marítimo, con la correspondiente indemnización.</li>
+                                            <li>▫️ Están prohibidas las instalaciones de tratamiento de aguas residuales y la instalación de colectores paralelos a la costa.</li>
+                                            <li>▫️ Está permitida la reparación de colectores existentes y su construcción cuando se integren en paseos marítimos u otros viales pavimentados.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <u>Cerramientos</u>: No podrán llevarse a cabo salvo:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ Los relativos a las paredes de las edificaciones debidamente autorizadas.</li>
+                                            <li>▫️ Los vallados perimetrales de cierre de parcelas colindantes con el DPMT (opacos hasta 1m).</li>
+                                            <li>▫️ Los vinculados a las concesiones en DPMT.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <u>Están prohibidas</u>:</p>
+                                    </div>
+                                     <div class="collapsible-content hidden">
+                                         <ul class="nested-list">
+                                            <li>▫️ Edificaciones destinadas a residencia o habitación.</li>
+                                            <li>▫️ La construcción o modificación de vías de transporte interurbanas y las de IMD superior a 500 vehículos.</li>
+                                            <li>▫️ Las actividades que impliquen la destrucción de yacimientos de áridos.</li>
+                                            <li>▫️ El tendido aéreo de líneas eléctricas de alta tensión.</li>
+                                            <li>▫️ El vertido de escombros, residuos sólidos y aguas residuales sin depuración.</li>
+                                            <li>▫️ La publicidad a través de carteles, vallas, medios acústicos o audiovisuales.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                 <li>▪️ <u>Con carácter ordinario</u>: solo se permitirán obras que no puedan tener otra ubicación (cultivo marino, salinas), o que presten servicios al DPMT, así como las instalaciones deportivas descubiertas.</li>
+                                 <li>▪️ <u>Excepcionalmente (Consejo de Ministros)</u>: Por razones de utilidad pública se podrán autorizar vías de transporte, tendidos eléctricos, residencias o industrias bajo condiciones muy estrictas.</li>
+                                 <li>▪️ <u>Publicidad</u>: Reglamentariamente se establecen las condiciones en que se puede autorizar.</li>
+                                 <li>▪️ <u>Requisito General</u>: Los usos permitidos requieren autorización administrativa de la C.A. y no podrán inscribirse en el Registro de la Propiedad sin ella.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-walking mr-2 text-blue-600"></i>Servidumbre de Tránsito</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Recae sobre una franja de <span class="pill pill-blue">6 m</span>, medidos tierra adentro desde el límite interior de la ribera del mar.</li>
+                    <li>Esta zona deberá dejarse permanentemente expedita para el paso público peatonal y para vehículos de vigilancia y salvamento, salvo en espacios especialmente protegidos.</li>
+                    <li>En lugares de tránsito difícil o peligroso, dicha anchura podrá ampliarse hasta un máximo de <span class="pill pill-blue">20 m</span>.</li>
+                    <li>Podrá ser ocupada excepcionalmente por obras a realizar en el DPMT (se sustituirá por una análoga) o para la ejecución de paseos marítimos.</li>
+                    <li>En estos casos autoriza el MITECO previo informe de la C.A.</li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-door-open mr-2 text-blue-600"></i>Servidumbre de Acceso al Mar</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Recae sobre los terrenos colindantes al DPM-T.</li>
+                    <li>En las zonas urbanas y urbanizables, los accesos de tráfico rodado deben estar separados <span class="pill pill-blue">500 m</span> como máximo y los peatonales <span class="pill pill-blue">200 m</span>.</li>
+                    <li>No se permiten obras o instalaciones que interrumpan el acceso al mar sin que se propongan soluciones alternativas con la misma efectividad a juicio de la Administración del Estado.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 3 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-history"></i></div>
+                <h2>3. LA DISPOSICIÓN TRANSITORIA TERCERA DE LA LEY 22/1988</h2>
+            </div>
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-city mr-2"></i>Aplicación en Suelo Urbano y Urbanizable</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong>Suelo Urbano:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ La anchura de la servidumbre de protección será de <span class="pill pill-blue">20 m</span> en los terrenos calificados como suelo urbano a la entrada en vigor de la Ley, y en aquellas áreas urbanas en que la edificación estuviera consolidada o los terrenos dispusieran de los servicios exigidos.</li>
+                                <li>▪️ No obstante, se respetarán los usos y construcciones existentes, así como las autorizaciones ya otorgadas.</li>
+                                <li>▪️ Asimismo, se podrán autorizar nuevos usos y construcciones de conformidad con los planes de ordenación en vigor, siempre que se garantice la efectividad de la servidumbre y no se perjudique el DPM-T.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong>Suelo Urbanizable Programado o Apto:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Se mantendrá el aprovechamiento urbanístico que tengan atribuido.</li>
+                                <li>
+                                     <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ Para determinar la anchura de la servidumbre de protección, se aplican las siguientes reglas:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ <strong>a) Si no cuentan con Plan parcial aprobado definitivamente:</strong> Éste deberá respetar las disposiciones generales de la Ley.</li>
+                                            <li>▫️ <strong>b) Si cuentan con Plan parcial aprobado definitivamente:</strong> Se ejecutarán sus determinaciones. No obstante, ciertos planes deberán ser revisados para adaptarlos a las disposiciones de la Ley.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>En ambos casos, la revisión se hará siempre que no dé lugar a indemnización de acuerdo con la legislación urbanística.</li>
+                    <li>La aplicación de las disposiciones podrá hacerse de forma gradual, de tal modo que la anchura de la zona de protección sea la máxima posible.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Card 4 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-map-signs"></i></div>
+                <h2>4. OTRAS LIMITACIONES A LA PROPIEDAD. ZONA DE INFLUENCIA</h2>
+            </div>
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-water mr-2"></i>Aportación de Áridos y Yacimientos</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>En los tramos finales de los cauces deberá mantenerse la <strong>aportación de áridos</strong> a sus desembocaduras. Para autorizar su extracción se necesitará informe favorable de la administración del Estado.</li>
+                    <li>Los yacimientos de áridos emplazados en la zona de influencia quedarán sujetos a los derechos de <strong>tanteo y retracto</strong> a favor de la administración del Estado, para su aportación a las playas.</li>
+                    <li>Con esta misma finalidad, dichos yacimientos se pueden declarar de <strong>utilidad pública</strong> a efectos de su expropiación y de la ocupación temporal de los terrenos necesarios.</li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-building mr-2"></i>Ordenación Urbanística en Zona de Influencia</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>En la zona de influencia (cuya anchura se determinará y que como mínimo será de <span class="pill pill-blue">500 m</span> desde la ribera), la ordenación urbanística contemplará:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ En tramos de playa y con acceso de tráfico rodado, se preverán <strong>reservas de suelo para aparcamientos</strong> en cuantía suficiente para garantizar el estacionamiento fuera de la zona de servidumbre de tránsito.</li>
+                                <li>▪️ Las construcciones <strong>evitarán la formación de pantallas arquitectónicas</strong> o acumulación de volúmenes, sin que la densidad de edificación pueda ser superior a la media del suelo urbanizable programado o equivalente del término municipal.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

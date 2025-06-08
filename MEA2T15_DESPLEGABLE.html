@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: La Erosión en los Distintos Tipos de Playas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .directive-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            border: 1px solid #4ade80; /* green-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-house-damage"></i> MEA2T15: LA EROSIÓN EN LOS DISTINTOS TIPOS DE PLAYAS <i class="fas fa-water"></i></h1>
+        </header>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-exclamation-triangle"></i></div>
+                <h2>1. CAUSAS DE LA EROSIÓN</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Causas y Estrategias de Realimentación</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <p class="mt-4">A continuación, se presentan algunas de las <strong><u>posibles causas de erosión</u></strong> de playas, junto con las <strong><u>estrategias de realimentación</u></strong> recomendadas.</p>
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-unlink text-red-600 icon"></i><u>Interrupción del transporte longitudinal</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <u>Causa</u>: Provocada por <strong><u>estructuras marítimas</u></strong> que interrumpen completamente el transporte longitudinal.</li>
+                                <li>▪️ <u>Efecto</u>: <strong><u>Aguas arriba se producen avances</u></strong> de la playa y <strong><u>aguas abajo problemas de erosión</u></strong>.</li>
+                                <li>▪️ <u>Solución</u>: El <strong><u>trasvase de arena</u></strong> intermitente o continuo, realizado por medios marítimos (dragas + bombeo) o por medios terrestres (maquinaria).</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                         <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-industry text-gray-600 icon"></i><u>Reducción de la fuente de sedimento</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <u>Causa</u>: Debidos a la <strong><u>reducción del caudal sólido aportado por los ríos</u></strong>, lo que producirá <u>retrocesos en la línea de costa</u>.</li>
+                               <li>▪️ <u>Origen</u>: Estos cambios se pueden producir por <strong><u>retención en embalses, cambios en política forestal o de usos del suelo, explotación de bancos de arenas o cambios en el régimen de caudales</u></strong>.</li>
+                               <li>▪️ <u>Solución</u>: Si el río no puede recuperar su estado original, la solución es <strong><u>aportar artificialmente el sedimento</u></strong> sobre la playa, de modo intermitente (se producirán fluctuaciones en la línea de costa), o continuo mediante instalaciones de bombeo fijas.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                         <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-wind text-yellow-600 icon"></i><u>Erosión de las dunas</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                               <li>▪️ <u>Causa</u>: Debido a <strong><u>sobreelevaciones durante los temporales</u></strong> o a <strong><u>destrucción de la vegetación</u></strong> que sujeta la arena de las dunas por afluencia masiva de visitantes.</li>
+                               <li>▪️ <u>Proceso</u>: Cuando el frente de la duna es cortado por la acción del oleaje, la arena es transportada transversalmente hacia las barras, de donde es transportada de vuelta hacia la playa seca en condiciones de buen tiempo, encargándose el viento de reconstruir la duna. En algunos casos, la arena transportada hacia el mar puede perderse en canales de marea profundos.</li>
+                               <li>▪️ <u>Solución</u>: Como en estos casos el problema suele afectar a grandes sectores de costa, la mejor solución es la <strong><u>disposición del material de realimentación directamente sobre la misma duna</u></strong>. En los casos de destrucción de la vegetación, es recomendable la <strong><u>plantación de vegetación dunar</u></strong> y el acondicionamiento de pasos para el público.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                         <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-map-marker-alt text-purple-600 icon"></i><u>Desplazamiento de los canales de marea</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <u>Causa</u>: Esta causa está relacionada con la indicada anteriormente, cuando la arena erosionada por los temporales <strong><u>cae en canales de marea</u></strong> próximos a la playa.</li>
+                               <li>▪️ <u>Solución</u>: En general el problema no se puede solucionar con realimentación por las altas tasas de transporte que se producen, teniéndose que <strong><u>actuar si es posible sobre el propio canal</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-wave-square text-cyan-600 icon"></i><u>Emigración de grandes ondas de arena</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <u>Causa</u>: Es un caso típico de costas con <strong><u>islas barrera</u></strong>, donde el desplazamiento de ondas de arena de gran escala puede provocar <strong><u>periódicos avances y retrocesos</u></strong> de la línea de costa.</li>
+                               <li>▪️ <u>Solución</u>: Antes de tomar ninguna decisión de actuación se debe hacer un <strong><u>estudio cuidadoso de la causa</u></strong> del retroceso y sus límites. En caso de decidirse por una realimentación es recomendable <strong><u>disponer la arena directamente en el lugar</u></strong> en que es necesaria.</li>
+                            </ul>
+                        </div>
+                    </li>
+                      <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-level-up-alt text-blue-600 icon"></i><u>Variación del nivel medio relativo del mar</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <u>Causa</u>: Provocan <strong><u>erosiones sobre grandes áreas</u></strong>.</li>
+                               <li>▪️ <u>Solución</u>: La medida de protección más adecuada es la <strong><u>disposición de la arena de realimentación directamente sobre la playa</u></strong> de una manera uniforme.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-tractor text-orange-600 icon"></i><u>Extracciones de arena</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <u>Causa</u>: En determinadas ocasiones se han producido importantes erosiones en playas por <strong><u>sacas de arena para construcción o uso industrial</u></strong>.</li>
+                               <li>▪️ <u>Solución</u>: Aparte de la <strong><u>prohibición de las explotaciones incontroladas</u></strong>, se impone la <strong><u>restauración del área explotada</u></strong> mediante la aportación de la arena, directamente en el lugar de la explotación.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-hard-hat"></i></div>
+                <h2>2. EFECTOS DE LAS INFRAESTRUCTURAS LITORALES Y MEDIDAS CORRECTORAS</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-project-diagram mr-2"></i>Efectos y Diseño de Puertos</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Las acciones producidas por las infraestructuras litorales pueden ser:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <strong><u>Activas</u>:</strong> <u>modificando el oleaje</u> (por fenómenos de difracción, reflexión y refracción).</li>
+                               <li>▪️ <strong><u>Pasivas</u>:</strong> por la <u>barrera física</u> que la obra supone al transporte de arena, produciendo <strong><u>sedimentación aguas arriba</u></strong> y <strong><u>erosión aguas abajo</u></strong> de la obra según el sentido de avance de la corriente longitudinal.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>En el diseño de un puerto es necesario realizar un <strong><u>estudio sobre la afección en la dinámica litoral</u></strong> producida por las obras, referido a la unidad fisiográfica costera correspondiente, de conformidad con lo establecido en la <span class="law-pill">Ley de Costas</span>.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>La <strong><u>ubicación del puerto</u></strong> para minimizar la afección a la dinámica litoral debe procurar:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Situarlo en <strong><u>zonas divergentes</u></strong> de la corriente sedimentaria.</li>
+                               <li>▪️ <strong><u>Evitar la ubicación</u></strong> en la zona contigua a sotamar de una fuente de sedimento.</li>
+                               <li>▪️ <strong><u>Localizarlo a sotamar de un cabo</u></strong> evitando el basculamiento de las playas anejas por efecto de la difracción.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+             <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-exchange-alt mr-2 text-green-600"></i>Medida Correctora: Trasvase de Arena (By-pass)</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>Como medida correctora de los efectos que produce un nuevo puerto en la línea de costa se utiliza el <strong><u>trasvase de arena</u></strong>, que es el transporte de sedimento costero para salvar una discontinuidad ubicada en el litoral.</li>
+                    <li>La necesidad de establecer un sistema de trasvase de arena es a menudo <u>reconocida a posteriori</u>, para mitigar la erosión de playas por medio de alimentaciones artificiales o disminuir los costes de mantenimiento de los canales de navegación.</li>
+                    <li>El aspecto de diseño más importante para que un sistema de by-pass tenga éxito es el <strong><u>entendimiento de los procesos costeros</u></strong> en el emplazamiento del proyecto, determinando: <u>tasas de transporte</u>, <u>recorridos de la arena</u> y <u>características del sedimento</u>.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-cogs mr-2"></i><u>Modos de Operación</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Los <u>sistemas de tipo intercepción</u> se basan en que el transporte litoral moverá el sedimento hacia ellos, y se ubican en la zona donde el sedimento tiene más probabilidades de concentrarse. Son adecuados para lugares donde el volumen de sedimentos y los cambios puedan ser predichos aceptablemente.</li>
+                               <li>▪️ Un sistema de by-pass se puede diseñar para operar en conjunción con <u>áreas de almacenamiento</u>. Suponiendo que se trasvasa el valor medio, las áreas de almacenamiento proporcionan una reserva cuando el transporte ocurre a tasas mayores, permitiendo que el material acumulado sea trasvasado con posterioridad.</li>
+                               <li>▪️ Por último, el programa de operación de un sistema de trasvase de arenas puede ser <u>continuo o periódico</u>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                      <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-tools mr-2"></i><u>Tipos de Sistemas de Trasvase</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>
+                                    <div class="collapsible-trigger">
+                                         <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        ▪️ <strong><u>Sistemas fijos</u>:</strong> son sistemas estacionarios de dragado diseñados, construidos y operados para una localización específica. Existen tres grandes tipos:
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ <u>Jet pump</u>: bomba accionada hidráulicamente, sin partes móviles. Puede trasvasar de 70 a 300 m³/h.</li>
+                                             <li>▫️ <u>Bombas sumergibles</u>: se ponen directamente en el material a bombear y pueden trasvasar de 30 a 150 m³/h.</li>
+                                             <li>▫️ <u>Dragado con scraper</u>: provee medios mecánicos para mover un scraper, descargando el material en un área accesible. Puede bombear hasta 200 m³/h.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                 <li>▪️ <strong><u>Sistemas móviles</u>:</strong> se encuentran las plantas de dragado flotantes y las plantas basadas en tierra montadas sobre un vehículo.</li>
+                                  <li>▪️ <strong><u>Sistemas semimóviles</u>:</strong> consisten esencialmente en los mismos componentes que los fijos, pero dotados de cierta movilidad. Teóricamente tienen mayor grado de efectividad.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-plus-square mr-2"></i><u>Elementos Auxiliares</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <strong><u>Cuencos de depósito</u>:</strong> son áreas de almacenamiento temporal del material litoral, que permiten un by-pass más eficiente.</li>
+                               <li>▪️ <strong><u>Sistemas de aliviadero</u>:</strong> consisten en una sección rebajada en un dique de escollera, que permite el paso de una cantidad de sedimento a un cuenco semiprotegido.</li>
+                               <li>▪️ <strong><u>Fluidificadores</u>:</strong> consisten en un tramo inclinado de tubería enterrada que, al bombear agua, fluidifica la arena para que fluya hacia un extremo desde donde se bombea.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+         <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-cloud-sun-rain"></i></div>
+                <h2>3. EFECTOS DEL CAMBIO CLIMÁTICO SOBRE LA EROSIÓN COSTERA</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-sitemap mr-2"></i>Plan Nacional de Adaptación (PNACC)</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-flag text-yellow-500 icon"></i>El <strong><u>Plan Nacional de Adaptación al Cambio Climático (PNACC) 2021-2030</u></strong>, coordinado por la Oficina Española de Cambio Climático, constituye el <u>instrumento de planificación básico</u> para promover la acción coordinada y coherente frente a los efectos del cambio climático en España.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-exclamation-circle text-red-600 icon"></i>En el marco del PNACC se ha analizado la influencia del cambio climático sobre la erosión costera, concluyendo que la combinación del aumento del nivel del mar y los cambios en los eventos extremos <strong><u>incrementan los riesgos de erosión costera</u></strong> debidos a:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ La <strong><u>inundación permanente</u></strong> por la subida del nivel del mar, especialmente en zonas bajas de la costa.</li>
+                               <li>▪️ La <strong><u>inundación ocasional</u></strong> por eventos extremos que se pueden presentar con mayor intensidad y frecuencia.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

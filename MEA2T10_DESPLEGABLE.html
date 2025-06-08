@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: La Gestión Integral del Litoral</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .directive-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            border: 1px solid #4ade80; /* green-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-sitemap"></i> MEA2T10: LA GESTIÓN INTEGRAL DEL LITORAL <i class="fas fa-wave-square"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-water"></i></div>
+                <h2>1. LA GESTIÓN INTEGRAL DEL LITORAL</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Importancia de la Zona Costera</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>La zona costera tiene un <strong><u>potencial enorme</u></strong> para la sociedad moderna.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>El papel de la zona costera es <strong><u>amplio y diverso</u></strong> y cumple una serie de funciones en relación con la creación de empleo, el crecimiento económico y la calidad de vida, como son:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <strong>Producción agraria y piscícola</strong> en zonas costeras.</li>
+                                <li>▪️ <strong>Producción de energía</strong> a partir de fuentes tradicionales (petróleo, gas) o renovables (viento, olas).</li>
+                                <li>▪️ <strong>Movilidad y comercio</strong> con los puertos y las vías de comunicación.</li>
+                                <li>▪️ <strong>Conservación del patrimonio</strong> cultural y arqueológico.</li>
+                                <li>▪️ <strong>Zonas residenciales, turismo, ocio, actividades recreativas</strong> y valores estéticos.</li>
+                                <li>▪️ <strong>Protección</strong> contra las fuerzas destructivas del mar.</li>
+                                <li>▪️ <strong>Protección</strong> de la naturaleza y la biodiversidad.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-exclamation-triangle mr-2 text-red-600"></i>Problemas de las Zonas Costeras</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Los <strong><u>problemas comunes</u></strong> de las zonas costeras son:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ <u>Urbanización no planificada</u>.</li>
+                                <li>▪️ <u>Decadencia de sectores tradicionales</u> respetuosos con el medio ambiente.</li>
+                                <li>▪️ <u>Erosión costera</u>.</li>
+                                <li>▪️ <u>Ausencia de redes adecuadas</u> de comunicación y transporte.</li>
+                                <li>▪️ <u>Mala gestión</u> de muchas zonas costeras a lo largo de los años.</li>
+                                <li>▪️ <u>Capacidad limitada</u> para recuperarse de graves defectos de gestión.</li>
+                                <li>▪️ <u>Rápida dinámica evolutiva</u>.</li>
+                                <li>▪️ <u>Enorme potencial</u> que atrae a personas y actividades económicas.</li>
+                                <li>▪️ Numerosos problemas de <u>contaminación</u> y de <u>tratamiento de los sedimentos</u>.</li>
+                                <li>▪️ <u>Condicionamientos y problemas especiales</u> de la ordenación territorial.</li>
+                                <li>▪️ Riesgo particularmente alto de <u>catástrofes naturales</u>.</li>
+                                <li>▪️ Amplio abanico de <u>actividades que compiten</u> por utilizar los mismos recursos.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Durante años la legislación y la política han tenido una <strong><u>orientación sectorial y sin coordinación</u></strong>, que han ido frecuentemente en contra de los intereses a largo plazo de una gestión sostenible.</p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ La <strong><u>rigidez burocrática</u></strong> ha limitado la creatividad y la capacidad de adaptación local.</li>
+                                 <li>▪️ Las <strong><u>iniciativas locales</u></strong> para una gestión sostenible han carecido de los recursos y el apoyo necesarios.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-check-double mr-2 text-green-600"></i>Principios Generales para una Gestión Correcta</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            Hay varias formas de gestionar correctamente las zonas costeras, pero las mejores iniciativas siguen unos <strong><u>principios generales</u></strong> que son:
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li><i class="fas fa-expand-arrows-alt mr-2"></i>Una <strong><u>perspectiva amplia</u></strong>: considerar todas las presiones interrelacionadas de forma simultánea.</li>
+                               <li><i class="fas fa-map-pin mr-2"></i><strong><u>Conocimiento de las condiciones específicas</u></strong> de la zona: las soluciones deben ser específicas para cada lugar.</li>
+                               <li><i class="fas fa-sync-alt mr-2"></i><strong><u>Trabajar en sintonía con los procesos naturales</u></strong>: basándose en su conocimiento para que las actividades sean más sostenibles.</li>
+                               <li><i class="fas fa-seedling mr-2"></i><strong><u>Tomar decisiones que no hipotequen el futuro</u></strong>: aplicar un planteamiento suficientemente flexible.</li>
+                               <li><i class="fas fa-users mr-2"></i><strong><u>Planificación participativa</u></strong>: integrar las opiniones de todos los interesados para crear compromiso.</li>
+                               <li><i class="fas fa-landmark mr-2"></i><strong><u>Apoyo y participación</u></strong> de todas las instancias administrativas competentes.</li>
+                               <li><i class="fas fa-tools mr-2"></i>Una <strong><u>combinación de instrumentos</u></strong> jurídicos, económicos, acuerdos voluntarios, información, tecnología, investigación y formación.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>Fruto de todas estas reflexiones surge la <strong><u>Gestión Integrada de las Zonas Costeras (GIZC)</u></strong>.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 2 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-cogs"></i></div>
+                <h2>2. LA GIZC COMO HERRAMIENTA DE COMPATIBILIDAD Y MECANISMO DE INTERACCIÓN</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Definición y Proceso</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>La <strong>Gestión Integrada de las Zonas Costeras (GIZC)</strong> es un proceso <strong><u>dinámico, continuo e iterativo</u></strong> destinado a promover la sostenibilidad de las zonas costeras.</li>
+                    <li>Consiste en <strong><u>equilibrar a largo plazo</u></strong> los beneficios del desarrollo económico y de los usos humanos con su protección, preservación y restauración.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>El término “<strong><u>integrada</u></strong>” se refiere a:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ La integración de <strong>objetivos</strong> y de los numerosos <strong>instrumentos</strong> necesarios.</li>
+                               <li>▪️ Designa la integración de todas las <strong>políticas, sectores e instancias administrativas</strong>.</li>
+                               <li>▪️ Debe ser una gestión integrada en el <strong>tiempo y en el espacio</strong> y es intrínsecamente <strong>pluridisciplinar</strong>.</li>
+                               <li>▪️ No debe encasillarse como un aspecto exclusivo del sector del medio ambiente.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>El proceso abarca <strong><u>todo el ciclo</u></strong> desde la recogida de información, la planificación, la toma de decisiones, la gestión y el seguimiento.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-bullseye mr-2"></i>Estrategia Española de GIZC: Objetivos</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>La <strong>Estrategia Española de GIZC</strong> define <strong><u>dos objetivos estratégicos</u></strong>:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <strong><u>Mejorar las condiciones</u></strong> ambientales, económicas y sociales de la zona costera bajo los principios del desarrollo sostenible.</li>
+                               <li>▪️ <strong><u>Revisar y adaptar el modelo de gestión</u></strong> y de toma de decisiones incorporando los principios de la GIZC.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Define también unos <strong><u>objetivos específicos</u></strong> que marcan los ejes prioritarios de actuación:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <strong><u>Objetivos específicos de desarrollo sostenible</u>:</strong></p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ <u>Gestión sostenible de la interacción</u> entre procesos físicos y ocupación.</li>
+                                            <li>▫️ <u>Protección y recuperación</u> de los ecosistemas litorales.</li>
+                                            <li>▫️ <u>Optimización del uso</u> de los recursos naturales.</li>
+                                            <li>▫️ <u>Seguridad</u> frente al riesgo de accidentes y catástrofes.</li>
+                                            <li>▫️ <u>Mejora en las dotaciones</u> para el uso público y la accesibilidad.</li>
+                                            <li>▫️ <u>Recuperación y promoción</u> del patrimonio cultural.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <strong><u>Objetivos específicos de gestión integrada</u>:</strong></p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                            <li>▫️ <u>Integración efectiva</u> y sistemática de la información en la toma de decisiones.</li>
+                                            <li>▫️ <u>Coordinación</u> entre los distintos niveles administrativos.</li>
+                                            <li>▫️ <u>Transparencia del proceso</u> y participación efectiva.</li>
+                                            <li>▫️ <u>Consolidación financiera</u> que asegure la disponibilidad de recursos.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Finalmente, las <strong><u>iniciativas, medidas e instrumentos concretos</u></strong> representan el compromiso de España y marcan el camino a seguir, incluyendo:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ El <strong><u>Plan Director para la Sostenibilidad de la Costa</u></strong>.</li>
+                               <li>▪️ La firma de <strong><u>Convenios de Colaboración</u></strong> con las CCAA.</li>
+                               <li>▪️ Un <strong><u>Observatorio de la Sostenibilidad del Litoral Español</u></strong>.</li>
+                               <li>▪️ La creación del <strong><u>Consejo Nacional de la Costa</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+         <!-- Main Card 3 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-water"></i></div>
+                <h2>3. LA ORDENACIÓN DEL ESPACIO MARÍTIMO (OEM)</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Marco Legal y Definiciones</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                     <li>El <span class="law-pill">RD 363/2017</span> establece un marco para la <strong><u>ordenación del espacio marítimo</u></strong>.</li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p>En este RD se define:</p>
+                         </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ <strong><u>Política marítima integrada</u>:</strong> política de la UE para fomentar la adopción <strong>coordinada y coherente</strong> de decisiones a fin de maximizar el desarrollo sostenible.</li>
+                                <li>▪️ <strong><u>Ordenación del espacio marítimo</u>:</strong> proceso mediante el cual las autoridades competentes <strong>analizan y organizan las actividades humanas</strong> en las zonas marinas con el fin de alcanzar objetivos ecológicos, económicos y sociales.</li>
+                             </ul>
+                        </div>
+                    </li>
+                    <li>Los planes de ordenación contribuirán al <strong><u>desarrollo sostenible</u></strong> de la pesca, acuicultura, turismo, transporte, etc., sin menoscabo de la conservación del medio ambiente.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-cogs mr-2"></i>Procedimiento de Elaboración y Seguimiento</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><u>Elaboración de los Planes</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ol class="list-decimal list-inside mt-2 ml-4 space-y-2">
+                               <li>Cada ministerio afectado realiza un <strong><u>inventario</u></strong> de actividades y usos.</li>
+                               <li>La <strong><u>DGCM</u></strong> elabora una propuesta de plan de ordenación.</li>
+                               <li>La DGCM remite la propuesta a la <strong><u>Comisión Interministerial de Estrategias Marinas</u></strong> para su valoración.</li>
+                               <li>Se recaba informe de la <strong><u>Comisión Delegada del Gobierno para Asuntos Económicos</u></strong>.</li>
+                               <li>Tras la participación pública, la propuesta se eleva al <strong><u>Consejo de Ministros</u></strong> para su aprobación mediante real decreto.</li>
+                                <li>Los planes de las cinco demarcaciones marinas se han aprobado mediante el <span class="law-pill">RD 150/2023</span>.</li>
+                            </ol>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><u>Aplicación, Seguimiento y Revisión</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Cada Departamento elaborará anualmente un <strong><u>informe sobre la aplicación</u></strong> de los planes.</li>
+                               <li>▪️ La DGCM evaluará los informes y remitirá un análisis a la Comisión Interministerial.</li>
+                               <li>▪️ Los planes serán <strong><u>revisados al menos cada diez años</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                      <li>En el marco del proceso se <strong><u>cooperará con los Estados miembros de la UE</u></strong> para garantizar que los planes sean coherentes y se coordinen.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

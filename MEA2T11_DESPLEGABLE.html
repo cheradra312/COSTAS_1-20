@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Las Distintas Teorías de Ondas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header .icon-bg {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            background-color: #e0f2fe;
+            color: #0c4a6e;
+        }
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        ul { list-style-type: none; padding-left: 0; }
+        li { margin-top: 1rem; }
+        .collapsible-content > ul {
+            padding-left: 1.75rem;
+            margin-top: 0.75rem;
+            border-left: 3px dotted #cbd5e1;
+        }
+        .collapsible-content > ul > li {
+            position: relative;
+        }
+        .collapsible-content > ul > li::before {
+            content: '🔹';
+            position: absolute;
+            left: -1.75rem;
+            color: #3b82f6;
+        }
+        .pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+        }
+        .pill-green { background-color: #dcfce7; color: #166534; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
+        .pill-gray { background-color: #e5e7eb; color: #374151; }
+        .law-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #f3e8ff; /* purple-100 */
+            color: #581c87; /* purple-800 */
+            border: 1px solid #c084fc; /* purple-400 */
+        }
+        .directive-pill {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0 0.2rem;
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            border: 1px solid #4ade80; /* green-400 */
+        }
+        .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            text-align: center;
+        }
+        .nested-list {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        /* Estilos para la funcionalidad desplegable */
+        .collapsible-trigger {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.25rem 0;
+        }
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            margin-right: 0.75rem;
+            width: 1em;
+            color: #3b82f6;
+        }
+        .collapsible-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-left: 1.75rem;
+        }
+        .collapsible-trigger.open .collapsible-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="text-gray-800 p-4 sm:p-6 md:p-8">
+    <div class="max-w-5xl mx-auto">
+
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-water"></i> MEA2T11: LAS DISTINTAS TEORÍAS DE ONDAS <i class="fas fa-wave-square"></i></h1>
+        </header>
+
+        <!-- Main Card 1 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-book"></i></div>
+                <h2>1. LAS DISTINTAS TEORÍAS DE ONDAS</h2>
+            </div>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Introducción y Conceptos Básicos</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-atom mr-2 text-purple-600"></i>En el océano siempre existe algún tipo de onda que pone de manifiesto la <strong><u>propagación de energía mecánica</u></strong> a lo largo de la interfase agua-atmósfera que constituye la superficie del mar.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-cogs mr-2 text-gray-600"></i>Los <strong><u>mecanismos</u></strong> que aportan esta energía son de diferente naturaleza:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Viento.</li>
+                               <li>▪️ Perturbaciones meteorológicas.</li>
+                               <li>▪️ Terremotos.</li>
+                               <li>▪️ Atracción planetaria, etc.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><i class="fas fa-wind mr-2 text-cyan-500"></i>Para los problemas de interés en ingeniería litoral, las ondas más importantes son fundamentalmente las <strong><u>ondas de viento</u></strong> con periodos <span class="pill pill-blue">entre 3 y 30 s</span>.</li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-calculator mr-2 text-yellow-700"></i>Descripción Matemática y Definiciones</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-chart-line mr-2 text-teal-600"></i>La descripción matemática de las ondas considera, en general, que las ondas son <strong><u>oscilaciones uniformes y periódicas</u></strong> de la superficie del agua. Es decir, se asume que estas ondas se repiten una y otra vez.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-columns mr-2 text-indigo-500"></i>Se distingue entre dos tipos de oscilaciones:</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <strong><u>Ondas progresivas</u>:</strong> se propagan manteniendo su forma si la profundidad es constante.</li>
+                               <li>▪️ <strong><u>Ondas estacionarias</u>:</strong> las ondas que no se propagan se denominan estacionarias, y en ellas la superficie del mar oscila verticalmente entre unos puntos fijos llamados nodos.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-ruler-combined mr-2"></i>Parámetros Fundamentales:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ <strong><u>Período (T)</u>:</strong> tiempo que transcurre hasta que se observa un punto idéntico de la superficie libre.</li>
+                                <li>▪️ <strong><u>Longitud de onda (L)</u>:</strong> distancia horizontal más corta entre dos puntos idénticos sucesivos.</li>
+                                 <li>▪️ <strong><u>Cresta</u>:</strong> el punto en el que la superficie libre alcanza un máximo.</li>
+                                 <li>▪️ <strong><u>Seno</u>:</strong> el punto donde alcanza un mínimo.</li>
+                                 <li>▪️ <strong><u>Altura de la onda (H)</u>:</strong> la distancia vertical total entre la cresta y el seno de la onda.</li>
+                                 <li>▪️ <strong><u>Celeridad (velocidad de fase)</u>:</strong> la velocidad a la que se propagan las ondas en el fluido, definida como L/T.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><strong><i class="fas fa-percentage mr-2"></i>Parámetros Adimensionales:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ <strong><u>Peralte de la onda</u>:</strong> H/L (altura/longitud).</li>
+                                <li>▪️ <strong><u>Altura relativa de la onda</u>:</strong> H/h (altura/profundidad).</li>
+                                <li>▪️ <strong><u>Profundidad relativa</u>:</strong> h/L (profundidad/longitud).</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-stream mr-2 text-purple-600"></i>Clasificación y Regímenes de Ondas</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-arrows-alt-v mr-2"></i><u>Clasificación por Amplitud</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ Si la altura de la onda H es pequeña con respecto a L o h (H/L&lt;&lt;1 o H/h&lt;&lt;1), al movimiento resultante se le denomina <strong><u>de pequeña amplitud</u></strong> o lineal.</li>
+                               <li>▪️ Cuando el valor de estos parámetros es grande, las ondas se denominan <strong><u>de amplitud finita</u></strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-layer-group mr-2"></i><u>Clasificación por Profundidad Relativa (h/L)</u>:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li>▪️ <u>Profundidades indefinidas</u>: h/L > 1/2 (la onda no es capaz de sentir la presencia del fondo).</li>
+                               <li>▪️ <u>Profundidades intermedias</u>: 1/20 < h/L < 1/2.</li>
+                               <li>▪️ <u>Profundidades reducidas</u>: h/L < 1/20.</li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-network-wired mr-2"></i>En función del valor de la profundidad relativa, se pueden definir <strong>dos regímenes bien diferenciados</strong>:</p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <strong><u>Régimen de Stokes</u></strong> (<span class="pill pill-blue">h/L ≥ 1</span>):</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                         <ul class="nested-list">
+                                             <li>▫️ Si las ondas son de pequeña amplitud, la teoría correspondiente es la <strong>teoría lineal de ondas</strong> (de Airy o Stokes de 1er orden).</li>
+                                             <li>▫️ A medida que el peralte H/L aumenta, aumenta el carácter no lineal y es necesaria la aplicación de otras teorías como <strong>Stokes II, Stokes III, y órdenes superiores</strong>.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ <strong><u>Régimen de onda larga</u></strong> (<span class="pill pill-blue">(h/L)² &lt;&lt; 1</span>):</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                             <li>▫️ <u>Teoría de onda larga lineal</u>.</li>
+                                             <li>
+                                                <div class="collapsible-trigger">
+                                                    <i class="fas fa-chevron-right collapsible-icon"></i>
+                                                    <p>▫️ <u>Teoría de Boussinesq</u>, de la que se derivan soluciones analíticas:</p>
+                                                </div>
+                                                 <div class="collapsible-content hidden">
+                                                     <ul class="nested-list">
+                                                         <li>- Onda solitaria.</li>
+                                                         <li>- Onda cnoidal.</li>
+                                                     </ul>
+                                                 </div>
+                                             </li>
+                                             <li>▫️ <u>Teoría de onda larga no lineal</u>.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Card 2 -->
+        <div class="card">
+             <div class="card-header">
+                <div class="icon-bg"><i class="fas fa-wind"></i></div>
+                <h2>2. LA PROPAGACIÓN DEL OLEAJE</h2>
+            </div>
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-water mr-2"></i>Generación y Crecimiento del Oleaje</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                 <ul>
+                    <li><i class="fas fa-wind mr-2"></i>La generación y el crecimiento del oleaje están vinculados en la mayoría de los casos al <strong><u>efecto del viento</u></strong> sobre la superficie del mar.</li>
+                     <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-chart-line mr-2"></i>Fases de Generación:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                <li>▪️ En primer lugar, se forman <strong><u>ondas capilares</u></strong> que son generadas por la turbulencia del aire sobre la superficie del mar.</li>
+                                <li>▪️ Esas ondas van creciendo, ya que la fuerza con la que el viento afecta al oleaje es mayor cuanto mayor es éste, por lo que el crecimiento es exponencial en esta fase, que se llama <strong><u>mar de viento</u></strong> (u oleaje tipo <i>sea</i>).</li>
+                                 <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ En esta fase el crecimiento del oleaje depende de:</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                         <ul class="nested-list">
+                                            <li>▫️ La velocidad del viento.</li>
+                                             <li>▫️ El tiempo que sople.</li>
+                                             <li>▫️ La superficie del océano sobre la que esté soplando (<strong><u>fetch</u></strong>).</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                 <li>▪️ Poco a poco, en la zona comienzan a aparecer olas más regulares de periodo más largo cuya energía proviene de las olas anteriores.</li>
+                                 <li>▪️ Estas olas se desplazan más rápidamente que el viento que las generó y por tanto abandonan la zona de generación. En esta fase el oleaje se llama <strong><u>mar de fondo</u></strong> (u oleaje tipo <i>swell</i>).</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6">
+             <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-wave-square mr-2"></i>Fenómenos de Transformación del Oleaje</h3>
+            </div>
+            <div class="collapsible-content hidden">
+                <ul>
+                    <li><i class="fas fa-shoe-prints mr-2"></i>A medida que el oleaje se acerca a la costa, el <strong><u>efecto del fondo</u></strong> empieza a hacerse palpable. A partir de la teoría lineal se puede deducir que una onda empieza a sentir la presencia del fondo cuando la profundidad en la que se encuentra es h < L/2.</li>
+                    <li><i class="fas fa-exchange-alt mr-2"></i>Como consecuencia de esta interacción, el tren de ondas se transforma, traduciéndose en <strong><u>variaciones en la altura de ola y en la dirección de propagación</u></strong>.</li>
+                    <li>
+                        <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><strong><i class="fas fa-project-diagram mr-2"></i>Estos procesos de transformación son:</strong></p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                               <li><i class="fas fa-arrows-alt-v mr-2"></i><strong><u>Asomeramiento</u>:</strong> A medida que un tren de ondas se aproxima hacia la costa es posible observar un <strong>aumento de su altura</strong> de onda y una <strong>reducción de su longitud</strong>.</li>
+                               <li><i class="fas fa-redo-alt mr-2"></i><strong><u>Refracción</u>:</strong> Es un <strong>giro del frente</strong> de ola debido a que la parte que se propaga en aguas profundas viaja con una celeridad mayor. Los frentes de ola tienden a ponerse <strong>paralelos a la costa</strong>.</li>
+                                <li><i class="fas fa-border-all mr-2"></i><strong><u>Difracción</u>:</strong> En su propagación, el oleaje encuentra obstáculos que dan lugar a este fenómeno, caracterizado por la <strong>cesión lateral de energía</strong> a las zonas de sombra.</li>
+                                <li><i class="fas fa-reflect mr-2"></i><strong><u>Reflexión</u>:</strong> Asociado también a la presencia de obstáculos, cuyo estudio es de especial importancia en estructuras artificiales y playas.</li>
+                                <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p><i class="fas fa-water mr-2"></i><strong><u>Transmisión</u>:</strong> Otro fenómeno que también se produce en presencia de estructuras es la transmisión.</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                           <li>▫️ Cuando el oleaje incide sobre una estructura, parte de la energía se disipa, parte se refleja y, dependiendo de la geometría, parte se transmite al abrigo de la misma.</li>
+                                           <li>▫️ Si la estructura es <strong>sumergida</strong>, la energía simplemente se transmite por encima de ella.</li>
+                                           <li>▫️ Si es <strong>emergida</strong>, el oleaje puede generar un flujo de agua por encima que a su vez genera oleaje al abrigo.</li>
+                                           <li>▫️ Si la estructura es <strong>suficientemente permeable</strong>, la energía se puede transmitir a través de ella.</li>
+                                           <li>▫️ Se puede definir un <strong>coeficiente de transmisión</strong> del oleaje como el cociente entre la altura de ola existente al abrigo de la estructura y la incidente.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-exclamation-circle mr-2 text-red-600"></i><u>Rotura del Oleaje</u>:</strong></p>
+                        </div>
+                         <div class="collapsible-content hidden">
+                             <ul class="nested-list">
+                                 <li>▪️ Es el <strong>mecanismo disipador de energía por excelencia</strong> en aguas poco profundas.</li>
+                                 <li>▪️ Este fenómeno está totalmente controlado por la profundidad y se produce cuando la altura alcanzada por la onda <strong>coincide aproximadamente con la profundidad</strong>. En ese momento el perfil de la onda deja de ser estable y rompe.</li>
+                                 <li>▪️ Un criterio de rotura sencillo, válido para playas de pendiente suave es <strong>H<sub>rot</sub> = γ · h</strong>, donde γ se denomina Índice de Rotura, y su valor es aproximadamente 0,8.</li>
+                                 <li>
+                                    <div class="collapsible-trigger">
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <p>▪️ El tipo de rotura del oleaje depende del peralte del mismo y de la pendiente del fondo. El <strong><u>Número de Iribarren (Ir)</u></strong> es un parámetro ampliamente aceptado como controlador del tipo de rotura. Dado que en las playas se utiliza la altura de ola en rotura, Hb, se suele utilizar el número de Iribarren en rotura, <strong>Irb = tan(β) / √(Hb/L)</strong>.</p>
+                                    </div>
+                                    <div class="collapsible-content hidden">
+                                        <ul class="nested-list">
+                                             <li>▫️ <u>Oscilación (Surging)</u>: <span class="pill pill-blue">Irb > 2</span>. Cuando las olas ascienden y descienden por el talud, con un mínimo de aire atrapado, la playa presenta una reflexión elevada.</li>
+                                             <li>▫️ <u>Colapso (Collapsing)</u>: <span class="pill pill-blue">1,5 < Irb < 2</span>. A medida que el nº de Iribarren disminuye, el frente de la onda se aproxima a la vertical. La ola comienza a desmoronarse por su base y colapsa.</li>
+                                             <li>▫️ <u>Voluta (Plunging)</u>: <span class="pill pill-blue">0,4 < Irb < 1,5</span>. La ola que rompe lanza su cresta hacia delante, rompiendo claramente en la base de la ola, encerrando una considerable cantidad de aire.</li>
+                                             <li>▫️ <u>Descrestamiento (Spilling)</u>: <span class="pill pill-blue">Irb < 0,4</span>. Si Ir continúa disminuyendo, el chorro de la voluta se hace progresivamente más débil, por lo que comienza a afectar sólo a la parte superior de la onda.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const triggers = document.querySelectorAll('.collapsible-trigger');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function (event) {
+                    // Evita que el evento de clic se propague a los triggers padres
+                    event.stopPropagation();
+                    
+                    const content = this.nextElementSibling;
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content && content.classList.contains('collapsible-content')) {
+                        if (content.classList.contains('hidden')) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
