@@ -12,70 +12,201 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            background-color: #f3f4f6; /* Un fondo neutro y suave */
+        }
+
+        /* Estilos para los botones de selección de temas */
+        .topic-button {
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            text-align: left;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem; /* Espacio reducido para acomodar el icono */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .topic-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Estilo para el botón activo se aplica con JS */
+        .topic-button.active {
+            color: white;
+        }
+        .topic-button.active .topic-icon,
+        .topic-button.active .topic-title {
+             color: white;
+        }
+
+        .topic-number {
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .topic-title {
+            font-weight: 600;
+            flex-grow: 1; /* El título ocupa el espacio restante */
+        }
+
+        .topic-icon {
+            font-size: 1.25rem;
+            width: 2rem;
+            text-align: center;
+            transition: color 0.2s ease-in-out;
+        }
+
+        /* Estilos para el botón de "Volver" */
+        #back-button {
+             transition: background-color 0.2s;
         }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
     <div class="max-w-7xl mx-auto">
-        <!-- Contenedor del selector -->
-        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 mb-8">
-            <label for="map-selector" class="block mb-2 text-xl font-bold text-gray-800">
-                <i class="fas fa-sitemap mr-2 text-blue-600"></i>Seleccionar Mapa Conceptual
-            </label>
-            <select id="map-selector" class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3">
-                <!-- Opciones actualizadas y en orden del 1 al 20 -->
-                <option value="MEA2T1_Desplegable.html">MEA2T1: La Legislación de Costas</option>
-                <option value="MEA2T2_DESPLEGABLE.html">MEA2T2: Bienes de Dominio Público Marítimo-Terrestre</option>
-                <option value="MEA2T3_DESPLEGABLE.html">MEA2T3: Limitaciones a la Propiedad</option>
-                <option value="MEA2T4_DESPLEGABLE.html">MEA2T4: Utilización del DPM-T</option>
-                <option value="MEA2T5_DESPLEGABLE.html">MEA2T5: Régimen Económico-Financiero</option>
-                <option value="MEA2T6_DESPLEGABLE.html">MEA2T6: Competencias de la AGE</option>
-                <option value="MEA2T7_DESPLEGABLE.html">MEA2T7: Régimen Transitorio</option>
-                <option value="MEA2T8_DESPLEGABLE.html">MEA2T8: Autorizaciones en Servidumbre de Protección</option>
-                <option value="MEA2T9_DESPLEGABLE.html">MEA2T9: Biodiversidad y conservación de ecosistemas marinos y costeros</option>
-                <option value="MEA2T10_DESPLEGABLE.html">MEA2T10: La gestión integral del litoral</option>
-                <option value="MEA2T11_DESPLEGABLE.html">MEA2T11: Las distintas teorías de ondas</option>
-                <option value="MEA2T12_DESPLEGABLE.html">MEA2T12: El transporte sólido litoral</option>
-                <option value="MEA2T13_DESPLEGABLE.html">MEA2T13: Los efectos del cambio climático sobre el litoral</option>
-                <option value="MEA2T14_DESPLEGABLE.html">MEA2T14: Las estrategias marinas en España</option>
-                <option value="MEA2T15_DESPLEGABLE.html">MEA2T15: La erosión en los distintos tipos de playas</option>
-                <option value="MEA2T16_DESPLEGABLE.html">MEA2T16: Proyectos de Playas Artificiales</option>
-                <option value="MEA2T17_DESPLEGABLE.html">MEA2T17: Fuentes Naturales de Sedimentos</option>
-                <option value="MEA2T18_DESPLEGABLE.html">MEA2T18: El Puerto</option>
-                <option value="MEA2T19_DESPLEGABLE.html">MEA2T19: Obras Portuarias (I)</option>
-                <option value="MEA2T20_DESPLEGABLE.html">MEA2T20: Obras Portuarias (II)</option>
-            </select>
+        <!-- VISTA DEL MENÚ PRINCIPAL -->
+        <div id="main-menu-view">
+            <header class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">Visor de Mapas Conceptuales</h1>
+                <p class="text-lg text-gray-500 mt-2">Selecciona un tema para comenzar</p>
+            </header>
+            <div id="topics-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <!-- Los botones se generarán aquí con JavaScript -->
+            </div>
         </div>
 
-        <!-- Contenedor del IFrame donde se mostrará el mapa -->
-        <div class="bg-white p-2 rounded-xl shadow-lg border border-gray-200">
-            <iframe id="content-frame" 
-                    class="w-full border-0 rounded-lg" 
-                    style="min-height: 85vh;" 
-                    src="MEA2T1_Desplegable.html">
-                <!-- El navegador mostrará un mensaje aquí si no soporta iframes -->
-                Tu navegador no soporta iframes.
-            </iframe>
+        <!-- VISTA DEL VISOR DE MAPAS (inicialmente oculta) -->
+        <div id="map-viewer-view" class="hidden">
+            <button id="back-button" class="mb-4 bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i>
+                Volver al Menú
+            </button>
+            <div class="bg-white p-2 rounded-xl shadow-lg border border-gray-200">
+                <iframe id="content-frame" 
+                        class="w-full border-0 rounded-lg" 
+                        style="min-height: 85vh;" 
+                        src="">
+                    Tu navegador no soporta iframes.
+                </iframe>
+            </div>
         </div>
     </div>
 
     <script>
-        // Seleccionamos los elementos del DOM
-        const selector = document.getElementById('map-selector');
-        const iframe = document.getElementById('content-frame');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lista de todos los temas con sus títulos, colores e iconos
+            const topics = [
+                { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
+                { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público', color: 'cyan', icon: 'fa-landmark' },
+                { file: 'MEA2T3_DESPLEGABLE.html', title: 'Limitaciones a la Propiedad', color: 'sky', icon: 'fa-ban' },
+                { file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPM-T', color: 'indigo', icon: 'fa-swimmer' },
+                { file: 'MEA2T5_DESPLEGABLE.html', title: 'Régimen Económico-Financiero', color: 'green', icon: 'fa-coins' },
+                { file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE', color: 'emerald', icon: 'fa-building-columns' },
+                { file: 'MEA2T7_DESPLEGABLE.html', title: 'Régimen Transitorio', color: 'teal', icon: 'fa-history' },
+                { file: 'MEA2T8_DESPLEGABLE.html', title: 'Autorizaciones en Servidumbre', color: 'lime', icon: 'fa-file-signature' },
+                { file: 'MEA2T9_DESPLEGABLE.html', title: 'Biodiversidad y conservación', color: 'yellow', icon: 'fa-seedling' },
+                { file: 'MEA2T10_DESPLEGABLE.html', title: 'La gestión integral del litoral', color: 'amber', icon: 'fa-tasks' },
+                { file: 'MEA2T11_DESPLEGABLE.html', title: 'Las distintas teorías de ondas', color: 'orange', icon: 'fa-wave-square' },
+                { file: 'MEA2T12_DESPLEGABLE.html', title: 'El transporte sólido litoral', color: 'red', icon: 'fa-arrows-left-right' },
+                { file: 'MEA2T13_DESPLEGABLE.html', title: 'Efectos del cambio climático', color: 'rose', icon: 'fa-temperature-high' },
+                { file: 'MEA2T14_DESPLEGABLE.html', title: 'Las estrategias marinas en España', color: 'pink', icon: 'fa-map' },
+                { file: 'MEA2T15_DESPLEGABLE.html', title: 'La erosión en playas', color: 'fuchsia', icon: 'fa-mountain-sun' },
+                { file: 'MEA2T16_DESPLEGABLE.html', title: 'Proyectos de Playas Artificiales', color: 'purple', icon: 'fa-umbrella-beach' },
+                { file: 'MEA2T17_DESPLEGABLE.html', title: 'Fuentes Naturales de Sedimentos', color: 'violet', icon: 'fa-stream' },
+                { file: 'MEA2T18_DESPLEGABLE.html', title: 'El Puerto', color: 'gray', icon: 'fa-anchor' },
+                { file: 'MEA2T19_DESPLEGABLE.html', title: 'Obras Portuarias (I)', color: 'slate', icon: 'fa-hard-hat' },
+                { file: 'MEA2T20_DESPLEGABLE.html', title: 'Obras Portuarias (II)', color: 'zinc', icon: 'fa-ship' }
+            ];
 
-        // Función para cambiar el contenido del iframe
-        function loadSelectedMap() {
-            // Obtenemos el nombre del archivo del 'value' de la opción seleccionada
-            const selectedMapFile = selector.value;
-            // Actualizamos el atributo 'src' del iframe
-            iframe.src = selectedMapFile;
-        }
+            const colorPalette = {
+                blue:   { normal: 'bg-blue-100 text-blue-800',   icon: 'text-blue-500',   active: 'bg-blue-500'   },
+                cyan:   { normal: 'bg-cyan-100 text-cyan-800',   icon: 'text-cyan-500',   active: 'bg-cyan-500'   },
+                sky:    { normal: 'bg-sky-100 text-sky-800',     icon: 'text-sky-500',    active: 'bg-sky-500'    },
+                indigo: { normal: 'bg-indigo-100 text-indigo-800', icon: 'text-indigo-500', active: 'bg-indigo-500' },
+                green:  { normal: 'bg-green-100 text-green-800',   icon: 'text-green-500',  active: 'bg-green-500'  },
+                emerald:{ normal: 'bg-emerald-100 text-emerald-800',icon: 'text-emerald-500',active: 'bg-emerald-500'},
+                teal:   { normal: 'bg-teal-100 text-teal-800',     icon: 'text-teal-500',   active: 'bg-teal-500'   },
+                lime:   { normal: 'bg-lime-100 text-lime-800',     icon: 'text-lime-500',   active: 'bg-lime-500'   },
+                yellow: { normal: 'bg-yellow-100 text-yellow-800', icon: 'text-yellow-500', active: 'bg-yellow-400' },
+                amber:  { normal: 'bg-amber-100 text-amber-800',   icon: 'text-amber-500',  active: 'bg-amber-400'  },
+                orange: { normal: 'bg-orange-100 text-orange-800', icon: 'text-orange-500', active: 'bg-orange-500' },
+                red:    { normal: 'bg-red-100 text-red-800',       icon: 'text-red-500',    active: 'bg-red-500'    },
+                rose:   { normal: 'bg-rose-100 text-rose-800',     icon: 'text-rose-500',   active: 'bg-rose-500'   },
+                pink:   { normal: 'bg-pink-100 text-pink-800',     icon: 'text-pink-500',   active: 'bg-pink-500'   },
+                fuchsia:{ normal: 'bg-fuchsia-100 text-fuchsia-800',icon: 'text-fuchsia-500',active: 'bg-fuchsia-500'},
+                purple: { normal: 'bg-purple-100 text-purple-800', icon: 'text-purple-500', active: 'bg-purple-500' },
+                violet: { normal: 'bg-violet-100 text-violet-800', icon: 'text-violet-500', active: 'bg-violet-500' },
+                gray:   { normal: 'bg-gray-100 text-gray-800',     icon: 'text-gray-500',   active: 'bg-gray-500'   },
+                slate:  { normal: 'bg-slate-100 text-slate-800',   icon: 'text-slate-500',  active: 'bg-slate-500'  },
+                zinc:   { normal: 'bg-zinc-100 text-zinc-800',     icon: 'text-zinc-500',   active: 'bg-zinc-500'   },
+            };
 
-        // Añadimos un 'event listener' que se activa cuando el usuario cambia la selección
-        selector.addEventListener('change', loadSelectedMap);
+            const gridContainer = document.getElementById('topics-grid');
+            const iframe = document.getElementById('content-frame');
+            const mainMenuView = document.getElementById('main-menu-view');
+            const mapViewerVIew = document.getElementById('map-viewer-view');
+            const backButton = document.getElementById('back-button');
+
+            // Generar los botones dinámicamente
+            topics.forEach((topic, index) => {
+                const button = document.createElement('button');
+                const colors = colorPalette[topic.color];
+                button.className = 'topic-button';
+                button.dataset.src = topic.file;
+                button.dataset.colorName = topic.color;
+
+                button.innerHTML = `
+                    <span class="topic-number ${colors.normal}">${index + 1}</span>
+                    <i class="fas ${topic.icon} topic-icon ${colors.icon}"></i>
+                    <span class="topic-title">${topic.title}</span>
+                `;
+                
+                button.addEventListener('mouseenter', () => button.style.borderColor = colors.active.replace('bg-', ''));
+                button.addEventListener('mouseleave', () => button.style.borderColor = '#d1d5db');
+
+                gridContainer.appendChild(button);
+            });
+
+            // Función para mostrar la vista del mapa
+            function showMapView(button) {
+                mainMenuView.classList.add('hidden');
+                mapViewerVIew.classList.remove('hidden');
+                iframe.src = button.dataset.src;
+            }
+
+            // Función para mostrar el menú principal
+            function showMainMenu() {
+                mapViewerVIew.classList.add('hidden');
+                mainMenuView.classList.remove('hidden');
+                iframe.src = ''; // Limpiar el iframe para detener la carga/reproducción
+            }
+
+            // Añadir event listener a la cuadrícula para seleccionar un tema
+            gridContainer.addEventListener('click', function(event) {
+                const button = event.target.closest('.topic-button');
+                if (button) {
+                    showMapView(button);
+                }
+            });
+            
+            // Añadir event listener al botón de "Volver"
+            backButton.addEventListener('click', showMainMenu);
+        });
     </script>
 </body>
 </html>
