@@ -12,10 +12,9 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Un fondo neutro y suave */
+            background-color: #f3f4f6;
         }
 
-        /* Estilos para los botones de selección de temas */
         .topic-button {
             background-color: #ffffff;
             border: 1px solid #d1d5db;
@@ -27,7 +26,7 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.75rem; /* Espacio reducido para acomodar el icono */
+            gap: 0.75rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
@@ -36,15 +35,6 @@
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
         }
         
-        /* Estilo para el botón activo se aplica con JS */
-        .topic-button.active {
-            color: white;
-        }
-        .topic-button.active .topic-icon,
-        .topic-button.active .topic-title {
-             color: white;
-        }
-
         .topic-number {
             border-radius: 9999px;
             font-weight: 700;
@@ -60,7 +50,7 @@
         
         .topic-title {
             font-weight: 600;
-            flex-grow: 1; /* El título ocupa el espacio restante */
+            flex-grow: 1;
         }
 
         .topic-icon {
@@ -70,8 +60,7 @@
             transition: color 0.2s ease-in-out;
         }
 
-        /* Estilos para el botón de "Volver" */
-        #back-button {
+        .control-button {
              transition: background-color 0.2s;
         }
     </style>
@@ -92,10 +81,16 @@
 
         <!-- VISTA DEL VISOR DE MAPAS (inicialmente oculta) -->
         <div id="map-viewer-view" class="hidden">
-            <button id="back-button" class="mb-4 bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i>
-                Volver al Menú
-            </button>
+            <div class="flex items-center gap-4 mb-4">
+                 <button id="back-button" class="control-button bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 flex items-center gap-2">
+                    <i class="fas fa-arrow-left"></i>
+                    Volver al Menú
+                </button>
+                <button id="play-audio-button" class="control-button bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 flex items-center gap-2">
+                    <i id="play-icon" class="fas fa-play"></i>
+                    <span id="play-text">Reproducir Audio</span>
+                </button>
+            </div>
             <div class="bg-white p-2 rounded-xl shadow-lg border border-gray-200">
                 <iframe id="content-frame" 
                         class="w-full border-0 rounded-lg" 
@@ -105,6 +100,8 @@
                 </iframe>
             </div>
         </div>
+        <!-- Elemento de audio, oculto pero funcional -->
+        <audio id="topic-audio" src=""></audio>
     </div>
 
     <script>
@@ -134,26 +131,26 @@
             ];
 
             const colorPalette = {
-                blue:   { normal: 'bg-blue-100 text-blue-800',   icon: 'text-blue-500',   active: 'bg-blue-500'   },
-                cyan:   { normal: 'bg-cyan-100 text-cyan-800',   icon: 'text-cyan-500',   active: 'bg-cyan-500'   },
-                sky:    { normal: 'bg-sky-100 text-sky-800',     icon: 'text-sky-500',    active: 'bg-sky-500'    },
-                indigo: { normal: 'bg-indigo-100 text-indigo-800', icon: 'text-indigo-500', active: 'bg-indigo-500' },
-                green:  { normal: 'bg-green-100 text-green-800',   icon: 'text-green-500',  active: 'bg-green-500'  },
-                emerald:{ normal: 'bg-emerald-100 text-emerald-800',icon: 'text-emerald-500',active: 'bg-emerald-500'},
-                teal:   { normal: 'bg-teal-100 text-teal-800',     icon: 'text-teal-500',   active: 'bg-teal-500'   },
-                lime:   { normal: 'bg-lime-100 text-lime-800',     icon: 'text-lime-500',   active: 'bg-lime-500'   },
-                yellow: { normal: 'bg-yellow-100 text-yellow-800', icon: 'text-yellow-500', active: 'bg-yellow-400' },
-                amber:  { normal: 'bg-amber-100 text-amber-800',   icon: 'text-amber-500',  active: 'bg-amber-400'  },
-                orange: { normal: 'bg-orange-100 text-orange-800', icon: 'text-orange-500', active: 'bg-orange-500' },
-                red:    { normal: 'bg-red-100 text-red-800',       icon: 'text-red-500',    active: 'bg-red-500'    },
-                rose:   { normal: 'bg-rose-100 text-rose-800',     icon: 'text-rose-500',   active: 'bg-rose-500'   },
-                pink:   { normal: 'bg-pink-100 text-pink-800',     icon: 'text-pink-500',   active: 'bg-pink-500'   },
-                fuchsia:{ normal: 'bg-fuchsia-100 text-fuchsia-800',icon: 'text-fuchsia-500',active: 'bg-fuchsia-500'},
-                purple: { normal: 'bg-purple-100 text-purple-800', icon: 'text-purple-500', active: 'bg-purple-500' },
-                violet: { normal: 'bg-violet-100 text-violet-800', icon: 'text-violet-500', active: 'bg-violet-500' },
-                gray:   { normal: 'bg-gray-100 text-gray-800',     icon: 'text-gray-500',   active: 'bg-gray-500'   },
-                slate:  { normal: 'bg-slate-100 text-slate-800',   icon: 'text-slate-500',  active: 'bg-slate-500'  },
-                zinc:   { normal: 'bg-zinc-100 text-zinc-800',     icon: 'text-zinc-500',   active: 'bg-zinc-500'   },
+                blue:   { normal: 'bg-blue-100 text-blue-800',   icon: 'text-blue-500'   },
+                cyan:   { normal: 'bg-cyan-100 text-cyan-800',   icon: 'text-cyan-500'   },
+                sky:    { normal: 'bg-sky-100 text-sky-800',     icon: 'text-sky-500'    },
+                indigo: { normal: 'bg-indigo-100 text-indigo-800', icon: 'text-indigo-500' },
+                green:  { normal: 'bg-green-100 text-green-800',   icon: 'text-green-500'  },
+                emerald:{ normal: 'bg-emerald-100 text-emerald-800',icon: 'text-emerald-500'},
+                teal:   { normal: 'bg-teal-100 text-teal-800',     icon: 'text-teal-500'   },
+                lime:   { normal: 'bg-lime-100 text-lime-800',     icon: 'text-lime-500'   },
+                yellow: { normal: 'bg-yellow-100 text-yellow-800', icon: 'text-yellow-500' },
+                amber:  { normal: 'bg-amber-100 text-amber-800',   icon: 'text-amber-500'  },
+                orange: { normal: 'bg-orange-100 text-orange-800', icon: 'text-orange-500' },
+                red:    { normal: 'bg-red-100 text-red-800',       icon: 'text-red-500'    },
+                rose:   { normal: 'bg-rose-100 text-rose-800',     icon: 'text-rose-500'   },
+                pink:   { normal: 'bg-pink-100 text-pink-800',     icon: 'text-pink-500'   },
+                fuchsia:{ normal: 'bg-fuchsia-100 text-fuchsia-800',icon: 'text-fuchsia-500'},
+                purple: { normal: 'bg-purple-100 text-purple-800', icon: 'text-purple-500' },
+                violet: { normal: 'bg-violet-100 text-violet-800', icon: 'text-violet-500' },
+                gray:   { normal: 'bg-gray-100 text-gray-800',     icon: 'text-gray-500'   },
+                slate:  { normal: 'bg-slate-100 text-slate-800',   icon: 'text-slate-500'  },
+                zinc:   { normal: 'bg-zinc-100 text-zinc-800',     icon: 'text-zinc-500'   },
             };
 
             const gridContainer = document.getElementById('topics-grid');
@@ -161,6 +158,10 @@
             const mainMenuView = document.getElementById('main-menu-view');
             const mapViewerVIew = document.getElementById('map-viewer-view');
             const backButton = document.getElementById('back-button');
+            const playAudioButton = document.getElementById('play-audio-button');
+            const topicAudio = document.getElementById('topic-audio');
+            const playIcon = document.getElementById('play-icon');
+            const playText = document.getElementById('play-text');
 
             // Generar los botones dinámicamente
             topics.forEach((topic, index) => {
@@ -168,17 +169,12 @@
                 const colors = colorPalette[topic.color];
                 button.className = 'topic-button';
                 button.dataset.src = topic.file;
-                button.dataset.colorName = topic.color;
-
+                button.dataset.audioSrc = `audios/${topic.file.replace('.html', '.mp3')}`;
                 button.innerHTML = `
                     <span class="topic-number ${colors.normal}">${index + 1}</span>
                     <i class="fas ${topic.icon} topic-icon ${colors.icon}"></i>
                     <span class="topic-title">${topic.title}</span>
                 `;
-                
-                button.addEventListener('mouseenter', () => button.style.borderColor = colors.active.replace('bg-', ''));
-                button.addEventListener('mouseleave', () => button.style.borderColor = '#d1d5db');
-
                 gridContainer.appendChild(button);
             });
 
@@ -187,16 +183,42 @@
                 mainMenuView.classList.add('hidden');
                 mapViewerVIew.classList.remove('hidden');
                 iframe.src = button.dataset.src;
+                topicAudio.src = button.dataset.audioSrc;
+                resetAudioPlayer();
             }
 
             // Función para mostrar el menú principal
             function showMainMenu() {
                 mapViewerVIew.classList.add('hidden');
                 mainMenuView.classList.remove('hidden');
-                iframe.src = ''; // Limpiar el iframe para detener la carga/reproducción
+                topicAudio.pause(); // Detener el audio si se está reproduciendo
+                iframe.src = ''; 
             }
 
-            // Añadir event listener a la cuadrícula para seleccionar un tema
+            // Función para resetear el estado del botón de audio
+            function resetAudioPlayer() {
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                playText.textContent = 'Reproducir Audio';
+            }
+
+            // Control del reproductor de audio
+            playAudioButton.addEventListener('click', function() {
+                if (topicAudio.paused) {
+                    topicAudio.play();
+                    playIcon.classList.remove('fa-play');
+                    playIcon.classList.add('fa-pause');
+                    playText.textContent = 'Pausar Audio';
+                } else {
+                    topicAudio.pause();
+                    resetAudioPlayer();
+                }
+            });
+
+            // Cuando el audio termina, resetea el botón
+            topicAudio.addEventListener('ended', resetAudioPlayer);
+
+            // Añadir event listener a la cuadrícula
             gridContainer.addEventListener('click', function(event) {
                 const button = event.target.closest('.topic-button');
                 if (button) {
@@ -210,3 +232,4 @@
     </script>
 </body>
 </html>
+
