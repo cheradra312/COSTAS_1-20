@@ -124,7 +124,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Lista de temas y capítulos ---
             const topics = [
                 { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
                 { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público', color: 'cyan', icon: 'fa-landmark',
@@ -146,18 +145,63 @@
                   ]
                 },
                 { file: 'MEA2T5_DESPLEGABLE.html', title: 'Régimen Económico-Financiero', color: 'green', icon: 'fa-coins' },
-                { file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE', color: 'emerald', icon: 'fa-building-columns' },
+                { file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE según la ley 22/1988', color: 'emerald', icon: 'fa-building-columns',
+                  chapters: [
+                    { "title": "1. Competencias de la AGE según la normativa de costas. Decretos de transferencias a las CCAA.", "start": 0, "end": 258 },
+                    { "title": "2. Obras de interés general.", "start": 258, "end": 436 },
+                    { "title": "3. Informes preceptivos y vinculantes.", "start": 426, "end": 534 },
+                    { "title": "4. Competencias de las Comunidades Autónomas.", "start": 524, "end": 563 },
+                    { "title": "5. Competencias municipales.", "start": 553, "end": 643 }
+                  ]
+                },
                 { file: 'MEA2T7_DESPLEGABLE.html', title: 'Régimen Transitorio', color: 'teal', icon: 'fa-history' },
                 { file: 'MEA2T8_DESPLEGABLE.html', title: 'Autorizaciones en Servidumbre', color: 'lime', icon: 'fa-file-signature' },
-                { file: 'MEA2T9_DESPLEGABLE.html', title: 'Biodiversidad y conservación', color: 'yellow', icon: 'fa-seedling' },
+                { file: 'MEA2T9_DESPLEGABLE.html', title: 'Biodiversidad y conservación de ecosistemas marinos y costeros', color: 'yellow', icon: 'fa-seedling',
+                  chapters: [
+                    { "title": "1. Biodiversidad y conservación de ecosistemas marinos y costeros.", "start": 0, "end": 172 },
+                    { "title": "2. Las zonas húmedas costeras.", "start": 172, "end": 448 },
+                    { "title": "3. Las zonas dunares costeras: definición y evolución en la normativa de costas.", "start": 438, "end": 532 },
+                    { "title": "4. Las zonas de fanerógamas marinas. Importancia y tratamiento.", "start": 522, "end": 788 }
+                  ]
+                },
                 { file: 'MEA2T10_DESPLEGABLE.html', title: 'La gestión integral del litoral', color: 'amber', icon: 'fa-tasks' },
                 { file: 'MEA2T11_DESPLEGABLE.html', title: 'Las distintas teorías de ondas', color: 'orange', icon: 'fa-wave-square' },
                 { file: 'MEA2T12_DESPLEGABLE.html', title: 'El transporte sólido litoral', color: 'red', icon: 'fa-arrows-left-right' },
-                { file: 'MEA2T13_DESPLEGABLE.html', title: 'Efectos del cambio climático', color: 'rose', icon: 'fa-temperature-high' },
+                { file: 'MEA2T13_DESPLEGABLE.html', title: 'Los efectos del cambio climático sobre el litoral', color: 'rose', icon: 'fa-temperature-high',
+                  chapters: [
+                    { "title": "1. Efectos del cambio climático en dinámicas, litoral, ecosistemas y recursos.", "start": 0, "end": 152 },
+                    { "title": "2. Adaptación de la costa al cambio climático.", "start": 142, "end": 298 },
+                    { "title": "3. Evaluación de riesgo de inundación en zonas costeras.", "start": 298, "end": 539 },
+                    { "title": "4. Efectos del cambio climático sobre la inundación costera.", "start": 539, "end": 602 },
+                    { "title": "5. Infraestructuras costeras ante el cambio climático.", "start": 592, "end": 687 },
+                    { "title": "6. Huella de carbono de los proyectos y medidas de reducción.", "start": 677, "end": 718 }
+                  ]
+                },
                 { file: 'MEA2T14_DESPLEGABLE.html', title: 'Las estrategias marinas en España', color: 'pink', icon: 'fa-map' },
-                { file: 'MEA2T15_DESPLEGABLE.html', title: 'La erosión en playas', color: 'fuchsia', icon: 'fa-mountain-sun' },
-                { file: 'MEA2T16_DESPLEGABLE.html', title: 'Proyectos de Playas Artificiales', color: 'purple', icon: 'fa-umbrella-beach' },
-                { file: 'MEA2T17_DESPLEGABLE.html', title: 'Fuentes Naturales de Sedimentos', color: 'violet', icon: 'fa-stream' },
+                { file: 'MEA2T15_DESPLEGABLE.html', title: 'La erosión en los distintos tipos de playas', color: 'fuchsia', icon: 'fa-mountain-sun',
+                  chapters: [
+                    { "title": "1. La erosión en los distintos tipos de playas. Causas de la erosión.", "start": 0, "end": 234 },
+                    { "title": "2. Efectos de las infraestructuras litorales sobre las playas. Medidas correctoras.", "start": 234, "end": 629 },
+                    { "title": "3. Efectos del cambio climático sobre la erosión costera.", "start": 619, "end": 676 }
+                  ]
+                },
+                { file: 'MEA2T16_DESPLEGABLE.html', title: 'Proyectos de playas artificiales', color: 'purple', icon: 'fa-umbrella-beach',
+                  chapters: [
+                    { "title": "1. Proyectos de playas artificiales. Actuaciones en la costa.", "start": 0, "end": 328 },
+                    { "title": "2. Formas de playa en planta. La espiral logarítmica y las soluciones parabólicas.", "start": 328, "end": 405 },
+                    { "title": "3. La granulometría de la arena como condicionante del diseño.", "start": 405, "end": 622 },
+                    { "title": "4. Aspectos ambientales de la regeneración de playas.", "start": 612, "end": 721 }
+                  ]
+                },
+                { file: 'MEA2T17_DESPLEGABLE.html', title: 'Las fuentes naturales de sedimentos', color: 'violet', icon: 'fa-stream',
+                  chapters: [
+                    { "title": "1. Las fuentes naturales de sedimentos.", "start": 0, "end": 101 },
+                    { "title": "2. Las zonas de préstamo para alimentación artificial.", "start": 101, "end": 223 },
+                    { "title": "3. Aspectos ambientales de la extracción de materiales del fondo marino.", "start": 223, "end": 517 },
+                    { "title": "4. Métodos de prospección submarina.", "start": 517, "end": 669 },
+                    { "title": "5. Otros métodos de prospección submarina.", "start": 669, "end": 772 }
+                  ]
+                },
                 { file: 'MEA2T18_DESPLEGABLE.html', title: 'El Puerto', color: 'gray', icon: 'fa-anchor' },
                 { file: 'MEA2T19_DESPLEGABLE.html', title: 'Obras Portuarias (I)', color: 'slate', icon: 'fa-hard-hat' },
                 { file: 'MEA2T20_DESPLEGABLE.html', title: 'Obras Portuarias (II)', color: 'zinc', icon: 'fa-ship' }
