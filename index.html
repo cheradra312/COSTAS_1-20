@@ -124,11 +124,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // --- ¡IMPORTANTE! Debes rellenar los tiempos de tus audios aquí ---
+            // --- Lista de temas y capítulos ---
             const topics = [
-                { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' 
-                  // Para añadir capítulos a este tema, sigue el formato del Tema 2
-                },
+                { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
                 { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público', color: 'cyan', icon: 'fa-landmark',
                   chapters: [
                       { "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 193 },
@@ -139,16 +137,14 @@
                       { "title": "6. Inmatriculación de fincas colindantes con el DPMT. Afectación y desafectación.", "start": 643, "end": 702 }
                   ]
                 },
-            
                 { file: 'MEA2T3_DESPLEGABLE.html', title: 'Limitaciones a la Propiedad', color: 'sky', icon: 'fa-ban' },
-                { file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPM-T', color: 'indigo', icon: 'fa-swimmer' },
-                chapters": [
+                { file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPMT', color: 'indigo', icon: 'fa-swimmer',
+                  chapters: [
                     { "title": "1. Utilización del DPMT. Disposiciones generales.", "start": 0, "end": 319 },
                     { "title": "2. Proyectos y obras en el DPMT. Estudios complementarios.", "start": 319, "end": 501 },
                     { "title": "3. Reservas, adscripciones, autorización y concesiones.", "start": 501, "end": 795 }
-                ]
+                  ]
                 },
-                                  
                 { file: 'MEA2T5_DESPLEGABLE.html', title: 'Régimen Económico-Financiero', color: 'green', icon: 'fa-coins' },
                 { file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE', color: 'emerald', icon: 'fa-building-columns' },
                 { file: 'MEA2T7_DESPLEGABLE.html', title: 'Régimen Transitorio', color: 'teal', icon: 'fa-history' },
@@ -192,6 +188,7 @@
             const volumeIcon = document.getElementById('volume-icon');
             
             let currentChapterEndTime = null;
+            let currentChapterStartTime = null;
 
             topics.forEach((topic, index) => {
                 const button = document.createElement('button');
@@ -253,7 +250,7 @@
             topicAudio.addEventListener('loadedmetadata', () => { totalDurationEl.textContent = formatTime(topicAudio.duration); timelineSlider.max = topicAudio.duration; });
             topicAudio.addEventListener('error', () => { playPauseButton.disabled = true; playPauseIcon.className = 'fas fa-times'; totalDurationEl.textContent = "Error"; });
             
-            playPauseButton.addEventListener('click', () => { currentChapterEndTime = null; topicAudio.paused ? topicAudio.play() : topicAudio.pause(); });
+            playPauseButton.addEventListener('click', () => { currentChapterEndTime = null; currentChapterStartTime = null; topicAudio.paused ? topicAudio.play() : topicAudio.pause(); });
             topicAudio.addEventListener('play', () => playPauseIcon.classList.replace('fa-play', 'fa-pause'));
             topicAudio.addEventListener('pause', () => playPauseIcon.classList.replace('fa-pause', 'fa-play'));
             topicAudio.addEventListener('ended', () => { if(!topicAudio.loop) playPauseIcon.classList.replace('fa-pause', 'fa-play'); });
@@ -262,13 +259,19 @@
                 timelineSlider.value = topicAudio.currentTime;
                 currentTimeEl.textContent = formatTime(topicAudio.currentTime);
                 if (currentChapterEndTime && topicAudio.currentTime >= currentChapterEndTime) {
-                    topicAudio.pause();
-                    currentChapterEndTime = null;
-                    document.querySelector('.chapter-button.playing')?.classList.remove('playing');
+                    if (topicAudio.loop) {
+                        topicAudio.currentTime = currentChapterStartTime;
+                        topicAudio.play();
+                    } else {
+                        topicAudio.pause();
+                        currentChapterEndTime = null;
+                        currentChapterStartTime = null;
+                        document.querySelector('.chapter-button.playing')?.classList.remove('playing');
+                    }
                 }
             });
 
-            timelineSlider.addEventListener('input', () => { currentChapterEndTime = null; topicAudio.currentTime = timelineSlider.value; });
+            timelineSlider.addEventListener('input', () => { currentChapterEndTime = null; currentChapterStartTime = null; topicAudio.currentTime = timelineSlider.value; });
 
             chaptersButton.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -279,8 +282,9 @@
                 if (e.target.tagName === 'BUTTON') {
                     document.querySelector('.chapter-button.playing')?.classList.remove('playing');
                     e.target.classList.add('playing');
-                    topicAudio.currentTime = e.target.dataset.start;
-                    currentChapterEndTime = e.target.dataset.end;
+                    currentChapterStartTime = parseFloat(e.target.dataset.start);
+                    currentChapterEndTime = parseFloat(e.target.dataset.end);
+                    topicAudio.currentTime = currentChapterStartTime;
                     topicAudio.play();
                     chaptersDropdown.classList.add('hidden');
                 }
