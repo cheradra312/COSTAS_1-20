@@ -60,9 +60,9 @@
             transition: color 0.2s ease-in-out;
         }
 
-        /* Estilos para el nuevo reproductor de audio */
-        #audio-player-container {
-            display: none; /* Oculto por defecto, se muestra con JS */
+        /* Estilos para el reproductor de audio y la barra de control superior */
+        #top-control-bar {
+            display: none;
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
         }
@@ -87,6 +87,13 @@
             width: 1rem;
             border-radius: 50%;
         }
+        
+        /* Estilo para el botón de play desactivado */
+        #play-pause-button:disabled {
+            background-color: #9ca3af; /* gray-400 */
+            cursor: not-allowed;
+            transform: none;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -105,27 +112,31 @@
 
         <!-- VISTA DEL VISOR DE MAPAS (inicialmente oculta) -->
         <div id="map-viewer-view" class="hidden">
-            <button id="back-button" class="mb-4 bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i>
-                Volver al Menú
-            </button>
-            
-            <!-- REPRODUCTOR DE AUDIO AVANZADO -->
-            <div id="audio-player-container" class="bg-white p-4 rounded-lg shadow-md flex items-center gap-4 mb-4">
-                <button id="play-pause-button" class="text-xl text-white bg-blue-500 hover:bg-blue-600 rounded-full w-12 h-12 flex items-center justify-center transition-transform transform hover:scale-110">
-                    <i id="play-pause-icon" class="fas fa-play"></i>
+            <!-- BARRA DE CONTROL SUPERIOR (rediseñada) -->
+            <div id="top-control-bar" class="flex justify-between items-center gap-4 mb-4">
+                <!-- Botón de Volver a la Izquierda -->
+                <button id="back-button" class="bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 flex items-center gap-2">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="hidden sm:inline">Volver</span>
                 </button>
-                <div class="flex items-center gap-2 text-sm text-gray-500">
-                    <span id="current-time">00:00</span>
-                    <input type="range" id="timeline-slider" class="w-48 md:w-64" value="0" step="1">
-                    <span id="total-duration">00:00</span>
-                </div>
-                <div class="flex items-center gap-4">
-                     <button id="speed-button" class="text-sm font-bold text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full w-12 h-10">1x</button>
-                     <div class="flex items-center gap-2">
-                         <i id="volume-icon" class="fas fa-volume-high text-gray-500 cursor-pointer"></i>
-                         <input type="range" id="volume-slider" class="w-20" min="0" max="1" step="0.05" value="1">
-                     </div>
+                
+                <!-- Reproductor de Audio a la Derecha -->
+                <div id="audio-player" class="bg-white p-2 rounded-lg shadow-md flex items-center gap-3">
+                    <button id="play-pause-button" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition-transform transform hover:scale-110">
+                        <i id="play-pause-icon" class="fas fa-play"></i>
+                    </button>
+                    <div class="flex items-center gap-2 text-xs text-gray-500">
+                        <span id="current-time">00:00</span>
+                        <input type="range" id="timeline-slider" class="w-24 md:w-32" value="0" step="1">
+                        <span id="total-duration">00:00</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                         <button id="speed-button" class="text-xs font-bold text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full w-9 h-9 flex-shrink-0">1x</button>
+                         <div class="hidden md:flex items-center gap-2">
+                             <i id="volume-icon" class="fas fa-volume-high text-gray-500 cursor-pointer"></i>
+                             <input type="range" id="volume-slider" class="w-16" min="0" max="1" step="0.05" value="1">
+                         </div>
+                    </div>
                 </div>
             </div>
 
@@ -162,7 +173,6 @@
                 { file: 'MEA2T20_DESPLEGABLE.html', title: 'Obras Portuarias (II)', color: 'zinc', icon: 'fa-ship' }
             ];
 
-            // Paleta de colores
             const colorPalette = {
                 blue:   { normal: 'bg-blue-100 text-blue-800',   icon: 'text-blue-500' },
                 cyan:   { normal: 'bg-cyan-100 text-cyan-800',   icon: 'text-cyan-500' },
@@ -186,15 +196,13 @@
                 zinc:   { normal: 'bg-zinc-100 text-zinc-800',     icon: 'text-zinc-500' },
             };
 
-            // Elementos del DOM
             const gridContainer = document.getElementById('topics-grid');
             const mainMenuView = document.getElementById('main-menu-view');
             const mapViewerVIew = document.getElementById('map-viewer-view');
             const backButton = document.getElementById('back-button');
             const iframe = document.getElementById('content-frame');
             
-            // Elementos del reproductor de audio
-            const audioPlayerContainer = document.getElementById('audio-player-container');
+            const topControlBar = document.getElementById('top-control-bar');
             const topicAudio = document.getElementById('topic-audio');
             const playPauseButton = document.getElementById('play-pause-button');
             const playPauseIcon = document.getElementById('play-pause-icon');
@@ -205,13 +213,12 @@
             const volumeSlider = document.getElementById('volume-slider');
             const volumeIcon = document.getElementById('volume-icon');
 
-            // Generar botones
             topics.forEach((topic, index) => {
                 const button = document.createElement('button');
                 const colors = colorPalette[topic.color];
                 button.className = 'topic-button';
                 button.dataset.src = topic.file;
-                button.dataset.audioSrc = `audios/${topic.file.replace(/_DESPLEGABLE\.html$|_Desplegable\.html$/, '.mp3')}`;
+                button.dataset.audioSrc = `audios/${topic.file.replace(/_desplegable\.html$/i, '.mp3')}`;
                 button.innerHTML = `
                     <span class="topic-number ${colors.normal}">${index + 1}</span>
                     <i class="fas ${topic.icon} topic-icon ${colors.icon}"></i>
@@ -220,14 +227,19 @@
                 gridContainer.appendChild(button);
             });
 
-            // Lógica de navegación
             function showMapView(button) {
+                // Resetear el estado del botón de play
+                playPauseButton.disabled = false;
+                playPauseButton.classList.remove('bg-gray-400');
+                playPauseButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                playPauseIcon.className = 'fas fa-play';
+
                 mainMenuView.classList.add('hidden');
                 mapViewerVIew.classList.remove('hidden');
                 iframe.src = button.dataset.src;
                 topicAudio.src = button.dataset.audioSrc;
-                audioPlayerContainer.style.display = 'flex';
-                setTimeout(() => audioPlayerContainer.style.opacity = 1, 10);
+                topControlBar.style.display = 'flex';
+                setTimeout(() => topControlBar.style.opacity = 1, 10);
             }
 
             function showMainMenu() {
@@ -235,14 +247,13 @@
                 mainMenuView.classList.remove('hidden');
                 topicAudio.pause();
                 iframe.src = '';
-                audioPlayerContainer.style.opacity = 0;
-                setTimeout(() => audioPlayerContainer.style.display = 'none', 300);
+                topControlBar.style.opacity = 0;
+                setTimeout(() => topControlBar.style.display = 'none', 300);
             }
 
             gridContainer.addEventListener('click', (e) => e.target.closest('.topic-button') && showMapView(e.target.closest('.topic-button')));
             backButton.addEventListener('click', showMainMenu);
 
-            // Lógica del reproductor de audio
             const formatTime = (time) => {
                 const minutes = Math.floor(time / 60);
                 const seconds = Math.floor(time % 60);
@@ -254,15 +265,26 @@
                 timelineSlider.max = topicAudio.duration;
             });
             
+            // NUEVO: Listener para el error de carga del audio
+            topicAudio.addEventListener('error', () => {
+                playPauseButton.disabled = true;
+                playPauseButton.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                playPauseButton.classList.add('bg-gray-400');
+                playPauseIcon.className = 'fas fa-times'; // Icono de "X" para indicar error
+                totalDurationEl.textContent = "Error";
+            });
+
             playPauseButton.addEventListener('click', () => {
                 if (topicAudio.paused) {
                     topicAudio.play();
-                    playPauseIcon.classList.replace('fa-play', 'fa-pause');
                 } else {
                     topicAudio.pause();
-                    playPauseIcon.classList.replace('fa-pause', 'fa-play');
                 }
             });
+            
+            topicAudio.addEventListener('play', () => playPauseIcon.classList.replace('fa-play', 'fa-pause'));
+            topicAudio.addEventListener('pause', () => playPauseIcon.classList.replace('fa-pause', 'fa-play'));
+            topicAudio.addEventListener('ended', () => playPauseIcon.classList.replace('fa-pause', 'fa-play'));
 
             topicAudio.addEventListener('timeupdate', () => {
                 timelineSlider.value = topicAudio.currentTime;
@@ -271,10 +293,6 @@
             
             timelineSlider.addEventListener('input', () => {
                 topicAudio.currentTime = timelineSlider.value;
-            });
-            
-            topicAudio.addEventListener('ended', () => {
-                 playPauseIcon.classList.replace('fa-pause', 'fa-play');
             });
 
             const speeds = [1, 1.25, 1.5, 2];
@@ -286,23 +304,20 @@
                 speedButton.textContent = `${newSpeed}x`;
             });
 
-            volumeSlider.addEventListener('input', (e) => {
-                topicAudio.volume = e.target.value;
-            });
-
+            volumeSlider.addEventListener('input', (e) => topicAudio.volume = e.target.value);
+            
             topicAudio.addEventListener('volumechange', () => {
                 volumeSlider.value = topicAudio.volume;
                 if (topicAudio.muted || topicAudio.volume === 0) {
-                    volumeIcon.classList.replace('fa-volume-high', 'fa-volume-mute');
+                    volumeIcon.className = "fas fa-volume-mute text-gray-500 cursor-pointer";
+                } else if (topicAudio.volume < 0.5) {
+                    volumeIcon.className = "fas fa-volume-low text-gray-500 cursor-pointer";
                 } else {
-                     volumeIcon.classList.replace('fa-volume-mute', 'fa-volume-high');
+                    volumeIcon.className = "fas fa-volume-high text-gray-500 cursor-pointer";
                 }
             });
             
-            volumeIcon.addEventListener('click', () => {
-                topicAudio.muted = !topicAudio.muted;
-            });
-
+            volumeIcon.addEventListener('click', () => topicAudio.muted = !topicAudio.muted);
         });
     </script>
 </body>
