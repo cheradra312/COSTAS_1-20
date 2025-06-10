@@ -230,7 +230,7 @@
             function showMapView(button) {
                 // Resetear el estado del botón de play
                 playPauseButton.disabled = false;
-                playPauseButton.classList.remove('bg-gray-400');
+                playPauseButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
                 playPauseButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
                 playPauseIcon.className = 'fas fa-play';
 
@@ -238,6 +238,11 @@
                 mapViewerVIew.classList.remove('hidden');
                 iframe.src = button.dataset.src;
                 topicAudio.src = button.dataset.audioSrc;
+                
+                // ---- INICIO DE LA HERRAMIENTA DE DEPURACIÓN ----
+                console.log("Intentando cargar audio desde:", topicAudio.src);
+                // ---- FIN DE LA HERRAMIENTA DE DEPURACIÓN ----
+
                 topControlBar.style.display = 'flex';
                 setTimeout(() => topControlBar.style.opacity = 1, 10);
             }
@@ -255,6 +260,7 @@
             backButton.addEventListener('click', showMainMenu);
 
             const formatTime = (time) => {
+                if (isNaN(time)) return "00:00";
                 const minutes = Math.floor(time / 60);
                 const seconds = Math.floor(time % 60);
                 return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
@@ -265,13 +271,13 @@
                 timelineSlider.max = topicAudio.duration;
             });
             
-            // NUEVO: Listener para el error de carga del audio
             topicAudio.addEventListener('error', () => {
                 playPauseButton.disabled = true;
                 playPauseButton.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-                playPauseButton.classList.add('bg-gray-400');
-                playPauseIcon.className = 'fas fa-times'; // Icono de "X" para indicar error
+                playPauseButton.classList.add('bg-gray-400', 'cursor-not-allowed');
+                playPauseIcon.className = 'fas fa-times';
                 totalDurationEl.textContent = "Error";
+                currentTimeEl.textContent = "Audio"
             });
 
             playPauseButton.addEventListener('click', () => {
