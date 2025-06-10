@@ -14,7 +14,6 @@
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6;
         }
-
         .topic-button {
             background-color: #ffffff;
             border: 1px solid #d1d5db;
@@ -29,12 +28,10 @@
             gap: 0.75rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-
         .topic-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
         }
-        
         .topic-number {
             border-radius: 9999px;
             font-weight: 700;
@@ -47,52 +44,22 @@
             flex-shrink: 0;
             transition: all 0.2s ease-in-out;
         }
+        .topic-title { font-weight: 600; flex-grow: 1; }
+        .topic-icon { font-size: 1.25rem; width: 2rem; text-align: center; transition: color 0.2s ease-in-out; }
+        #top-control-bar { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
         
-        .topic-title {
-            font-weight: 600;
-            flex-grow: 1;
-        }
+        input[type="range"]::-webkit-slider-runnable-track { background: #e5e7eb; height: 0.25rem; border-radius: 1rem; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; margin-top: -6px; background-color: #3b82f6; height: 1rem; width: 1rem; border-radius: 50%; }
+        input[type="range"] { -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; }
 
-        .topic-icon {
-            font-size: 1.25rem;
-            width: 2rem;
-            text-align: center;
-            transition: color 0.2s ease-in-out;
-        }
+        #play-pause-button:disabled { background-color: #9ca3af; cursor: not-allowed; transform: none; }
 
-        /* Estilos para el reproductor de audio y la barra de control superior */
-        #top-control-bar {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
+        .chapter-button { transition: background-color 0.2s; }
+        .chapter-button.playing { background-color: #dbeafe; font-weight: 700; color: #1e3a8a; }
         
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            background: transparent;
-            cursor: pointer;
-        }
-        input[type="range"]::-webkit-slider-runnable-track {
-            background: #e5e7eb;
-            height: 0.25rem;
-            border-radius: 1rem;
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            margin-top: -6px;
+        #loop-button.active {
+            color: #ffffff;
             background-color: #3b82f6;
-            height: 1rem;
-            width: 1rem;
-            border-radius: 50%;
-        }
-        
-        /* Estilo para el botón de play desactivado */
-        #play-pause-button:disabled {
-            background-color: #9ca3af; /* gray-400 */
-            cursor: not-allowed;
-            transform: none;
         }
     </style>
 </head>
@@ -105,23 +72,27 @@
                 <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">Visor de Mapas Conceptuales</h1>
                 <p class="text-lg text-gray-500 mt-2">Selecciona un tema para comenzar</p>
             </header>
-            <div id="topics-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <!-- Los botones se generarán aquí con JavaScript -->
-            </div>
+            <div id="topics-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
         </div>
 
-        <!-- VISTA DEL VISOR DE MAPAS (inicialmente oculta) -->
+        <!-- VISTA DEL VISOR DE MAPAS -->
         <div id="map-viewer-view" class="hidden">
-            <!-- BARRA DE CONTROL SUPERIOR (rediseñada) -->
             <div id="top-control-bar" class="flex justify-between items-center gap-4 mb-4">
-                <!-- Botón de Volver a la Izquierda -->
                 <button id="back-button" class="bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 flex items-center gap-2">
                     <i class="fas fa-arrow-left"></i>
                     <span class="hidden sm:inline">Volver</span>
                 </button>
-                
-                <!-- Reproductor de Audio a la Derecha -->
-                <div id="audio-player" class="bg-white p-2 rounded-lg shadow-md flex items-center gap-3">
+                <div id="audio-player" class="bg-white p-2 rounded-lg shadow-md flex items-center gap-3 relative">
+                    <!-- Menú Desplegable de Capítulos -->
+                    <div id="chapters-menu-container" class="relative">
+                        <button id="chapters-button" class="text-gray-600 hover:bg-gray-200 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition">
+                            <i class="fas fa-list-ul"></i>
+                        </button>
+                        <div id="chapters-dropdown" class="absolute top-full mt-2 left-0 bg-white shadow-lg rounded-lg p-2 w-80 max-h-72 overflow-y-auto hidden z-10">
+                            <!-- Los capítulos se insertarán aquí -->
+                        </div>
+                    </div>
+                    
                     <button id="play-pause-button" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition-transform transform hover:scale-110">
                         <i id="play-pause-icon" class="fas fa-play"></i>
                     </button>
@@ -131,6 +102,9 @@
                         <span id="total-duration">00:00</span>
                     </div>
                     <div class="flex items-center gap-3">
+                         <button id="loop-button" class="text-gray-500 hover:bg-gray-200 rounded-full w-9 h-9 flex-shrink-0 transition-colors">
+                            <i class="fas fa-retweet"></i>
+                         </button>
                          <button id="speed-button" class="text-xs font-bold text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full w-9 h-9 flex-shrink-0">1x</button>
                          <div class="hidden md:flex items-center gap-2">
                              <i id="volume-icon" class="fas fa-volume-high text-gray-500 cursor-pointer"></i>
@@ -139,7 +113,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="bg-white p-2 rounded-xl shadow-lg border border-gray-200">
                 <iframe id="content-frame" class="w-full border-0 rounded-lg" style="min-height: 80vh;" src=""></iframe>
             </div>
@@ -150,9 +124,21 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- ¡IMPORTANTE! Debes rellenar los tiempos de tus audios aquí ---
             const topics = [
-                { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
-                { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público', color: 'cyan', icon: 'fa-landmark' },
+                { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' 
+                  // Para añadir capítulos a este tema, sigue el formato del Tema 2
+                },
+                { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público', color: 'cyan', icon: 'fa-landmark',
+                  chapters: [
+                      { "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 122 },
+                      { "title": "2. Prevalencia del DPMT. Potestades de la administración.", "start": 186, "end": 312 },
+                      { "title": "3. El deslinde del DPMT. Procedimiento.", "start": 357, "end": 560 },
+                      { "title": "4. Estudios para la justificación del deslinde.", "start": 560, "end": 570 },
+                      { "title": "5. Proyecto de deslinde. Efectos de la aprobación.", "start": 570, "end": 628 },
+                      { "title": "6. Inmatriculación de fincas. Afectación y desafectación.", "start": 630, "end": 660 }
+                  ]
+                },
                 { file: 'MEA2T3_DESPLEGABLE.html', title: 'Limitaciones a la Propiedad', color: 'sky', icon: 'fa-ban' },
                 { file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPM-T', color: 'indigo', icon: 'fa-swimmer' },
                 { file: 'MEA2T5_DESPLEGABLE.html', title: 'Régimen Económico-Financiero', color: 'green', icon: 'fa-coins' },
@@ -172,28 +158,9 @@
                 { file: 'MEA2T19_DESPLEGABLE.html', title: 'Obras Portuarias (I)', color: 'slate', icon: 'fa-hard-hat' },
                 { file: 'MEA2T20_DESPLEGABLE.html', title: 'Obras Portuarias (II)', color: 'zinc', icon: 'fa-ship' }
             ];
-
+            
             const colorPalette = {
-                blue:   { normal: 'bg-blue-100 text-blue-800',   icon: 'text-blue-500' },
-                cyan:   { normal: 'bg-cyan-100 text-cyan-800',   icon: 'text-cyan-500' },
-                sky:    { normal: 'bg-sky-100 text-sky-800',     icon: 'text-sky-500' },
-                indigo: { normal: 'bg-indigo-100 text-indigo-800', icon: 'text-indigo-500' },
-                green:  { normal: 'bg-green-100 text-green-800',   icon: 'text-green-500' },
-                emerald:{ normal: 'bg-emerald-100 text-emerald-800',icon: 'text-emerald-500' },
-                teal:   { normal: 'bg-teal-100 text-teal-800',     icon: 'text-teal-500' },
-                lime:   { normal: 'bg-lime-100 text-lime-800',     icon: 'text-lime-500' },
-                yellow: { normal: 'bg-yellow-100 text-yellow-800', icon: 'text-yellow-500' },
-                amber:  { normal: 'bg-amber-100 text-amber-800',   icon: 'text-amber-500' },
-                orange: { normal: 'bg-orange-100 text-orange-800', icon: 'text-orange-500' },
-                red:    { normal: 'bg-red-100 text-red-800',       icon: 'text-red-500' },
-                rose:   { normal: 'bg-rose-100 text-rose-800',     icon: 'text-rose-500' },
-                pink:   { normal: 'bg-pink-100 text-pink-800',     icon: 'text-pink-500' },
-                fuchsia:{ normal: 'bg-fuchsia-100 text-fuchsia-800',icon: 'text-fuchsia-500' },
-                purple: { normal: 'bg-purple-100 text-purple-800', icon: 'text-purple-500' },
-                violet: { normal: 'bg-violet-100 text-violet-800', icon: 'text-violet-500' },
-                gray:   { normal: 'bg-gray-100 text-gray-800',     icon: 'text-gray-500' },
-                slate:  { normal: 'bg-slate-100 text-slate-800',   icon: 'text-slate-500' },
-                zinc:   { normal: 'bg-zinc-100 text-zinc-800',     icon: 'text-zinc-500' },
+                blue: { normal: 'bg-blue-100 text-blue-800', icon: 'text-blue-500' }, cyan: { normal: 'bg-cyan-100 text-cyan-800', icon: 'text-cyan-500' }, sky: { normal: 'bg-sky-100 text-sky-800', icon: 'text-sky-500' }, indigo: { normal: 'bg-indigo-100 text-indigo-800', icon: 'text-indigo-500' }, green: { normal: 'bg-green-100 text-green-800', icon: 'text-green-500' }, emerald: { normal: 'bg-emerald-100 text-emerald-800', icon: 'text-emerald-500' }, teal: { normal: 'bg-teal-100 text-teal-800', icon: 'text-teal-500' }, lime: { normal: 'bg-lime-100 text-lime-800', icon: 'text-lime-500' }, yellow: { normal: 'bg-yellow-100 text-yellow-800', icon: 'text-yellow-500' }, amber: { normal: 'bg-amber-100 text-amber-800', icon: 'text-amber-500' }, orange: { normal: 'bg-orange-100 text-orange-800', icon: 'text-orange-500' }, red: { normal: 'bg-red-100 text-red-800', icon: 'text-red-500' }, rose: { normal: 'bg-rose-100 text-rose-800', icon: 'text-rose-500' }, pink: { normal: 'bg-pink-100 text-pink-800', icon: 'text-pink-500' }, fuchsia: { normal: 'bg-fuchsia-100 text-fuchsia-800', icon: 'text-fuchsia-500' }, purple: { normal: 'bg-purple-100 text-purple-800', icon: 'text-purple-500' }, violet: { normal: 'bg-violet-100 text-violet-800', icon: 'text-violet-500' }, gray: { normal: 'bg-gray-100 text-gray-800', icon: 'text-gray-500' }, slate: { normal: 'bg-slate-100 text-slate-800', icon: 'text-slate-500' }, zinc: { normal: 'bg-zinc-100 text-zinc-800', icon: 'text-zinc-500' }
             };
 
             const gridContainer = document.getElementById('topics-grid');
@@ -201,8 +168,10 @@
             const mapViewerVIew = document.getElementById('map-viewer-view');
             const backButton = document.getElementById('back-button');
             const iframe = document.getElementById('content-frame');
-            
             const topControlBar = document.getElementById('top-control-bar');
+            const chaptersMenuContainer = document.getElementById('chapters-menu-container');
+            const chaptersButton = document.getElementById('chapters-button');
+            const chaptersDropdown = document.getElementById('chapters-dropdown');
             const topicAudio = document.getElementById('topic-audio');
             const playPauseButton = document.getElementById('play-pause-button');
             const playPauseIcon = document.getElementById('play-pause-icon');
@@ -210,39 +179,51 @@
             const currentTimeEl = document.getElementById('current-time');
             const totalDurationEl = document.getElementById('total-duration');
             const speedButton = document.getElementById('speed-button');
+            const loopButton = document.getElementById('loop-button');
             const volumeSlider = document.getElementById('volume-slider');
             const volumeIcon = document.getElementById('volume-icon');
+            
+            let currentChapterEndTime = null;
 
             topics.forEach((topic, index) => {
                 const button = document.createElement('button');
                 const colors = colorPalette[topic.color];
                 button.className = 'topic-button';
-                button.dataset.src = topic.file;
-                button.dataset.audioSrc = `audios/${topic.file.replace(/_desplegable\.html$/i, '.mp3')}`;
-                button.innerHTML = `
-                    <span class="topic-number ${colors.normal}">${index + 1}</span>
-                    <i class="fas ${topic.icon} topic-icon ${colors.icon}"></i>
-                    <span class="topic-title">${topic.title}</span>
-                `;
+                button.dataset.index = index;
+                button.innerHTML = `<span class="topic-number ${colors.normal}">${index + 1}</span><i class="fas ${topic.icon} topic-icon ${colors.icon}"></i><span class="topic-title">${topic.title}</span>`;
                 gridContainer.appendChild(button);
             });
 
+            function updateChapters(topic) {
+                chaptersDropdown.innerHTML = '';
+                if (topic.chapters && topic.chapters.length > 0) {
+                    topic.chapters.forEach(chapter => {
+                        const chapterButton = document.createElement('button');
+                        chapterButton.className = 'chapter-button w-full text-left p-2 rounded hover:bg-gray-100 text-sm';
+                        chapterButton.textContent = chapter.title;
+                        chapterButton.dataset.start = chapter.start;
+                        chapterButton.dataset.end = chapter.end;
+                        chaptersDropdown.appendChild(chapterButton);
+                    });
+                    chaptersMenuContainer.classList.remove('hidden');
+                } else {
+                    chaptersMenuContainer.classList.add('hidden');
+                }
+            }
+            
             function showMapView(button) {
-                // Resetear el estado del botón de play
                 playPauseButton.disabled = false;
-                playPauseButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-                playPauseButton.classList.add('bg-blue-500', 'hover:bg-blue-600');
                 playPauseIcon.className = 'fas fa-play';
-
+                const topicIndex = button.dataset.index;
+                const selectedTopic = topics[topicIndex];
+                
                 mainMenuView.classList.add('hidden');
                 mapViewerVIew.classList.remove('hidden');
-                iframe.src = button.dataset.src;
-                topicAudio.src = button.dataset.audioSrc;
+                iframe.src = selectedTopic.file;
+                topicAudio.src = `audios/${selectedTopic.file.replace(/_desplegable\.html$/i, '.mp3')}`;
                 
-                // ---- INICIO DE LA HERRAMIENTA DE DEPURACIÓN ----
-                console.log("Intentando cargar audio desde:", topicAudio.src);
-                // ---- FIN DE LA HERRAMIENTA DE DEPURACIÓN ----
-
+                updateChapters(selectedTopic);
+                
                 topControlBar.style.display = 'flex';
                 setTimeout(() => topControlBar.style.opacity = 1, 10);
             }
@@ -259,71 +240,69 @@
             gridContainer.addEventListener('click', (e) => e.target.closest('.topic-button') && showMapView(e.target.closest('.topic-button')));
             backButton.addEventListener('click', showMainMenu);
 
-            const formatTime = (time) => {
-                if (isNaN(time)) return "00:00";
-                const minutes = Math.floor(time / 60);
-                const seconds = Math.floor(time % 60);
-                return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            };
-
-            topicAudio.addEventListener('loadedmetadata', () => {
-                totalDurationEl.textContent = formatTime(topicAudio.duration);
-                timelineSlider.max = topicAudio.duration;
-            });
+            const formatTime = (time) => !isNaN(time) ? `${String(Math.floor(time/60)).padStart(2,'0')}:${String(Math.floor(time%60)).padStart(2,'0')}` : "00:00";
             
-            topicAudio.addEventListener('error', () => {
-                playPauseButton.disabled = true;
-                playPauseButton.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-                playPauseButton.classList.add('bg-gray-400', 'cursor-not-allowed');
-                playPauseIcon.className = 'fas fa-times';
-                totalDurationEl.textContent = "Error";
-                currentTimeEl.textContent = "Audio"
-            });
-
-            playPauseButton.addEventListener('click', () => {
-                if (topicAudio.paused) {
-                    topicAudio.play();
-                } else {
-                    topicAudio.pause();
-                }
-            });
+            topicAudio.addEventListener('loadedmetadata', () => { totalDurationEl.textContent = formatTime(topicAudio.duration); timelineSlider.max = topicAudio.duration; });
+            topicAudio.addEventListener('error', () => { playPauseButton.disabled = true; playPauseIcon.className = 'fas fa-times'; totalDurationEl.textContent = "Error"; });
             
+            playPauseButton.addEventListener('click', () => { currentChapterEndTime = null; topicAudio.paused ? topicAudio.play() : topicAudio.pause(); });
             topicAudio.addEventListener('play', () => playPauseIcon.classList.replace('fa-play', 'fa-pause'));
             topicAudio.addEventListener('pause', () => playPauseIcon.classList.replace('fa-pause', 'fa-play'));
-            topicAudio.addEventListener('ended', () => playPauseIcon.classList.replace('fa-pause', 'fa-play'));
+            topicAudio.addEventListener('ended', () => { if(!topicAudio.loop) playPauseIcon.classList.replace('fa-pause', 'fa-play'); });
 
             topicAudio.addEventListener('timeupdate', () => {
                 timelineSlider.value = topicAudio.currentTime;
                 currentTimeEl.textContent = formatTime(topicAudio.currentTime);
+                if (currentChapterEndTime && topicAudio.currentTime >= currentChapterEndTime) {
+                    topicAudio.pause();
+                    currentChapterEndTime = null;
+                    document.querySelector('.chapter-button.playing')?.classList.remove('playing');
+                }
             });
-            
-            timelineSlider.addEventListener('input', () => {
-                topicAudio.currentTime = timelineSlider.value;
+
+            timelineSlider.addEventListener('input', () => { currentChapterEndTime = null; topicAudio.currentTime = timelineSlider.value; });
+
+            chaptersButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                chaptersDropdown.classList.toggle('hidden');
+            });
+
+            chaptersDropdown.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    document.querySelector('.chapter-button.playing')?.classList.remove('playing');
+                    e.target.classList.add('playing');
+                    topicAudio.currentTime = e.target.dataset.start;
+                    currentChapterEndTime = e.target.dataset.end;
+                    topicAudio.play();
+                    chaptersDropdown.classList.add('hidden');
+                }
             });
 
             const speeds = [1, 1.25, 1.5, 2];
             let currentSpeedIndex = 0;
             speedButton.addEventListener('click', () => {
                 currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
-                const newSpeed = speeds[currentSpeedIndex];
-                topicAudio.playbackRate = newSpeed;
-                speedButton.textContent = `${newSpeed}x`;
+                topicAudio.playbackRate = speeds[currentSpeedIndex];
+                speedButton.textContent = `${speeds[currentSpeedIndex]}x`;
+            });
+
+            loopButton.addEventListener('click', () => {
+                topicAudio.loop = !topicAudio.loop;
+                loopButton.classList.toggle('active');
             });
 
             volumeSlider.addEventListener('input', (e) => topicAudio.volume = e.target.value);
-            
             topicAudio.addEventListener('volumechange', () => {
                 volumeSlider.value = topicAudio.volume;
-                if (topicAudio.muted || topicAudio.volume === 0) {
-                    volumeIcon.className = "fas fa-volume-mute text-gray-500 cursor-pointer";
-                } else if (topicAudio.volume < 0.5) {
-                    volumeIcon.className = "fas fa-volume-low text-gray-500 cursor-pointer";
-                } else {
-                    volumeIcon.className = "fas fa-volume-high text-gray-500 cursor-pointer";
+                volumeIcon.className = topicAudio.muted || topicAudio.volume === 0 ? "fas fa-volume-mute text-gray-500" : topicAudio.volume < 0.5 ? "fas fa-volume-low text-gray-500" : "fas fa-volume-high text-gray-500";
+            });
+            volumeIcon.addEventListener('click', () => topicAudio.muted = !topicAudio.muted);
+            
+            document.addEventListener('click', (e) => {
+                if (!chaptersMenuContainer.contains(e.target)) {
+                    chaptersDropdown.classList.add('hidden');
                 }
             });
-            
-            volumeIcon.addEventListener('click', () => topicAudio.muted = !topicAudio.muted);
         });
     </script>
 </body>
