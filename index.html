@@ -60,8 +60,32 @@
             transition: color 0.2s ease-in-out;
         }
 
-        .control-button {
-             transition: background-color 0.2s;
+        /* Estilos para el nuevo reproductor de audio */
+        #audio-player-container {
+            display: none; /* Oculto por defecto, se muestra con JS */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: #e5e7eb;
+            height: 0.25rem;
+            border-radius: 1rem;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -6px;
+            background-color: #3b82f6;
+            height: 1rem;
+            width: 1rem;
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -81,32 +105,40 @@
 
         <!-- VISTA DEL VISOR DE MAPAS (inicialmente oculta) -->
         <div id="map-viewer-view" class="hidden">
-            <div class="flex items-center gap-4 mb-4">
-                 <button id="back-button" class="control-button bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 flex items-center gap-2">
-                    <i class="fas fa-arrow-left"></i>
-                    Volver al Menú
+            <button id="back-button" class="mb-4 bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i>
+                Volver al Menú
+            </button>
+            
+            <!-- REPRODUCTOR DE AUDIO AVANZADO -->
+            <div id="audio-player-container" class="bg-white p-4 rounded-lg shadow-md flex items-center gap-4 mb-4">
+                <button id="play-pause-button" class="text-xl text-white bg-blue-500 hover:bg-blue-600 rounded-full w-12 h-12 flex items-center justify-center transition-transform transform hover:scale-110">
+                    <i id="play-pause-icon" class="fas fa-play"></i>
                 </button>
-                <button id="play-audio-button" class="control-button bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 flex items-center gap-2">
-                    <i id="play-icon" class="fas fa-play"></i>
-                    <span id="play-text">Reproducir Audio</span>
-                </button>
+                <div class="flex items-center gap-2 text-sm text-gray-500">
+                    <span id="current-time">00:00</span>
+                    <input type="range" id="timeline-slider" class="w-48 md:w-64" value="0" step="1">
+                    <span id="total-duration">00:00</span>
+                </div>
+                <div class="flex items-center gap-4">
+                     <button id="speed-button" class="text-sm font-bold text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full w-12 h-10">1x</button>
+                     <div class="flex items-center gap-2">
+                         <i id="volume-icon" class="fas fa-volume-high text-gray-500 cursor-pointer"></i>
+                         <input type="range" id="volume-slider" class="w-20" min="0" max="1" step="0.05" value="1">
+                     </div>
+                </div>
             </div>
+
             <div class="bg-white p-2 rounded-xl shadow-lg border border-gray-200">
-                <iframe id="content-frame" 
-                        class="w-full border-0 rounded-lg" 
-                        style="min-height: 85vh;" 
-                        src="">
-                    Tu navegador no soporta iframes.
-                </iframe>
+                <iframe id="content-frame" class="w-full border-0 rounded-lg" style="min-height: 80vh;" src=""></iframe>
             </div>
         </div>
-        <!-- Elemento de audio, oculto pero funcional -->
+        
         <audio id="topic-audio" src=""></audio>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Lista de todos los temas con sus títulos, colores e iconos
             const topics = [
                 { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
                 { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público', color: 'cyan', icon: 'fa-landmark' },
@@ -130,46 +162,56 @@
                 { file: 'MEA2T20_DESPLEGABLE.html', title: 'Obras Portuarias (II)', color: 'zinc', icon: 'fa-ship' }
             ];
 
+            // Paleta de colores
             const colorPalette = {
-                blue:   { normal: 'bg-blue-100 text-blue-800',   icon: 'text-blue-500'   },
-                cyan:   { normal: 'bg-cyan-100 text-cyan-800',   icon: 'text-cyan-500'   },
-                sky:    { normal: 'bg-sky-100 text-sky-800',     icon: 'text-sky-500'    },
+                blue:   { normal: 'bg-blue-100 text-blue-800',   icon: 'text-blue-500' },
+                cyan:   { normal: 'bg-cyan-100 text-cyan-800',   icon: 'text-cyan-500' },
+                sky:    { normal: 'bg-sky-100 text-sky-800',     icon: 'text-sky-500' },
                 indigo: { normal: 'bg-indigo-100 text-indigo-800', icon: 'text-indigo-500' },
-                green:  { normal: 'bg-green-100 text-green-800',   icon: 'text-green-500'  },
-                emerald:{ normal: 'bg-emerald-100 text-emerald-800',icon: 'text-emerald-500'},
-                teal:   { normal: 'bg-teal-100 text-teal-800',     icon: 'text-teal-500'   },
-                lime:   { normal: 'bg-lime-100 text-lime-800',     icon: 'text-lime-500'   },
+                green:  { normal: 'bg-green-100 text-green-800',   icon: 'text-green-500' },
+                emerald:{ normal: 'bg-emerald-100 text-emerald-800',icon: 'text-emerald-500' },
+                teal:   { normal: 'bg-teal-100 text-teal-800',     icon: 'text-teal-500' },
+                lime:   { normal: 'bg-lime-100 text-lime-800',     icon: 'text-lime-500' },
                 yellow: { normal: 'bg-yellow-100 text-yellow-800', icon: 'text-yellow-500' },
-                amber:  { normal: 'bg-amber-100 text-amber-800',   icon: 'text-amber-500'  },
+                amber:  { normal: 'bg-amber-100 text-amber-800',   icon: 'text-amber-500' },
                 orange: { normal: 'bg-orange-100 text-orange-800', icon: 'text-orange-500' },
-                red:    { normal: 'bg-red-100 text-red-800',       icon: 'text-red-500'    },
-                rose:   { normal: 'bg-rose-100 text-rose-800',     icon: 'text-rose-500'   },
-                pink:   { normal: 'bg-pink-100 text-pink-800',     icon: 'text-pink-500'   },
-                fuchsia:{ normal: 'bg-fuchsia-100 text-fuchsia-800',icon: 'text-fuchsia-500'},
+                red:    { normal: 'bg-red-100 text-red-800',       icon: 'text-red-500' },
+                rose:   { normal: 'bg-rose-100 text-rose-800',     icon: 'text-rose-500' },
+                pink:   { normal: 'bg-pink-100 text-pink-800',     icon: 'text-pink-500' },
+                fuchsia:{ normal: 'bg-fuchsia-100 text-fuchsia-800',icon: 'text-fuchsia-500' },
                 purple: { normal: 'bg-purple-100 text-purple-800', icon: 'text-purple-500' },
                 violet: { normal: 'bg-violet-100 text-violet-800', icon: 'text-violet-500' },
-                gray:   { normal: 'bg-gray-100 text-gray-800',     icon: 'text-gray-500'   },
-                slate:  { normal: 'bg-slate-100 text-slate-800',   icon: 'text-slate-500'  },
-                zinc:   { normal: 'bg-zinc-100 text-zinc-800',     icon: 'text-zinc-500'   },
+                gray:   { normal: 'bg-gray-100 text-gray-800',     icon: 'text-gray-500' },
+                slate:  { normal: 'bg-slate-100 text-slate-800',   icon: 'text-slate-500' },
+                zinc:   { normal: 'bg-zinc-100 text-zinc-800',     icon: 'text-zinc-500' },
             };
 
+            // Elementos del DOM
             const gridContainer = document.getElementById('topics-grid');
-            const iframe = document.getElementById('content-frame');
             const mainMenuView = document.getElementById('main-menu-view');
             const mapViewerVIew = document.getElementById('map-viewer-view');
             const backButton = document.getElementById('back-button');
-            const playAudioButton = document.getElementById('play-audio-button');
+            const iframe = document.getElementById('content-frame');
+            
+            // Elementos del reproductor de audio
+            const audioPlayerContainer = document.getElementById('audio-player-container');
             const topicAudio = document.getElementById('topic-audio');
-            const playIcon = document.getElementById('play-icon');
-            const playText = document.getElementById('play-text');
+            const playPauseButton = document.getElementById('play-pause-button');
+            const playPauseIcon = document.getElementById('play-pause-icon');
+            const timelineSlider = document.getElementById('timeline-slider');
+            const currentTimeEl = document.getElementById('current-time');
+            const totalDurationEl = document.getElementById('total-duration');
+            const speedButton = document.getElementById('speed-button');
+            const volumeSlider = document.getElementById('volume-slider');
+            const volumeIcon = document.getElementById('volume-icon');
 
-            // Generar los botones dinámicamente
+            // Generar botones
             topics.forEach((topic, index) => {
                 const button = document.createElement('button');
                 const colors = colorPalette[topic.color];
                 button.className = 'topic-button';
                 button.dataset.src = topic.file;
-                button.dataset.audioSrc = `audios/${topic.file.replace('.html', '.mp3')}`;
+                button.dataset.audioSrc = `audios/${topic.file.replace(/_DESPLEGABLE\.html$|_Desplegable\.html$/, '.mp3')}`;
                 button.innerHTML = `
                     <span class="topic-number ${colors.normal}">${index + 1}</span>
                     <i class="fas ${topic.icon} topic-icon ${colors.icon}"></i>
@@ -178,58 +220,90 @@
                 gridContainer.appendChild(button);
             });
 
-            // Función para mostrar la vista del mapa
+            // Lógica de navegación
             function showMapView(button) {
                 mainMenuView.classList.add('hidden');
                 mapViewerVIew.classList.remove('hidden');
                 iframe.src = button.dataset.src;
                 topicAudio.src = button.dataset.audioSrc;
-                resetAudioPlayer();
+                audioPlayerContainer.style.display = 'flex';
+                setTimeout(() => audioPlayerContainer.style.opacity = 1, 10);
             }
 
-            // Función para mostrar el menú principal
             function showMainMenu() {
                 mapViewerVIew.classList.add('hidden');
                 mainMenuView.classList.remove('hidden');
-                topicAudio.pause(); // Detener el audio si se está reproduciendo
-                iframe.src = ''; 
+                topicAudio.pause();
+                iframe.src = '';
+                audioPlayerContainer.style.opacity = 0;
+                setTimeout(() => audioPlayerContainer.style.display = 'none', 300);
             }
 
-            // Función para resetear el estado del botón de audio
-            function resetAudioPlayer() {
-                playIcon.classList.remove('fa-pause');
-                playIcon.classList.add('fa-play');
-                playText.textContent = 'Reproducir Audio';
-            }
+            gridContainer.addEventListener('click', (e) => e.target.closest('.topic-button') && showMapView(e.target.closest('.topic-button')));
+            backButton.addEventListener('click', showMainMenu);
 
-            // Control del reproductor de audio
-            playAudioButton.addEventListener('click', function() {
+            // Lógica del reproductor de audio
+            const formatTime = (time) => {
+                const minutes = Math.floor(time / 60);
+                const seconds = Math.floor(time % 60);
+                return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            };
+
+            topicAudio.addEventListener('loadedmetadata', () => {
+                totalDurationEl.textContent = formatTime(topicAudio.duration);
+                timelineSlider.max = topicAudio.duration;
+            });
+            
+            playPauseButton.addEventListener('click', () => {
                 if (topicAudio.paused) {
                     topicAudio.play();
-                    playIcon.classList.remove('fa-play');
-                    playIcon.classList.add('fa-pause');
-                    playText.textContent = 'Pausar Audio';
+                    playPauseIcon.classList.replace('fa-play', 'fa-pause');
                 } else {
                     topicAudio.pause();
-                    resetAudioPlayer();
+                    playPauseIcon.classList.replace('fa-pause', 'fa-play');
                 }
             });
 
-            // Cuando el audio termina, resetea el botón
-            topicAudio.addEventListener('ended', resetAudioPlayer);
+            topicAudio.addEventListener('timeupdate', () => {
+                timelineSlider.value = topicAudio.currentTime;
+                currentTimeEl.textContent = formatTime(topicAudio.currentTime);
+            });
+            
+            timelineSlider.addEventListener('input', () => {
+                topicAudio.currentTime = timelineSlider.value;
+            });
+            
+            topicAudio.addEventListener('ended', () => {
+                 playPauseIcon.classList.replace('fa-pause', 'fa-play');
+            });
 
-            // Añadir event listener a la cuadrícula
-            gridContainer.addEventListener('click', function(event) {
-                const button = event.target.closest('.topic-button');
-                if (button) {
-                    showMapView(button);
+            const speeds = [1, 1.25, 1.5, 2];
+            let currentSpeedIndex = 0;
+            speedButton.addEventListener('click', () => {
+                currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
+                const newSpeed = speeds[currentSpeedIndex];
+                topicAudio.playbackRate = newSpeed;
+                speedButton.textContent = `${newSpeed}x`;
+            });
+
+            volumeSlider.addEventListener('input', (e) => {
+                topicAudio.volume = e.target.value;
+            });
+
+            topicAudio.addEventListener('volumechange', () => {
+                volumeSlider.value = topicAudio.volume;
+                if (topicAudio.muted || topicAudio.volume === 0) {
+                    volumeIcon.classList.replace('fa-volume-high', 'fa-volume-mute');
+                } else {
+                     volumeIcon.classList.replace('fa-volume-mute', 'fa-volume-high');
                 }
             });
             
-            // Añadir event listener al botón de "Volver"
-            backButton.addEventListener('click', showMainMenu);
+            volumeIcon.addEventListener('click', () => {
+                topicAudio.muted = !topicAudio.muted;
+            });
+
         });
     </script>
 </body>
 </html>
-
