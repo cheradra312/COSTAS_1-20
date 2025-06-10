@@ -124,44 +124,45 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- Lista de temas y capítulos ---
             const topics = [
                 { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
-                { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público', color: 'cyan', icon: 'fa-landmark',
+                { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark',
                   chapters: [
-                      { "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 193 },
-                      { "title": "2. Prevalencia del DPMT. Potestades de la administración.", "start": 183, "end": 246 },
-                      { "title": "3. El deslinde del DPMT. Procedimiento.", "start": 236, "end": 543 },
+                      { "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 192 },
+                      { "title": "2. Prevalencia del DPMT. Potestades de la administración.", "start": 182, "end": 242 },
+                      { "title": "3. El deslinde del DPMT. Procedimiento.", "start": 232, "end": 543 },
                       { "title": "4. Estudios para la justificación del deslinde.", "start": 543, "end": 573 },
-                      { "title": "5. Proyecto de deslinde. Efectos de la aprobación del deslinde.", "start": 573, "end": 653 },
-                      { "title": "6. Inmatriculación de fincas colindantes con el DPMT. Afectación y desafectación.", "start": 643, "end": 702 }
+                      { "title": "5. Proyecto de deslinde. Efectos de la aprobación del deslinde.", "start": 573, "end": 648 },
+                      { "title": "6. Inmatriculación de fincas colindantes con el DPMT. Afectación y desafectación.", "start": 638 }
                   ]
                 },
                 { file: 'MEA2T3_DESPLEGABLE.html', title: 'Limitaciones a la Propiedad', color: 'sky', icon: 'fa-ban' },
                 { file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPMT', color: 'indigo', icon: 'fa-swimmer',
                   chapters: [
-                    { "title": "1. Utilización del DPMT. Disposiciones generales.", "start": 0, "end": 319 },
-                    { "title": "2. Proyectos y obras en el DPMT. Estudios complementarios.", "start": 319, "end": 501 },
-                    { "title": "3. Reservas, adscripciones, autorización y concesiones.", "start": 501, "end": 795 }
+                    { "title": "1. Utilización del DPMT. Disposiciones generales.", "start": 0, "end": 331 },
+                    { "title": "2. Proyectos y obras en el DPMT. Estudios complementarios.", "start": 321, "end": 504 },
+                    { "title": "3. Reservas, adscripciones, autorización y concesiones.", "start": 494 }
                   ]
                 },
                 { file: 'MEA2T5_DESPLEGABLE.html', title: 'Régimen Económico-Financiero', color: 'green', icon: 'fa-coins' },
                 { file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE según la ley 22/1988', color: 'emerald', icon: 'fa-building-columns',
                   chapters: [
                     { "title": "1. Competencias de la AGE según la normativa de costas. Decretos de transferencias a las CCAA.", "start": 0, "end": 258 },
-                    { "title": "2. Obras de interés general.", "start": 258, "end": 436 },
-                    { "title": "3. Informes preceptivos y vinculantes.", "start": 426, "end": 534 },
-                    { "title": "4. Competencias de las Comunidades Autónomas.", "start": 524, "end": 563 },
-                    { "title": "5. Competencias municipales.", "start": 553, "end": 643 }
+                    { "title": "2. Obras de interés general.", "start": 258, "end": 443 },
+                    { "title": "3. Informes preceptivos y vinculantes.", "start": 433, "end": 531 },
+                    { "title": "4. Competencias de las Comunidades Autónomas.", "start": 521, "end": 565 },
+                    { "title": "5. Competencias municipales.", "start": 555 }
                   ]
                 },
                 { file: 'MEA2T7_DESPLEGABLE.html', title: 'Régimen Transitorio', color: 'teal', icon: 'fa-history' },
                 { file: 'MEA2T8_DESPLEGABLE.html', title: 'Autorizaciones en Servidumbre', color: 'lime', icon: 'fa-file-signature' },
                 { file: 'MEA2T9_DESPLEGABLE.html', title: 'Biodiversidad y conservación de ecosistemas marinos y costeros', color: 'yellow', icon: 'fa-seedling',
                   chapters: [
-                    { "title": "1. Biodiversidad y conservación de ecosistemas marinos y costeros.", "start": 0, "end": 172 },
-                    { "title": "2. Las zonas húmedas costeras.", "start": 172, "end": 448 },
-                    { "title": "3. Las zonas dunares costeras: definición y evolución en la normativa de costas.", "start": 438, "end": 532 },
-                    { "title": "4. Las zonas de fanerógamas marinas. Importancia y tratamiento.", "start": 522, "end": 788 }
+                    { "title": "1. Biodiversidad y conservación de ecosistemas marinos y costeros.", "start": 0, "end": 173 },
+                    { "title": "2. Las zonas húmedas costeras.", "start": 163, "end": 450 },
+                    { "title": "3. Las zonas dunares costeras: definición y evolución en la normativa de costas.", "start": 440, "end": 546 },
+                    { "title": "4. Las zonas de fanerógamas marinas. Importancia y tratamiento.", "start": 536 }
                   ]
                 },
                 { file: 'MEA2T10_DESPLEGABLE.html', title: 'La gestión integral del litoral', color: 'amber', icon: 'fa-tasks' },
@@ -169,37 +170,37 @@
                 { file: 'MEA2T12_DESPLEGABLE.html', title: 'El transporte sólido litoral', color: 'red', icon: 'fa-arrows-left-right' },
                 { file: 'MEA2T13_DESPLEGABLE.html', title: 'Los efectos del cambio climático sobre el litoral', color: 'rose', icon: 'fa-temperature-high',
                   chapters: [
-                    { "title": "1. Efectos del cambio climático en dinámicas, litoral, ecosistemas y recursos.", "start": 0, "end": 152 },
-                    { "title": "2. Adaptación de la costa al cambio climático.", "start": 142, "end": 298 },
-                    { "title": "3. Evaluación de riesgo de inundación en zonas costeras.", "start": 298, "end": 539 },
-                    { "title": "4. Efectos del cambio climático sobre la inundación costera.", "start": 539, "end": 602 },
-                    { "title": "5. Infraestructuras costeras ante el cambio climático.", "start": 592, "end": 687 },
-                    { "title": "6. Huella de carbono de los proyectos y medidas de reducción.", "start": 677, "end": 718 }
+                    { "title": "1. Los efectos del cambio climático sobre las dinámicas oceánicas, el litoral, los ecosistemas y los recursos marinos. Factores de degradación del litoral.", "start": 0, "end": 153 },
+                    { "title": "2. Adaptación de la costa a los efectos del cambio climático.", "start": 143, "end": 259 },
+                    { "title": "3. Evaluación de riesgo de inundación en zonas costeras.", "start": 249, "end": 538 },
+                    { "title": "4. Efectos del cambio climático sobre la inundación costera.", "start": 528, "end": 596 },
+                    { "title": "5. Las infraestructuras costeras ante los impactos del cambio climático: análisis y diseño de medidas de adaptación.", "start": 586, "end": 677 },
+                    { "title": "6. Huella de carbono de los proyectos en análisis de ciclo de vida. Principales medidas en infraestructuras para contribuir a la reducción de emisiones de gases de efecto invernadero.", "start": 667 }
                   ]
                 },
                 { file: 'MEA2T14_DESPLEGABLE.html', title: 'Las estrategias marinas en España', color: 'pink', icon: 'fa-map' },
                 { file: 'MEA2T15_DESPLEGABLE.html', title: 'La erosión en los distintos tipos de playas', color: 'fuchsia', icon: 'fa-mountain-sun',
                   chapters: [
-                    { "title": "1. La erosión en los distintos tipos de playas. Causas de la erosión.", "start": 0, "end": 234 },
-                    { "title": "2. Efectos de las infraestructuras litorales sobre las playas. Medidas correctoras.", "start": 234, "end": 629 },
-                    { "title": "3. Efectos del cambio climático sobre la erosión costera.", "start": 619, "end": 676 }
+                    { "title": "1. La erosión en los distintos tipos de playas. Causas de la erosión.", "start": 0, "end": 210 },
+                    { "title": "2. Efectos de las infraestructuras litorales sobre las playas. Medidas correctoras y actuaciones.", "start": 200, "end": 616 },
+                    { "title": "3. Efectos del cambio climático sobre la erosión costera.", "start": 606 }
                   ]
                 },
                 { file: 'MEA2T16_DESPLEGABLE.html', title: 'Proyectos de playas artificiales', color: 'purple', icon: 'fa-umbrella-beach',
                   chapters: [
-                    { "title": "1. Proyectos de playas artificiales. Actuaciones en la costa.", "start": 0, "end": 328 },
-                    { "title": "2. Formas de playa en planta. La espiral logarítmica y las soluciones parabólicas.", "start": 328, "end": 405 },
-                    { "title": "3. La granulometría de la arena como condicionante del diseño.", "start": 405, "end": 622 },
-                    { "title": "4. Aspectos ambientales de la regeneración de playas.", "start": 612, "end": 721 }
+                    { "title": "1. Proyectos de playas artificiales. Actuaciones en la costa.", "start": 0, "end": 329 },
+                    { "title": "2. Formas de playa en planta. La espiral logarítmica y las soluciones parabólicas.", "start": 319, "end": 428 },
+                    { "title": "3. La granulometría de la arena como condicionante del diseño.", "start": 418, "end": 626 },
+                    { "title": "4. Aspectos ambientales de la regeneración de playas. Efectos sobre las comunidades pelágicas y bentónicas.", "start": 616 }
                   ]
                 },
                 { file: 'MEA2T17_DESPLEGABLE.html', title: 'Las fuentes naturales de sedimentos', color: 'violet', icon: 'fa-stream',
                   chapters: [
-                    { "title": "1. Las fuentes naturales de sedimentos.", "start": 0, "end": 101 },
-                    { "title": "2. Las zonas de préstamo para alimentación artificial.", "start": 101, "end": 223 },
-                    { "title": "3. Aspectos ambientales de la extracción de materiales del fondo marino.", "start": 223, "end": 517 },
-                    { "title": "4. Métodos de prospección submarina.", "start": 517, "end": 669 },
-                    { "title": "5. Otros métodos de prospección submarina.", "start": 669, "end": 772 }
+                    { "title": "1. Las fuentes naturales de sedimentos.", "start": 0, "end": 99 },
+                    { "title": "2. Las zonas de préstamo para alimentación artificial.", "start": 89, "end": 226 },
+                    { "title": "3. Aspectos ambientales de la extracción de materiales del fondo marino. Directrices para la caracterización del material de dragado y su reubicación en aguas del dominio público marítimo-terrestre.", "start": 216, "end": 515 },
+                    { "title": "4. Métodos de prospección submarina.", "start": 505, "end": 667 },
+                    { "title": "5. Otros métodos de prospección submarina: gravimetría, sondeos y ensayos in-situ.", "start": 657 }
                   ]
                 },
                 { file: 'MEA2T18_DESPLEGABLE.html', title: 'El Puerto', color: 'gray', icon: 'fa-anchor' },
@@ -251,7 +252,9 @@
                         chapterButton.className = 'chapter-button w-full text-left p-2 rounded hover:bg-gray-100 text-sm';
                         chapterButton.textContent = chapter.title;
                         chapterButton.dataset.start = chapter.start;
-                        chapterButton.dataset.end = chapter.end;
+                        if(chapter.end !== undefined) {
+                           chapterButton.dataset.end = chapter.end;
+                        }
                         chaptersDropdown.appendChild(chapterButton);
                     });
                     chaptersMenuContainer.classList.remove('hidden');
@@ -297,7 +300,15 @@
             playPauseButton.addEventListener('click', () => { currentChapterEndTime = null; currentChapterStartTime = null; topicAudio.paused ? topicAudio.play() : topicAudio.pause(); });
             topicAudio.addEventListener('play', () => playPauseIcon.classList.replace('fa-play', 'fa-pause'));
             topicAudio.addEventListener('pause', () => playPauseIcon.classList.replace('fa-pause', 'fa-play'));
-            topicAudio.addEventListener('ended', () => { if(!topicAudio.loop) playPauseIcon.classList.replace('fa-pause', 'fa-play'); });
+            topicAudio.addEventListener('ended', () => {
+                 if (topicAudio.loop && currentChapterStartTime === null) {
+                    // Loop for the whole audio
+                 } else if (topicAudio.loop && currentChapterStartTime !== null) {
+                    // This case is handled in 'timeupdate'
+                 } else {
+                    playPauseIcon.classList.replace('fa-pause', 'fa-play');
+                 }
+            });
 
             topicAudio.addEventListener('timeupdate', () => {
                 timelineSlider.value = topicAudio.currentTime;
@@ -327,7 +338,7 @@
                     document.querySelector('.chapter-button.playing')?.classList.remove('playing');
                     e.target.classList.add('playing');
                     currentChapterStartTime = parseFloat(e.target.dataset.start);
-                    currentChapterEndTime = parseFloat(e.target.dataset.end);
+                    currentChapterEndTime = e.target.dataset.end ? parseFloat(e.target.dataset.end) : null;
                     topicAudio.currentTime = currentChapterStartTime;
                     topicAudio.play();
                     chaptersDropdown.classList.add('hidden');
