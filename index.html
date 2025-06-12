@@ -26,6 +26,7 @@
         #edit-mode-toggle { -webkit-appearance: none; appearance: none; height: 1.25rem; width: 2.25rem; }
         #edit-mode-toggle:checked::after { transform: translateX(1rem); }
         #edit-mode-toggle::after { content: ''; display: inline-block; width: 1rem; height: 1rem; border-radius: 50%; background: white; transition: transform 0.2s ease-in-out; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        .modal-overlay { transition: opacity 0.3s ease-in-out; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -67,8 +68,14 @@
                 <!-- PANEL DE EDICIÓN -->
                 <div id="editor-panel" class="w-full lg:w-1/3 bg-white p-4 rounded-lg shadow-lg border border-gray-200 hidden">
                     <h3 class="font-bold text-lg mb-2 border-b pb-2">Editor de Capítulos</h3>
-                    <div id="editor-list" class="space-y-2 max-h-[65vh] overflow-y-auto pr-2"></div>
-                    <button id="save-data-button" class="mt-4 w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 flex items-center justify-center gap-2">
+                    <div id="editor-list" class="space-y-2 max-h-[60vh] overflow-y-auto pr-2"></div>
+                     <div class="mt-4 flex gap-2">
+                        <input type="text" id="new-chapter-title-input" placeholder="Título del nuevo epígrafe" class="flex-grow p-2 border rounded-md text-sm">
+                        <button id="add-chapter-button" class="bg-indigo-500 text-white font-bold p-2 rounded-md hover:bg-indigo-600">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <button id="save-data-button" class="mt-2 w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 flex items-center justify-center gap-2">
                         <i id="save-icon" class="fas fa-cloud-upload-alt"></i><span id="save-text">Guardar en la Nube</span>
                     </button>
                     <p id="save-notification" class="text-center text-green-700 font-semibold mt-2 opacity-0 transition-opacity">¡Guardado!</p>
@@ -76,6 +83,20 @@
                 <!-- Iframe -->
                 <div id="iframe-container" class="flex-1 transition-all duration-300">
                      <iframe id="content-frame" class="w-full border-0 rounded-xl shadow-lg" style="min-height: 80vh;" src=""></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MODAL DE CONTRASEÑA -->
+        <div id="password-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 modal-overlay">
+            <div class="bg-white p-6 rounded-lg shadow-2xl w-full max-w-sm">
+                <h2 class="text-lg font-bold mb-4">Modo Edición Protegido</h2>
+                <p class="text-sm text-gray-600 mb-2">Introduce la contraseña para continuar.</p>
+                <input type="password" id="password-input" class="w-full border border-gray-300 p-2 rounded-md mb-2">
+                <p id="password-error" class="text-red-500 text-xs hidden mb-4">Contraseña incorrecta.</p>
+                <div class="flex justify-end gap-2">
+                    <button id="cancel-edit-button" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300">Cancelar</button>
+                    <button id="confirm-edit-button" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -99,6 +120,7 @@
             function initializeFirebase() {
                 let firebaseConfig;
                 try {
+                    // CORRECCIÓN: Se usa la configuración que proporcionaste como primaria
                     firebaseConfig = {
                         apiKey: "AIzaSyCKXzSmQ9F1M4W59Vyalu3CWdKFsh7dOmE",
                         authDomain: "costas-304b9.firebaseapp.com",
@@ -108,16 +130,12 @@
                         appId: "1:251850800414:web:435e20e5305881732e5d0f",
                         measurementId: "G-C2NTL72PZH"
                     };
-
+                    // Sobrescribir con la configuración del entorno si está disponible
                     if (typeof __firebase_config !== 'undefined' && __firebase_config) {
                          const envConfig = JSON.parse(__firebase_config);
-                         if (envConfig.projectId) {
-                            firebaseConfig = envConfig;
-                         }
+                         if (envConfig.projectId) firebaseConfig = envConfig;
                     }
-                } catch (e) {
-                    console.error("Firebase config parsing error:", e);
-                }
+                } catch (e) { console.error("Firebase config parsing error:", e); }
                 
                 const app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
@@ -127,18 +145,10 @@
             // Autenticación del usuario
             async function authenticateUser() {
                 try {
-                    if (!auth) {
-                        console.error("Firebase Auth no está inicializado.");
-                        return;
-                    }
                     const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-                    if (token) {
-                        await signInWithCustomToken(auth, token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
+                    if (token) await signInWithCustomToken(auth, token);
+                    else await signInAnonymously(auth);
                     userId = auth.currentUser.uid;
-                    console.log("Usuario autenticado:", userId);
                 } catch (error) {
                     console.error("Error de autenticación:", error);
                     userId = `anon_${crypto.randomUUID()}`;
@@ -149,7 +159,7 @@
             await authenticateUser();
 
             const topics = [
-                { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
+                 { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
                 { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark',
                   chapters: [
                       { "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 192 },
@@ -286,7 +296,7 @@
             
             // Lógica de la aplicación...
             const colorPalette={blue:{normal:"bg-blue-100 text-blue-800",icon:"text-blue-500"},cyan:{normal:"bg-cyan-100 text-cyan-800",icon:"text-cyan-500"},sky:{normal:"bg-sky-100 text-sky-800",icon:"text-sky-500"},indigo:{normal:"bg-indigo-100 text-indigo-800",icon:"text-indigo-500"},green:{normal:"bg-green-100 text-green-800",icon:"text-green-500"},emerald:{normal:"bg-emerald-100 text-emerald-800",icon:"text-emerald-500"},teal:{normal:"bg-teal-100 text-teal-800",icon:"text-teal-500"},lime:{normal:"bg-lime-100 text-lime-800",icon:"text-lime-500"},yellow:{normal:"bg-yellow-100 text-yellow-800",icon:"text-yellow-500"},amber:{normal:"bg-amber-100 text-amber-800",icon:"text-amber-500"},orange:{normal:"bg-orange-100 text-orange-800",icon:"text-orange-500"},red:{normal:"bg-red-100 text-red-800",icon:"text-red-500"},rose:{normal:"bg-rose-100 text-rose-800",icon:"text-rose-500"},pink:{normal:"bg-pink-100 text-pink-800",icon:"text-pink-500"},fuchsia:{normal:"bg-fuchsia-100 text-fuchsia-800",icon:"text-fuchsia-500"},purple:{normal:"bg-purple-100 text-purple-800",icon:"text-purple-500"},violet:{normal:"bg-violet-100 text-violet-800",icon:"text-violet-500"},gray:{normal:"bg-gray-100 text-gray-800",icon:"text-gray-500"},slate:{normal:"bg-slate-100 text-slate-800",icon:"text-slate-500"},zinc:{normal:"bg-zinc-100 text-zinc-800",icon:"text-zinc-500"}};
-            const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),iframe=document.getElementById("content-frame"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),volumeSlider=document.getElementById("volume-slider"),volumeIcon=document.getElementById("volume-icon"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),iframeContainer=document.getElementById("iframe-container");
+            const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),iframe=document.getElementById("content-frame"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),volumeSlider=document.getElementById("volume-slider"),volumeIcon=document.getElementById("volume-icon"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),iframeContainer=document.getElementById("iframe-container"),addChapterButton = document.getElementById("add-chapter-button"),passwordModalOverlay=document.getElementById("password-modal-overlay"),passwordInput=document.getElementById("password-input"),confirmEditButton=document.getElementById("confirm-edit-button"),cancelEditButton=document.getElementById("cancel-edit-button"),passwordError=document.getElementById("password-error"),newChapterTitleInput=document.getElementById("new-chapter-title-input");
             
             topics.forEach((e,t)=>{
                 const o=document.createElement("button"),n=colorPalette[e.color];
@@ -325,13 +335,21 @@
 
                 const chaptersToEdit = docSnap.exists() ? docSnap.data().chapters : (topic.chapters || []);
                 
-                editorList.innerHTML="",editedChapters=JSON.parse(JSON.stringify(chaptersToEdit));
-                if(chaptersToEdit.length > 0) {
-                    chaptersToEdit.forEach((chapter, index) => {
+                editedChapters=JSON.parse(JSON.stringify(chaptersToEdit));
+                renderEditorList();
+            }
+            
+            function renderEditorList() {
+                editorList.innerHTML = "";
+                 if(editedChapters.length > 0) {
+                    editedChapters.forEach((chapter, index) => {
                         const item = document.createElement("div");
                         item.className = "edit-chapter-item p-2 border-b";
                         item.innerHTML = `
-                            <input type="text" value="${chapter.title}" class="w-full font-semibold text-sm bg-gray-100 p-1 rounded border" data-index="${index}">
+                            <div class="flex items-center gap-2">
+                                <input type="text" value="${chapter.title}" class="w-full font-semibold text-sm bg-gray-100 p-1 rounded border" data-index="${index}">
+                                <button data-index="${index}" class="delete-chapter-button text-red-500 hover:text-red-700 p-1"><i class="fas fa-trash-alt"></i></button>
+                            </div>
                             <div class="flex items-center justify-between mt-1 text-xs">
                                 <div>
                                     <button data-index="${index}" data-type="start" class="mark-button bg-sky-500 text-white px-2 py-1 rounded-md hover:bg-sky-600">Inicio</button>
@@ -345,9 +363,10 @@
                         editorList.appendChild(item);
                     });
                 } else {
-                    editorList.innerHTML='<p class="text-gray-500 text-sm">Este tema no tiene capítulos definidos para editar.</p>';
+                    editorList.innerHTML='<p class="text-gray-500 text-sm">Este tema no tiene capítulos. Añade uno para empezar.</p>';
                 }
             }
+
 
             async function showMapView(button){
                 playPauseButton.disabled = !1, playPauseIcon.className = "fas fa-play";
@@ -392,15 +411,58 @@
             speedButton.addEventListener("click",()=>{currentSpeedIndex=(currentSpeedIndex+1)%speeds.length;const e=speeds[currentSpeedIndex];topicAudio.playbackRate=e,speedButton.textContent=`${e}x`}),loopButton.addEventListener("click",()=>{topicAudio.loop=!topicAudio.loop,loopButton.classList.toggle("active")}),volumeSlider.addEventListener("input",e=>topicAudio.volume=e.target.value),topicAudio.addEventListener("volumechange",()=>{volumeSlider.value=topicAudio.volume,volumeIcon.className=topicAudio.muted||0===topicAudio.volume?"fas fa-volume-mute text-gray-500":topicAudio.volume<.5?"fas fa-volume-low text-gray-500":"fas fa-volume-high text-gray-500"}),volumeIcon.addEventListener("click",()=>topicAudio.muted=!topicAudio.muted),document.addEventListener("click",e=>{chaptersMenuContainer.contains(e.target)||chaptersDropdown.classList.add("hidden")});
             
             editModeToggle.addEventListener("change",()=>{
-                let isEditMode=editModeToggle.checked;
-                editorPanel.style.display=isEditMode?"block":"none",iframeContainer.className=isEditMode?"w-full lg:w-2/3":"flex-1",setTimeout(()=>{editorPanel.style.opacity=isEditMode?1:0},10)
+                if (editModeToggle.checked) {
+                    passwordModalOverlay.classList.remove('hidden');
+                } else {
+                    let isEditMode = false;
+                    editorPanel.style.opacity = 0;
+                    setTimeout(() => editorPanel.style.display = 'none', 300);
+                    iframeContainer.className = "flex-1 transition-all duration-300";
+                }
+            });
+
+            function enterEditMode() {
+                let isEditMode = true;
+                editorPanel.style.display="block";
+                iframeContainer.className="w-full lg:w-2/3";
+                setTimeout(()=>editorPanel.style.opacity=1,10);
+                passwordModalOverlay.classList.add('hidden');
+                passwordInput.value = '';
+                passwordError.classList.add('hidden');
+            }
+
+            function closePasswordModal() {
+                 passwordModalOverlay.classList.add('hidden');
+                 editModeToggle.checked = false;
+                 passwordInput.value = '';
+                 passwordError.classList.add('hidden');
+            }
+            
+            confirmEditButton.addEventListener('click', () => {
+                if (passwordInput.value === "1234") {
+                    enterEditMode();
+                } else {
+                    passwordError.classList.remove('hidden');
+                }
+            });
+            cancelEditButton.addEventListener('click', closePasswordModal);
+            passwordModalOverlay.addEventListener('click', (e) => {
+                if (e.target === passwordModalOverlay) {
+                    closePasswordModal();
+                }
             });
 
             editorList.addEventListener("click",e=>{
-                const t=e.target.closest(".mark-button");
+                const t=e.target.closest(".mark-button, .delete-chapter-button");
                 if(t){
-                    const o=t.dataset.index,n=t.dataset.type,a=Math.round(100*topicAudio.currentTime)/100;
-                    editedChapters[o][n]=a,document.getElementById(`${n}-time-${o}`).textContent=formatTime(a)
+                    const o=t.dataset.index;
+                    if (t.classList.contains('mark-button')) {
+                        const n=t.dataset.type, a=Math.round(100*topicAudio.currentTime)/100;
+                        editedChapters[o][n]=a,document.getElementById(`${n}-time-${o}`).textContent=formatTime(a);
+                    } else if (t.classList.contains('delete-chapter-button')) {
+                        editedChapters.splice(o, 1);
+                        renderEditorList();
+                    }
                 }
             });
 
@@ -408,6 +470,15 @@
                 if (e.target.tagName === 'INPUT' && e.target.type === 'text') {
                     const index = e.target.dataset.index;
                     editedChapters[index].title = e.target.value;
+                }
+            });
+            
+            addChapterButton.addEventListener('click', () => {
+                const newTitle = newChapterTitleInput.value.trim();
+                if (newTitle) {
+                    editedChapters.push({ title: newTitle, start: 0, end: 0 });
+                    renderEditorList();
+                    newChapterTitleInput.value = '';
                 }
             });
 
@@ -423,7 +494,7 @@
                     await setDoc(docRef, dataToSave);
                     saveNotification.style.opacity=1;
                     setTimeout(()=>{ saveNotification.style.opacity=0 }, 2000);
-                    await updateChapters(currentTopic); // Refresh chapters dropdown
+                    await updateChapters(currentTopic);
                 } catch (error) {
                     console.error("Error al guardar en Firestore: ", error);
                     alert("No se pudo guardar los datos.");
@@ -436,3 +507,4 @@
     </script>
 </body>
 </html>
+
