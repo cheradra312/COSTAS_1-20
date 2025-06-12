@@ -6,419 +6,684 @@
     <title>Visor de Mapas Conceptuales</title>
     <!-- Tailwind CSS para el diseño -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome para los iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Google Fonts y Font Awesome para los iconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
+        /* Estilos generales y para el selector */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            background-color: #f3f4f6; /* bg-gray-100 */
         }
-        .topic-button {
-            background-color: #ffffff;
-            border: 1px solid #d1d5db;
-            color: #374151;
-            padding: 1rem;
+        .selector-container {
+            background-color: white;
+            padding: 1.5rem 2rem;
+            margin: 2rem auto;
             border-radius: 0.75rem;
-            text-align: left;
-            transition: all 0.2s ease-in-out;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            max-width: 56rem; /* max-w-2xl */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid #e5e7eb;
         }
-        .topic-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-        }
-        .topic-number {
-            border-radius: 9999px;
-            font-weight: 700;
+        #map-selector {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
             font-size: 1.125rem;
-            width: 2.75rem;
-            height: 2.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.2s ease-in-out;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .topic-title { font-weight: 600; flex-grow: 1; }
-        .topic-icon { font-size: 1.25rem; width: 2rem; text-align: center; transition: color 0.2s ease-in-out; }
-        #top-control-bar { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
-        
-        input[type="range"]::-webkit-slider-runnable-track { background: #e5e7eb; height: 0.25rem; border-radius: 1rem; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; margin-top: -6px; background-color: #3b82f6; height: 1rem; width: 1rem; border-radius: 50%; }
-        input[type="range"] { -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; }
-
-        #play-pause-button:disabled { background-color: #9ca3af; cursor: not-allowed; transform: none; }
-
-        .chapter-button { transition: background-color 0.2s; }
-        .chapter-button.playing { background-color: #dbeafe; font-weight: 700; color: #1e3a8a; }
-        
-        #loop-button.active {
-            color: #ffffff;
-            background-color: #3b82f6;
+        #map-selector:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgb(59 130 246 / 0.3);
         }
+        #content-container {
+             margin: 0 auto;
+             padding: 0 1rem; /* Padding para dispositivos móviles */
+        }
+
+        /* --- ESTILOS COMBINADOS --- */
+
+        /* Mapa 1: Legislación de Costas */
+        .costas-card { background-color: #ffffff; border-radius: 0.75rem; padding: 1.5rem 2rem; margin-bottom: 2rem; margin-top: 2rem; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); border: 1px solid #e2e8f0; max-width: 56rem; margin-left: auto; margin-right: auto; }
+        .costas-card-header { display: flex; align-items: center; gap: 0.75rem; border-bottom: 2px solid #e0f2fe; padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+        .costas-card-header .icon-bg { padding: 0.5rem; border-radius: 9999px; background-color: #e0f2fe; color: #0c4a6e; }
+        .costas-card-header h2 { font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
+        .costas-collapsible-content ul { padding-left: 1.75rem; margin-top: 0.75rem; border-left: 3px dotted #cbd5e1; }
+        .costas-collapsible-content ul > li { position: relative; list-style-type: none; margin-top: 1rem; }
+        .costas-collapsible-content ul > li::before { content: '🔹'; position: absolute; left: -1.75rem; color: #3b82f6; }
+        .pill { display: inline-block; padding: 0.1rem 0.6rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; margin: 0 0.2rem; }
+        .pill-green { background-color: #dcfce7; color: #166534; } .pill-red { background-color: #fee2e2; color: #991b1b; } .pill-blue { background-color: #dbeafe; color: #1e4d91; } .pill-yellow { background-color: #fef9c3; color: #854d0e; } .pill-gray { background-color: #e5e7eb; color: #374151; } .pill-purple { background-color: #f3e8ff; color: #5b21b6;} .pill-brown { background-color: #fde2d4; color: #8c2d04;}
+        .costas-nested-list { padding-left: 1.5rem; margin-top: 0.5rem; border-left: 2px solid #e2e8f0; list-style-type: none;}
+        .costas-collapsible-trigger { cursor: pointer; display: flex; align-items: center; width: 100%; padding: 0.25rem 0; }
+        .costas-collapsible-icon { transition: transform 0.3s ease; margin-right: 0.75rem; width: 1em; color: #3b82f6; }
+        .costas-collapsible-content { overflow: hidden; max-height: 5000px; transition: max-height 0.5s ease-out; padding-left: 1.75rem; }
+        .costas-collapsible-content.hidden { max-height: 0; }
+        .costas-collapsible-trigger.open .costas-collapsible-icon { transform: rotate(90deg); }
+
+        /* Mapa 2: Estaciones de Bombeo */
+        .bombeo-container-a4 { max-width: 210mm; margin: 2rem auto; padding: 20mm; background-color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border-radius: 0.25rem; }
+        .bombeo-collapsible-header { font-size: 1.75rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0; padding: 0.75rem; border-bottom: 2px solid #93c5fd; color: #1e3a8a; display: flex; align-items: center; justify-content: space-between; cursor: pointer; border-radius: 0.25rem 0.25rem 0 0; transition: background-color 0.2s ease-in-out; }
+        .bombeo-collapsible-header:hover { background-color: #eff6ff; }
+        .bombeo-collapsible-header .fas { margin-right: 0.75rem; color: #3b82f6; font-size: 1.5rem; }
+        .bombeo-collapsible-header .toggle-icon { transition: transform 0.3s ease-in-out; font-size: 1.2rem; color: #3b82f6; }
+        .bombeo-collapsible-header.active .toggle-icon { transform: rotate(90deg); }
+        .bombeo-collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; border: 1px solid #e5e7eb; border-top: none; padding: 0 1.5rem; border-radius: 0 0 0.25rem 0.25rem; }
+        .bombeo-collapsible-content.open { padding: 1.5rem; }
+        .bombeo-container-a4 h1 { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 2rem; color: #111827; border-bottom: 3px solid #2563eb; padding-bottom: 1rem; }
+        .bombeo-container-a4 h3 { font-size: 1.375rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; color: #1f2937; display: flex; align-items: center; }
+        .bombeo-container-a4 h3 .fas { margin-right: 0.6rem; color: #60a5fa; font-size: 1.2rem; }
+        .bombeo-container-a4 h4 { font-size: 1.125rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #374151; display: flex; align-items: center; }
+        .bombeo-container-a4 p { margin-bottom: 0.875rem; line-height: 1.75; }
+        .bombeo-container-a4 ul { list-style: none; padding-left: 0; margin-bottom: 1rem; }
+        .bombeo-container-a4 li { margin-bottom: 0.6rem; padding-left: 2rem; position: relative; }
+        .bombeo-container-a4 li::before { font-family: "Font Awesome 6 Free"; font-weight: 900; content: '\f105'; position: absolute; left: 0.5rem; color: #2563eb; font-size: 0.9em; top: 0.35em; }
+        .bombeo-container-a4 ul ul { margin-top: 0.5rem; padding-left: 2rem; }
+        .bombeo-container-a4 ul ul li::before { content: '\f0da'; color: #60a5fa; }
+        .bombeo-container-a4 ul ul ul li::before { content: '\f054'; color: #93c5fd; }
+        .bombeo-container-a4 strong, .bombeo-container-a4 b { font-weight: 700; color: #1e3a8a; }
+        .bombeo-container-a4 em, .bombeo-container-a4 i:not(.fas):not(.far) { font-style: italic; color: #059669; }
+        .interpretation-guide { margin-top: 3.5rem; padding: 1.75rem; background-color: #f9fafb; border-top: 2px solid #3b82f6; border-radius: 0 0 0.25rem 0.25rem; font-size: 0.875rem;}
+        
+        /* Mapa 3: Régimen Transitorio */
+        .regimen-card { background-color: #ffffff; border-radius: 0.75rem; padding: 1.5rem 2rem; margin-bottom: 2rem; margin-top: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); border: 1px solid #e5e7eb; max-width: 56rem; margin-left: auto; margin-right: auto;}
+        .regimen-card h2 { border-bottom: 2px solid #dbeafe; padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+        .regimen-card ul { list-style-type: none; padding-left: 0; }
+        .regimen-card li { margin-top: 0.75rem; }
+        .regimen-card ul ul { padding-left: 1.5rem; margin-top: 0.5rem; border-left: 2px solid #e2e8f0; }
+        .regimen-card ul ul ul { padding-left: 1.5rem; margin-top: 0.5rem; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-4">
 
-    <div class="max-w-7xl mx-auto">
-        <!-- VISTA DEL MENÚ PRINCIPAL -->
-        <div id="main-menu-view">
-            <header class="text-center mb-8">
-                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">Visor de Mapas Conceptuales</h1>
-                <p class="text-lg text-gray-500 mt-2">Selecciona un tema para comenzar</p>
-            </header>
-            <div id="topics-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
-        </div>
-
-        <!-- VISTA DEL VISOR DE MAPAS -->
-        <div id="map-viewer-view" class="hidden">
-            <div id="top-control-bar" class="flex justify-between items-center gap-4 mb-4">
-                <button id="back-button" class="bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 flex items-center gap-2">
-                    <i class="fas fa-arrow-left"></i>
-                    <span class="hidden sm:inline">Volver</span>
-                </button>
-                <div id="audio-player" class="bg-white p-2 rounded-lg shadow-md flex items-center gap-3 relative">
-                    <div id="chapters-menu-container" class="relative">
-                        <button id="chapters-button" class="text-gray-600 hover:bg-gray-200 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition">
-                            <i class="fas fa-list-ul"></i>
-                        </button>
-                        <div id="chapters-dropdown" class="absolute top-full mt-2 left-0 bg-white shadow-lg rounded-lg p-2 w-80 max-h-72 overflow-y-auto hidden z-10"></div>
-                    </div>
-                    <button id="play-pause-button" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition-transform transform hover:scale-110">
-                        <i id="play-pause-icon" class="fas fa-play"></i>
-                    </button>
-                    <div class="flex items-center gap-2 text-xs text-gray-500">
-                        <span id="current-time">00:00</span>
-                        <input type="range" id="timeline-slider" class="w-24 md:w-32" value="0" step="1">
-                        <span id="total-duration">00:00</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                         <button id="loop-button" class="text-gray-500 hover:bg-gray-200 rounded-full w-9 h-9 flex-shrink-0 transition-colors">
-                            <i class="fas fa-retweet"></i>
-                         </button>
-                         <button id="speed-button" class="text-xs font-bold text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full w-9 h-9 flex-shrink-0">1x</button>
-                         <div class="hidden md:flex items-center gap-2">
-                             <i id="volume-icon" class="fas fa-volume-high text-gray-500 cursor-pointer"></i>
-                             <input type="range" id="volume-slider" class="w-16" min="0" max="1" step="0.05" value="1">
-                         </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- CORRECCIÓN: Se elimina el div contenedor del iframe -->
-            <iframe id="content-frame" class="w-full border-0 rounded-xl shadow-lg" style="min-height: 80vh;" src=""></iframe>
-        </div>
-        
-        <audio id="topic-audio" src=""></audio>
+    <!-- Contenedor del selector -->
+    <div class="selector-container">
+        <label for="map-selector" class="block mb-2 text-xl font-bold text-gray-800"><i class="fas fa-map mr-2"></i>Seleccionar Mapa Conceptual</label>
+        <select id="map-selector" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option value="costas" selected>MEA2T1: Legislación de Costas</option>
+            <option value="bombeo">MEA1T28: Estaciones de Bombeo</option>
+            <option value="regimen">MEA2T7: Régimen Transitorio</option>
+        </select>
     </div>
 
+    <!-- Contenedor donde se mostrará el contenido del mapa seleccionado -->
+    <div id="content-container"></div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // --- Lista de temas y capítulos ---
-            const topics = [
-                { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
-                { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark',
-                  chapters: [
-                      { "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 192 },
-                      { "title": "2. Prevalencia del DPMT. Potestades de la administración.", "start": 182, "end": 242 },
-                      { "title": "3. El deslinde del DPMT. Procedimiento.", "start": 232, "end": 543 },
-                      { "title": "4. Estudios para la justificación del deslinde.", "start": 543, "end": 573 },
-                      { "title": "5. Proyecto de deslinde. Efectos de la aprobación del deslinde.", "start": 573, "end": 648 },
-                      { "title": "6. Inmatriculación de fincas colindantes con el DPMT. Afectación y desafectación.", "start": 638 }
-                  ]
-                },
-                { file: 'MEA2T3_DESPLEGABLE.html', title: 'Limitaciones a la propiedad', color: 'sky', icon: 'fa-ban',
-                  chapters: [
-                    { "title": "1. Limitaciones a la propiedad sobre los terrenos contiguos a la ribera del mar por razones de protección del dominio público marítimo-terrestre.", "start": 0, "end": 72 },
-                    { "title": "2. Servidumbres de protección, tránsito y acceso al mar. Anchura y usos permitidos.", "start": 62, "end": 435 },
-                    { "title": "3. La disposición transitoria tercera de la ley 22/1988.", "start": 425, "end": 565 },
-                    { "title": "4. Otras limitaciones a la propiedad. Zona de influencia.", "start": 555 }
-                  ]
-                },
-                { file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPMT', color: 'indigo', icon: 'fa-swimmer',
-                  chapters: [
-                    { "title": "1. Utilización del DPMT. Disposiciones generales.", "start": 0, "end": 331 },
-                    { "title": "2. Proyectos y obras en el DPMT. Estudios complementarios.", "start": 321, "end": 504 },
-                    { "title": "3. Reservas, adscripciones, autorización y concesiones.", "start": 494 }
-                  ]
-                },
-                { file: 'MEA2T5_DESPLEGABLE.html', title: 'Régimen Económico-Financiero', color: 'green', icon: 'fa-coins' },
-                { file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE según la ley 22/1988', color: 'emerald', icon: 'fa-building-columns',
-                  chapters: [
-                    { "title": "1. Competencias de la AGE según la normativa de costas. Decretos de transferencias a las CCAA.", "start": 0, "end": 258 },
-                    { "title": "2. Obras de interés general.", "start": 258, "end": 443 },
-                    { "title": "3. Informes preceptivos y vinculantes.", "start": 433, "end": 531 },
-                    { "title": "4. Competencias de las Comunidades Autónomas.", "start": 521, "end": 565 },
-                    { "title": "5. Competencias municipales.", "start": 555 }
-                  ]
-                },
-                { file: 'MEA2T7_DESPLEGABLE.html', title: 'Régimen Transitorio', color: 'teal', icon: 'fa-history' },
-                { file: 'MEA2T8_DESPLEGABLE.html', title: 'Las autorizaciones en servidumbre de protección', color: 'lime', icon: 'fa-file-signature',
-                  chapters: [
-                    { "title": "1. Las autorizaciones en servidumbre de protección. Competencia.", "start": 0, "end": 334 },
-                    { "title": "2. La declaración responsable. La disposición transitoria cuarta de la ley 22/1988 y su desarrollo reglamentario.", "start": 324, "end": 614 },
-                    { "title": "3. Autorización de nuevos usos y construcciones conforme a los instrumentos de ordenación, fachadas marítimas.", "start": 604 }
-                  ]
-                },
-                { file: 'MEA2T9_DESPLEGABLE.html', title: 'Biodiversidad y conservación de ecosistemas marinos y costeros', color: 'yellow', icon: 'fa-seedling',
-                  chapters: [
-                    { "title": "1. Biodiversidad y conservación de ecosistemas marinos y costeros.", "start": 0, "end": 173 },
-                    { "title": "2. Las zonas húmedas costeras.", "start": 163, "end": 450 },
-                    { "title": "3. Las zonas dunares costeras: definición y evolución en la normativa de costas.", "start": 440, "end": 546 },
-                    { "title": "4. Las zonas de fanerógamas marinas. Importancia y tratamiento.", "start": 536 }
-                  ]
-                },
-                { file: 'MEA2T10_DESPLEGABLE.html', title: 'La gestión integral del litoral', color: 'amber', icon: 'fa-tasks' },
-                { file: 'MEA2T11_DESPLEGABLE.html', title: 'Las distintas teorías de ondas', color: 'orange', icon: 'fa-wave-square',
-                  chapters: [
-                    { "title": "1. Las distintas teorías de ondas.", "start": 0, "end": 257 },
-                    { "title": "2. La propagación del oleaje. Los fenómenos de refracción, difracción, transmisión y reflexión del oleaje.", "start": 247 }
-                  ]
-                },
-                { file: 'MEA2T12_DESPLEGABLE.html', title: 'El transporte sólido litoral', color: 'red', icon: 'fa-arrows-left-right',
-                  chapters: [
-                    { "title": "1. El transporte sólido litoral.", "start": 0, "end": 108 },
-                    { "title": "2. Distintas formulaciones.", "start": 98, "end": 182 },
-                    { "title": "3. Evolución de la línea de costa. Modelos.", "start": 172, "end": 352 },
-                    { "title": "4. El perfil de playa. Distintas formulaciones teóricas.", "start": 342, "end": 482 },
-                    { "title": "5. Variaciones del perfil.", "start": 472, "end": 613 },
-                    { "title": "6. La profundidad de cierre.", "start": 603 }
-                  ]
-                },
-                { file: 'MEA2T13_DESPLEGABLE.html', title: 'Los efectos del cambio climático sobre el litoral', color: 'rose', icon: 'fa-temperature-high',
-                  chapters: [
-                    { "title": "1. Los efectos del cambio climático sobre las dinámicas oceánicas, el litoral, los ecosistemas y los recursos marinos. Factores de degradación del litoral.", "start": 0, "end": 153 },
-                    { "title": "2. Adaptación de la costa a los efectos del cambio climático.", "start": 143, "end": 259 },
-                    { "title": "3. Evaluación de riesgo de inundación en zonas costeras.", "start": 249, "end": 538 },
-                    { "title": "4. Efectos del cambio climático sobre la inundación costera.", "start": 528, "end": 596 },
-                    { "title": "5. Las infraestructuras costeras ante los impactos del cambio climático: análisis y diseño de medidas de adaptación.", "start": 586, "end": 677 },
-                    { "title": "6. Huella de carbono de los proyectos en análisis de ciclo de vida. Principales medidas en infraestructuras para contribuir a la reducción de emisiones de gases de efecto invernadero.", "start": 667 }
-                  ]
-                },
-                { file: 'MEA2T14_DESPLEGABLE.html', title: 'Las estrategias marinas en España', color: 'pink', icon: 'fa-map' },
-                { file: 'MEA2T15_DESPLEGABLE.html', title: 'La erosión en los distintos tipos de playas', color: 'fuchsia', icon: 'fa-mountain-sun',
-                  chapters: [
-                    { "title": "1. La erosión en los distintos tipos de playas. Causas de la erosión.", "start": 0, "end": 210 },
-                    { "title": "2. Efectos de las infraestructuras litorales sobre las playas. Medidas correctoras y actuaciones.", "start": 200, "end": 616 },
-                    { "title": "3. Efectos del cambio climático sobre la erosión costera.", "start": 606 }
-                  ]
-                },
-                { file: 'MEA2T16_DESPLEGABLE.html', title: 'Proyectos de playas artificiales', color: 'purple', icon: 'fa-umbrella-beach',
-                  chapters: [
-                    { "title": "1. Proyectos de playas artificiales. Actuaciones en la costa.", "start": 0, "end": 329 },
-                    { "title": "2. Formas de playa en planta. La espiral logarítmica y las soluciones parabólicas.", "start": 319, "end": 428 },
-                    { "title": "3. La granulometría de la arena como condicionante del diseño.", "start": 418, "end": 626 },
-                    { "title": "4. Aspectos ambientales de la regeneración de playas. Efectos sobre las comunidades pelágicas y bentónicas.", "start": 616 }
-                  ]
-                },
-                { file: 'MEA2T17_DESPLEGABLE.html', title: 'Las fuentes naturales de sedimentos', color: 'violet', icon: 'fa-stream',
-                  chapters: [
-                    { "title": "1. Las fuentes naturales de sedimentos.", "start": 0, "end": 99 },
-                    { "title": "2. Las zonas de préstamo para alimentación artificial.", "start": 89, "end": 226 },
-                    { "title": "3. Aspectos ambientales de la extracción de materiales del fondo marino. Directrices para la caracterización del material de dragado y su reubicación en aguas del dominio público marítimo-terrestre.", "start": 216, "end": 515 },
-                    { "title": "4. Métodos de prospección submarina.", "start": 505, "end": 667 },
-                    { "title": "5. Otros métodos de prospección submarina: gravimetría, sondeos y ensayos in-situ.", "start": 657 }
-                  ]
-                },
-                { file: 'MEA2T18_DESPLEGABLE.html', title: 'El puerto', color: 'gray', icon: 'fa-anchor',
-                  chapters: [
-                    { "title": "1. El puerto, aspectos generales y físicos. Objetivos y funciones.", "start": 0, "end": 43 },
-                    { "title": "2. El sistema portuario español.", "start": 33, "end": 163 },
-                    { "title": "3. Real Decreto Legislativo 2/2011 por el que se aprueba el TRL de puertos del Estado y de la Marina Mercante.", "start": 153, "end": 217 },
-                    { "title": "4. Financiación de puertos.", "start": 207, "end": 357 },
-                    { "title": "5. Modelos de gestión.", "start": 347, "end": 409 },
-                    { "title": "6. Planificación portuaria. Fundamentos y planes.", "start": 399, "end": 507 },
-                    { "title": "7. Previsiones de tráfico.", "start": 497, "end": 622 },
-                    { "title": "8. Estudio de capacidad. Ordenación de terminales.", "start": 612 }
-                  ]
-                },
-                { file: 'MEA2T19_DESPLEGABLE.html', title: 'Obras portuarias (II)', color: 'slate', icon: 'fa-hard-hat',
-                  chapters: [
-                    { "title": "1. Obras de abrigo y portuarias y definición y caracterización de la situación y factores de proyecto.", "start": 0, "end": 202 },
-                    { "title": "2. Estados límite últimos. Período de retorno.", "start": 192, "end": 266 },
-                    { "title": "3. Bases de datos. Clima marítimo, caracterización estadística de oleaje, parámetros.", "start": 256, "end": 583 },
-                    { "title": "4. Análisis estadístico del oleaje en aguas profundas y poco profundas régimen estremales y régimen medio.", "start": 573 }
-                  ]
-                },
-                { file: 'MEA2T20_DESPLEGABLE.html', title: 'Obras portuarias (I)', color: 'zinc', icon: 'fa-ship',
-                  chapters: [
-                    { "title": "1. Obras de abrigo y portuarias y diseños y dimensionamiento. Diseño en planta.", "start": 0, "end": 185 },
-                    { "title": "2. Obras exteriores: Diques verticales, diques en talud, diques rebasables.", "start": 175, "end": 370 },
-                    { "title": "3. Obras interiores: muelles, dársenas, amarres, fondeo.", "start": 360, "end": 535 },
-                    { "title": "4. Superficies portuarias.", "start": 525, "end": 680 },
-                    { "title": "5. Profundidades accesorias, maniobrabilidad de buques.", "start": 670 }
-                  ]
-                }
-            ];
-            
-            const colorPalette = {
-                blue: { normal: 'bg-blue-100 text-blue-800', icon: 'text-blue-500' }, cyan: { normal: 'bg-cyan-100 text-cyan-800', icon: 'text-cyan-500' }, sky: { normal: 'bg-sky-100 text-sky-800', icon: 'text-sky-500' }, indigo: { normal: 'bg-indigo-100 text-indigo-800', icon: 'text-indigo-500' }, green: { normal: 'bg-green-100 text-green-800', icon: 'text-green-500' }, emerald: { normal: 'bg-emerald-100 text-emerald-800', icon: 'text-emerald-500' }, teal: { normal: 'bg-teal-100 text-teal-800', icon: 'text-teal-500' }, lime: { normal: 'bg-lime-100 text-lime-800', icon: 'text-lime-500' }, yellow: { normal: 'bg-yellow-100 text-yellow-800', icon: 'text-yellow-500' }, amber: { normal: 'bg-amber-100 text-amber-800', icon: 'text-amber-500' }, orange: { normal: 'bg-orange-100 text-orange-800', icon: 'text-orange-500' }, red: { normal: 'bg-red-100 text-red-800', icon: 'text-red-500' }, rose: { normal: 'bg-rose-100 text-rose-800', icon: 'text-rose-500' }, pink: { normal: 'bg-pink-100 text-pink-800', icon: 'text-pink-500' }, fuchsia: { normal: 'bg-fuchsia-100 text-fuchsia-800', icon: 'text-fuchsia-500' }, purple: { normal: 'bg-purple-100 text-purple-800', icon: 'text-purple-500' }, violet: { normal: 'bg-violet-100 text-violet-800', icon: 'text-violet-500' }, gray: { normal: 'bg-gray-100 text-gray-800', icon: 'text-gray-500' }, slate: { normal: 'bg-slate-100 text-slate-800', icon: 'text-slate-500' }, zinc: { normal: 'bg-zinc-100 text-zinc-800', icon: 'text-zinc-500' }
-            };
+        // Objeto para almacenar el contenido HTML COMPLETO de cada mapa
+        const mapData = {
+            costas: `
+                <div class="max-w-5xl mx-auto">
+                    <header class="mb-10 text-center">
+                        <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-water"></i> MEA2T1: LA LEGISLACIÓN DE COSTAS <i class="fas fa-scroll"></i></h1>
+                        <p class="text-xl text-gray-600"><strong><u>Evolución, Leyes y Reglamento General</u></strong></p>
+                    </header>
+                    <div class="costas-card">
+                        <div class="costas-card-header">
+                            <div class="icon-bg"><i class="fas fa-history"></i></div>
+                            <h2>1. EVOLUCIÓN DE LA NORMATIVA DE COSTAS</h2>
+                        </div>
+                        <div class="costas-collapsible-trigger">
+                            <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                            <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-bullseye mr-2 text-blue-600"></i>Objetivos y Justificación</h3>
+                        </div>
+                        <div class="costas-collapsible-content hidden">
+                            <ul>
+                                <li>La legislación de costas tiene como objetivos la defensa del equilibrio de nuestro litoral, la protección y conservación de sus valores naturales y culturales, el aprovechamiento racional de sus recursos, y la garantía de su uso y disfrute abierto a todos.</li>
+                                <li>
+                                    <div class="costas-collapsible-trigger">
+                                         <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                                         <p>Estos objetivos están justificados por los <strong>daños sufridos</strong> en nuestra costa durante las décadas previas a la entrada en vigor de la Ley de Costas de 1988, y que han sido principalmente los siguientes:</p>
+                                    </div>
+                                    <div class="costas-collapsible-content hidden">
+                                         <ul class="costas-nested-list">
+                                            <li><i class="fas fa-users mr-2 text-purple-600"></i>Un <strong>fuerte incremento de la población</strong> en el litoral y la consiguiente intensificación de usos turístico, agrícola, industrial, de transporte y pesquero, que concentra más del 35% de la población, con una densidad cuatro veces superior a la media, y que llega a triplicarse estacionalmente en ciertas zonas por la población turística.</li>
+                                            <li><i class="fas fa-arrow-down mr-2 text-red-600"></i>La <strong>disminución de los aportes sólidos de los ríos</strong> que ha ocasionado la regresión del 17% de línea de costa, debido a que, por los embalses construidos y las repoblaciones forestales, los principales suministradores de sedimentos no aportan áridos. A esto hay que añadir la destrucción de dunas litorales, las extracciones abusivas de áridos y la ejecución de obras marítimas con barreras que bloquean el flujo de arena a lo largo de la costa.</li>
+                                            <li><i class="fas fa-user-lock mr-2 text-orange-600"></i>La <strong>desnaturalización de porciones del dominio público litoral</strong> porque el reconocimiento de la propiedad particular, y por el otorgamiento de determinadas concesiones y la carencia de accesos públicos, con el resultado de que ciertas extensiones de la ribera del mar han quedado sustraídas al disfrute de la colectividad.</li>
+                                            <li><i class="fas fa-water-damage mr-2 text-brown-600"></i>La <strong>destrucción de las marismas</strong>, espacios vitales para la producción orgánica y biológica, bajo pretendidos motivos sanitarios, económicos o agrícolas, habiendo sido dedicados realmente a una edificación especulativa.</li>
+                                            <li><i class="fas fa-city mr-2 text-gray-600"></i>Un <strong>urbanismo nocivo</strong> de altas murallas de edificios al mismo borde de la playa o del mar, vías de transporte de gran intensidad de tráfico demasiado próximas a la orilla, y vertidos al mar sin depuración en muchos casos.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr class="my-6">
+                        <div class="costas-collapsible-trigger">
+                            <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                            <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-gavel mr-2 text-yellow-700"></i>Evolución Histórica y Legislación Anterior</h3>
+                        </div>
+                        <div class="costas-collapsible-content hidden">
+                             <ul>
+                                <li>En las cuestiones de dominio, además de definir la ribera del mar de forma más acorde con su realidad natural, se vuelve a los orígenes de nuestra tradición, recogida en el <strong>Derecho romano y medieval</strong>, al reafirmar la calificación del mar y su ribera como patrimonio colectivo, siguiendo el mandato constitucional.</li>
+                                <li>La actual legislación de costas cierra el paréntesis de signo privatizador que inició la Ley de Aguas de 1866 con un equívoco respeto a los derechos legítimamente adquiridos, que no deberían ser otros que los concesionales, continuado por las <strong>Leyes de Puertos de 1880 y 1928</strong>, así como por la <strong>Ley de Costas de 1969</strong>, a pesar de los graves problemas que ya existían en esta época y de la postura contraria y prácticamente unánime de la doctrina.</li>
+                                <li>
+                                    <div class="costas-collapsible-trigger">
+                                        <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                                        <p>La legislación anterior a 1988, la <strong>Ley de 1969</strong>, presentaba las siguientes carencias:</p>
+                                    </div>
+                                    <div class="costas-collapsible-content hidden">
+                                         <ul class="costas-nested-list">
+                                            <li>▪️ <strong>Escasa definición</strong> de la zona marítimo-terrestre y de playa, ya que se definía la zona marítimo-terrestre como "el espacio de las costas o fronteras marítimas del territorio español que baña el mar en su flujo y reflujo, en donde sean sensibles las mareas, y las mayores olas en los temporales ordinarios, en donde no lo sean. Esta zona se extiende asimismo por las márgenes de los ríos hasta el sitio en que sean navegables o se hagan sensibles las mareas", o las playas “como las riberas del mar o de las rías formadas por arenales o pedregales en superficie casi plana, con vegetación nula o escasa y característica".</li>
+                                            <li>▪️ <strong>Prevalencia de la posesión particular</strong> en el dominio público amparada por el Registro de la Propiedad.</li>
+                                            <li>▪️ <strong>Servidumbres insuficientes</strong> con ausencia de medios de protección en el terreno colindante.</li>
+                                            <li>▪️ <strong>Usucapión veintenal</strong> como título legitimador del uso.</li>
+                                            <li>▪️ <strong>Actitud pasiva de la administración</strong> en el otorgamiento generalizado de autorizaciones y concesiones.</li>
+                                            <li>▪️ <strong>Ausencia de normas</strong> para conservar el paisaje y el medio.</li>
+                                            <li>▪️ <strong>Lentitud</strong> del procedimiento sancionador.</li>
+                                            <li>▪️ <strong>Obsolescencia</strong> de algunas competencias por la nueva organización del Estado.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="costas-card">
+                        <div class="costas-card-header">
+                            <div class="icon-bg"><i class="fas fa-file-contract"></i></div>
+                            <h2>2. LA LEY 22/1988 Y LA LEY 2/2013</h2>
+                        </div>
+                        <div class="costas-collapsible-trigger">
+                            <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                            <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Contexto y Reforma</h3>
+                        </div>
+                         <div class="costas-collapsible-content hidden">
+                            <ul>
+                                <li>La <strong>Ley 22/1988</strong> y su reglamento de 1989 supusieron un cambio radical en un momento en el que la gran presión sobre la costa había desembocado en una grave amenaza para nuestras costas (7.880 km, con 13.560 ha de patrimonio público).</li>
+                                <li>
+                                    <div class="costas-collapsible-trigger">
+                                        <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                                        <p>Tras más de 20 años, se pusieron de manifiesto <strong>inconvenientes</strong>, motivados porque sus efectos no eran inmediatos:</p>
+                                    </div>
+                                    <div class="costas-collapsible-content hidden">
+                                        <ul class="costas-nested-list">
+                                            <li>▪️ Litigiosidad crónica.</li>
+                                            <li>▪️ En no pocos supuestos no ha llegado a aplicarse.</li>
+                                            <li>▪️ Tolerancia sobre situaciones inaceptables medioambientalmente.</li>
+                                            <li>▪️ Impotencia para imponerse sobre realidades sociales consolidadas.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="costas-collapsible-trigger">
+                                        <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                                        <p>Por ello surge la reforma de la <strong>Ley 2/2013</strong>, que proporciona:</p>
+                                    </div>
+                                    <div class="costas-collapsible-content hidden">
+                                        <ul class="costas-nested-list">
+                                            <li>▪️ <strong>Seguridad jurídica</strong> en un marco de continuidad a largo plazo en las relaciones jurídicas en el litoral.</li>
+                                            <li>▪️ Refuerza la <strong>protección del medio ambiente</strong> litoral.</li>
+                                            <li>▪️ <strong>Concilia la protección del litoral</strong> con las actividades respetuosas con el medio ambiente.</li>
+                                            <li>▪️ Resuelve problemas arrastrados 25 años.</li>
+                                            <li>▪️ Contempla los efectos del <strong>cambio climático</strong>.</li>
+                                            <li>▪️ Establece la obligatoriedad de <strong>inscribir los bienes de dominio público</strong> en el Registro de la Propiedad.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr class="my-6">
+                        <div class="costas-collapsible-trigger">
+                            <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                             <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-sitemap mr-2"></i>Estructura y Cambios Principales</h3>
+                        </div>
+                        <div class="costas-collapsible-content hidden">
+                            <ul>
+                                <li>La Ley 2/2013 en su artículo 1 mantiene la <strong>estructura de la Ley 22/1988</strong> (título preliminar y 6 títulos).</li>
+                                <li>Ambas leyes tienen <strong>disposiciones transitorias</strong> (9 en la de 1988, 5 en la de 2013) que establecen un cuidadoso régimen transitorio.</li>
+                                <li>
+                                    <div class="costas-collapsible-trigger">
+                                        <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                                         <p>Los <strong>principales cambios</strong> que introduce la Ley 2/2013 son:</p>
+                                    </div>
+                                    <div class="costas-collapsible-content hidden">
+                                        <ul class="costas-nested-list">
+                                            <li><i class="fas fa-ruler-combined mr-2 text-blue-500"></i><strong>Cambios en la determinación de las lindes del DPM-T</strong> y en el procedimiento de deslinde (los terrenos inundados artificial y controladamente, solo pasarán a ser DPM-T cuando sean navegables).</li>
+                                            <li><i class="fas fa-shield-alt mr-2 text-green-500"></i><strong>Modificación de los instrumentos legales de protección</strong> (servidumbre de protección de <span class="pill pill-blue">20 m</span> en trama urbana consolidada y márgenes de ríos; no se generan servidumbres en Urbanizaciones marítimo-terrestres).</li>
+                                            <li><i class="fas fa-signature mr-2 text-yellow-600"></i><strong>Alteraciones del régimen de concesiones y autorizaciones</strong> (amplía plazo de concesiones hasta <span class="pill pill-blue">75 años</span>, permitiendo transmisión mortis causa e inter vivos; ampliación de plazo de autorizaciones de 1 a 4 años).</li>
+                                            <li><i class="fas fa-undo mr-2 text-gray-600"></i><strong>Novedades para afectados</strong> (restitución a particulares de propiedades que hayan dejado de ser DPM-T en virtud de la nueva ley, como los terrenos inundados artificialmente que no sean navegables).</li>
+                                            <li><i class="fas fa-hard-hat mr-2 text-orange-600"></i><strong>Novedades sobre construcciones</strong> (se permiten obras de reparación, mejora, modernización y consolidación a los titulares en régimen transitorio, siempre que no impliquen aumento de volumen, altura ni superficie, y mejoren la eficiencia energética y el ahorro de agua).</li>
+                                            <li><i class="fas fa-umbrella-beach mr-2 text-yellow-500"></i><strong>Clasificación de playas</strong> en naturales y urbanas. En las naturales se restringe la ocupación, mientras que en las urbanas se mantiene la ocupación máxima de la mitad de la superficie en pleamar.</li>
+                                            <li><i class="fas fa-gavel mr-2 text-red-500"></i><strong>Plazo de prescripción de infracciones</strong> se reduce a la mitad (graves de 4 a 2 años, leves de 1 año a 6 meses).</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="costas-card">
+                        <div class="costas-card-header">
+                            <div class="icon-bg"><i class="fas fa-book"></i></div>
+                            <h2>3. REAL DECRETO 876/2014 (REGLAMENTO GENERAL DE COSTAS)</h2>
+                        </div>
+                        <div class="costas-collapsible-trigger">
+                            <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                            <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2"></i>Contexto y Elaboración</h3>
+                        </div>
+                        <div class="costas-collapsible-content hidden">
+                            <ul>
+                                <li>El Reglamento de 2014 es el resultado de un largo proceso de elaboración con la participación de ciudadanos, ONGs ambientales, empresas, CCAA, Ayuntamientos, otros organismos e instituciones.</li>
+                                <li>Desarrolla las dos leyes de Costas (de 1988 y de 2013) y sustituye al Reglamento de 1989.</li>
+                            </ul>
+                        </div>
+                        <hr class="my-6">
+                        <div class="costas-collapsible-trigger">
+                            <i class="fas fa-chevron-right costas-collapsible-icon"></i>
+                            <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-tasks mr-2"></i>Principales Medidas</h3>
+                        </div>
+                        <div class="costas-collapsible-content hidden">
+                            <ul>
+                                <li><i class="fas fa-ban mr-2 text-red-600"></i>Se <strong>prohíben nuevas edificaciones</strong> en la costa y se facilitan las obras de mejora y reparación de las existentes siempre que no aumenten tamaño y mejoren la eficiencia energética y el ahorro de agua.</li>
+                                <li><i class="fas fa-map-marked-alt mr-2 text-blue-600"></i>Se <strong>define con claridad y precisión el DPM-T</strong> y las reglas para su deslinde.</li>
+                                <li><i class="fas fa-search mr-2 text-gray-600"></i>Se mejora la <strong>información y transparencia</strong> mediante obligatoria inscripción en el Registro de la Propiedad y publicación de los deslindes en internet para que cualquier ciudadano pueda conocer la situación de los bienes en la costa.</li>
+                                <li><i class="fas fa-stream mr-2 text-purple-600"></i>Se establecen <strong>reglas claras para el uso y ocupación</strong> de la costa ampliando los plazos máximos de concesión y autorización facilitando la planificación y estabilidad de las actividades, pero solo de las que garantizan la protección del litoral restringiendo al mínimo las ocupaciones en las playas mejor conservadas, y organizando su prestación ordenada y sostenible en las playas urbanas.</li>
+                                <li><i class="fas fa-home mr-2 text-green-600"></i>Se <strong>protege y clarifica la situación</strong> de los antiguos propietarios que fueron despojados de sus viviendas y otros bienes en el litoral.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>`,
+            bombeo: `
+                <div class="bombeo-container-a4">
+                    <h1><i class="fas fa-water"></i> MEA1T28. ESTACIONES DE BOMBEO 🏭💧⚙️💨</h1>
+                    <div class="map-content">
+                        <section>
+                            <h2 class="bombeo-collapsible-header">
+                                <span><i class="fas fa-book-open"></i> 1. ESTACIONES DE BOMBEO: CONCEPTOS BÁSICOS</span>
+                                <i class="fas fa-chevron-right toggle-icon"></i>
+                            </h2>
+                            <div class="bombeo-collapsible-content">
+                                <article>
+                                    <h3><i class="fas fa-info-circle"></i> A. DEFINICIÓN:</h3>
+                                    <p>Son lugares donde se instalan <strong>máquinas hidromecánicas</strong> (<u>bombas</u>) capaces de aumentar la <em>carga hidráulica</em> en una conducción <cite></cite>.</p>
+                                </article>
+                                <article>
+                                    <h3><i class="fas fa-cogs"></i> B. CONCEPTOS BÁSICOS (Diseño y Explotación): <cite></cite></h3>
+                                    <ul>
+                                        <li>
+                                            <h4><i class="fas fa-tachometer-alt"></i> I. Capacidad:</h4>
+                                            <p><strong>Volumen bombeado</strong> por unidad de tiempo, es decir, el <em>caudal</em> <cite></cite>.</p>
+                                        </li>
+                                        <li>
+                                            <h4><i class="fas fa-ruler-vertical"></i> II. Altura:</h4>
+                                            <p>Distancia en vertical a la que puede elevar el agua, se mide en m columna de agua (mca) <cite></cite>.</p>
+                                            <ul>
+                                                <li><strong>Se distinguen:</strong> <cite></cite>
+                                                    <ul>
+                                                        <li>• Altura geométrica de la aspiración <cite></cite>.</li>
+                                                        <li>• Geométrica de elevación <cite></cite>.</li>
+                                                        <li>• Geométrica total <cite></cite>.</li>
+                                                        <li>• Altura de velocidad <cite></cite>.</li>
+                                                        <li>• Pérdidas de carga por rozamiento y singulares <cite></cite>.</li>
+                                                        <li>• Altura manométrica total <cite></cite>.</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <h4><i class="fas fa-percentage"></i> III. Rendimiento:</h4>
+                                            <p>Cociente entre la <em>potencia útil</em> y la <em>potencia absorbida</em> <cite></cite>, suele estar <em>entre el 60 y el 85%</em> <cite></cite>.</p>
+                                        </li>
+                                        <li>
+                                            <h4><i class="fas fa-chart-line"></i> IV. Curvas características:</h4>
+                                            <p>Relacionan el <u>caudal bombeado (Q)</u> y la <u>altura (H) a la que se bombea</u>, la intersección entre la curva de la bomba y la del sistema se denomina <strong>punto de funcionamiento</strong> <cite></cite>.</p>
+                                        </li>
+                                        <li>
+                                            <h4><i class="fas fa-wind"></i> V. Cavitación:</h4>
+                                            <p>Fenómeno de formación de burbujas de vapor cuando la presión del fluido cae por debajo de su presión de vapor, produciendo <strong>marcha inestable</strong>, <u>ruido y vibraciones</u> <cite></cite>.</p>
+                                        </li>
+                                        <li>
+                                            <h4><i class="fas fa-drafting-compass"></i> VI. NPSH (Net Positive Suction Head):</h4>
+                                            <p>O <em>Altura neta positiva de aspiración</em>, representa el <strong>margen de presión disponible</strong> a la entrada de la bomba para <u>evitar la cavitación</u> <cite></cite>.</p>
+                                        </li>
+                                    </ul>
+                                </article>
+                            </div>
+                        </section>
+                        <section>
+                            <h2 class="bombeo-collapsible-header">
+                                <span><i class="fas fa-tools"></i> 2. TIPOS DE BOMBAS: CARACTERÍSTICAS, SELECCIÓN, TRANSITORIOS</span>
+                                <i class="fas fa-chevron-right toggle-icon"></i>
+                            </h2>
+                            <div class="bombeo-collapsible-content">
+                                <article>
+                                    <h3><i class="fas fa-tags"></i> A. CARACTERÍSTICAS Y CLASIFICACIÓN DE BOMBAS: <cite></cite></h3>
+                                    <ul>
+                                        <li>
+                                            <h4><i class="fas fa-fan"></i> I. Bombas de energía cinética o centrífugas: 💨💧</h4>
+                                             <ul>
+                                                <li>• <u>Clasificación por flujo:</u> Pueden ser de <em>flujo radial, mixto o axial</em> <cite></cite>.</li>
+                                                <li>• <u>Aplicaciones comunes:</u> Las dos primeras para <em>aguas residuales y limpias</em>; la tercera para <em>efluentes tratados y pluviales</em> <cite></cite>.</li>
+                                                <li>• <u>Componentes principales:</u> <strong>Impulsor</strong> (rodete) y <strong>carcasa</strong> <cite></cite>.</li>
+                                                <li>• <u>Uso y operación:</u> Son las <u>más usadas</u>. Se recomienda su puesta en marcha con la <em>válvula de impulsión cerrada</em> <cite></cite>.</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <h4><i class="fas fa-sync-alt"></i> II. Bombas de desplazamiento positivo o de tornillo: 🔩💧</h4>
+                                            <p>Basadas en el <u>principio del tornillo de Arquímedes</u>, son más adecuadas para <strong>aguas residuales</strong> por su tolerancia a sólidos <cite></cite>.</p>
+                                        </li>
+                                    </ul>
+                                </article>
+                                <article>
+                                    <h3><i class="fas fa-check-circle"></i> B. SELECCIÓN DE BOMBAS: ✅⚙️</h3>
+                                    <p>Para su selección se deben tener en cuenta, entre otros: <strong>caudales de proyecto</strong>, <strong>ubicación</strong>, <strong>altura manométrica</strong>, <strong>diseño de la tubería</strong>, y las <u>curvas características</u> <cite></cite>.</p>
+                                </article>
+                                <article>
+                                    <h3><i class="fas fa-wave-square"></i> C. TRANSITORIOS HIDRÁULICOS: 🌊⏳⚡</h3>
+                                    <ul>
+                                        <li>• <span class="item-title">Definición:</span> Régimen de circulación <em>variable en el tiempo</em>. Se agrupa en: <u>oscilaciones en masa</u> y <u>golpe de ariete</u> <cite></cite>.</li>
+                                        <li>• <span class="item-title">Origen:</span> <strong>Arranques y paradas de las bombas</strong>, y <strong>fallos del suministro de energía</strong> <cite></cite>.</li>
+                                        <li>• <span class="item-title">Efectos:</span> Pueden dar lugar a <em>cambios importantes de la presión</em> por variaciones rápidas de la velocidad <cite></cite>.</li>
+                                        <li>• <span class="item-title">Máxima sobrepresión (cierre instantáneo):</span> Depende del <u>módulo de elasticidad del material</u> y de las <u>dimensiones</u> de la conducción <cite></cite>.</li>
+                                    </ul>
+                                </article>
+                            </div>
+                        </section>
+                        <section>
+                            <h2 class="bombeo-collapsible-header">
+                                <span><i class="fas fa-shield-alt"></i> 3. PROTECCIÓN CONTRA TRANSITORIOS Y TIPOS DE ESTACIONES</span>
+                                <i class="fas fa-chevron-right toggle-icon"></i>
+                            </h2>
+                            <div class="bombeo-collapsible-content">
+                                 <article>
+                                    <h3><i class="far fa-life-ring"></i> A. PROTECCIÓN CONTRA GOLPE DE ARIETE (elementos empleados): <cite></cite></h3>
+                                    <ul>
+                                        <li>• <strong>Válvulas de retención</strong> con contrapeso y manivela <cite></cite>.</li>
+                                        <li>• Válvulas de retención de <u>resorte</u> <cite></cite>.</li>
+                                        <li>• Combinación de las anteriores con <strong>válvula reguladora de alta presión</strong> <cite></cite>.</li>
+                                        <li>• <strong>Válvulas de purga y admisión de aire (ventosas)</strong> <cite></cite>.</li>
+                                        <li>• Válvulas de <em>control positivo en la descarga</em> <cite></cite>.</li>
+                                        <li>• <strong>Válvulas de alivio</strong> o <u>by-pass de la aspiración</u> (pueden ser de <em>cono, de macho o de mariposa</em>) <cite></cite>.</li>
+                                        <li>• <strong>Volantes de inercia</strong> acoplados a las bombas para <u>evitar la parada brusca</u> <cite></cite>.</li>
+                                        <li>• <strong>Chimeneas de equilibrio</strong> (torres piezométricas) <cite></cite>.</li>
+                                    </ul>
+                                </article>
+                                <article>
+                                    <h3><i class="fas fa-industry"></i> B. TIPOS DE ESTACIONES DE BOMBEO: 🏭🏷️</h3>
+                                    <p>(Las estaciones modernas están <u>completamente automatizadas</u> <cite></cite>) (Se clasifican según diferentes criterios <cite></cite>):</p>
+                                    <ul>
+                                        <li>• <span class="item-title"><i class="fas fa-tint"></i> Por aguas bombeadas:</span> <em>Residuales, pluviales, industriales, etc.</em> <cite></cite>.</li>
+                                        <li>• <span class="item-title"><i class="fas fa-charging-station"></i> Por fuente de energía:</span> <strong>Eléctricas o diésel</strong> <cite></cite>.</li>
+                                        <li>• <span class="item-title"><i class="fas fa-cog"></i> Por método de bombeo:</span> <strong>Centrífugas o de desplazamiento positivo</strong> <cite></cite>.</li>
+                                        <li>• <span class="item-title"><i class="fas fa-compress-arrows-alt"></i> Por emplazamiento:</span> <em>De cámara seca o cámara húmeda</em> <cite></cite>.</li>
+                                        <li>• <span class="item-title"><i class="fas fa-arrows-alt-v"></i> Por posición relativa:</span> <u>En serie</u> (más altura) o <u>en paralelo</u> (más caudal) <cite></cite>.</li>
+                                        <li>• <span class="item-title"><i class="fas fa-arrow-down"></i> Por succión:</span> <em>Positivas</em> o <em>negativas</em> <cite></cite>.</li>
+                                    </ul>
+                                </article>
+                            </div>
+                        </section>
+                        <section>
+                            <h2 class="bombeo-collapsible-header">
+                                <span><i class="fas fa-tachometer-alt"></i> 4. ESTACIONES DE SOBREPRESIÓN</span>
+                                 <i class="fas fa-chevron-right toggle-icon"></i>
+                            </h2>
+                            <div class="bombeo-collapsible-content">
+                                <article>
+                                    <h3><i class="fas fa-bullseye"></i> A. FINALIDAD:</h3>
+                                    <p>Inducir una <strong>presión adicional</strong> en la red para atender demandas donde la presión general es insuficiente <cite></cite>.</p>
+                                </article>
+                                <article>
+                                    <h3><i class="fas fa-cubes"></i> B. MÓDULOS COMPONENTES:</h3>
+                                    <p>Suelen agrupar los componentes en <strong>dos módulos</strong> <cite></cite>: <u>Módulo de bombeo</u> y <u>Módulo de acumulación</u> <cite></cite>.</p>
+                                </article>
+                            </div>
+                        </section>
+                        <section>
+                            <h2 class="bombeo-collapsible-header">
+                                <span><i class="fas fa-hard-hat"></i> 5. ELEMENTOS CONSTRUCTIVOS</span>
+                                <i class="fas fa-chevron-right toggle-icon"></i>
+                            </h2>
+                            <div class="bombeo-collapsible-content">
+                                <p>(Los <u>elementos más importantes</u> son)</p>
+                                <ul>
+                                    <li>• <span class="item-title"><i class="fas fa-water"></i> Cámara de aspiración:</span> Almacena el agua y protege las bombas con <strong>rejas o dilaceradores</strong> <cite></cite>.</li>
+                                    <li>• <span class="item-title"><i class="fas fa-archive"></i> Cámara seca:</span> Alberga <strong>bombas, tuberías y valvulería</strong> <cite></cite>.</li>
+                                    <li>• <span class="item-title"><i class="fas fa-project-diagram"></i> Tuberías de aspiración e impulsión</span> <cite></cite>.</li>
+                                    <li>• <span class="item-title"><i class="fas fa-microchip"></i> Instrumentación:</span> <u>Controles automáticos, manuales, alarmas</u>, etc. <cite></cite>.</li>
+                                    <li>• <u>Equipos de izado:</u> <em>Puentes grúa o vigas carril</em> para mantenimiento <cite></cite>.</li>
+                                    <li>• <span class="item-title"><i class="fas fa-bolt"></i> Alimentación de energía:</span> <strong>Línea eléctrica</strong> o <strong>depósito de combustible</strong> <cite></cite>.</li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section>
+                            <h2 class="bombeo-collapsible-header">
+                                <span><i class="fas fa-ruler-combined"></i> 6. INGENIERÍA DE IMPULSIONES</span>
+                                <i class="fas fa-chevron-right toggle-icon"></i>
+                            </h2>
+                            <div class="bombeo-collapsible-content">
+                                 <article>
+                                    <h3><i class="fas fa-pipe"></i> A. TUBERÍA DE IMPULSIÓN: Definición</h3>
+                                    <p>Conducción desde la bomba (<strong>presión máxima</strong>) hasta el punto de descarga (<em>presión atmosférica</em>) <cite></cite>.</p>
+                                </article>
+                                <article>
+                                    <h3><i class="fas fa-cogs"></i> B. DISEÑO INFLUIDO POR:</h3>
+                                    <ul>
+                                        <li>• El <u>número, tamaño y tipo de bombas</u> <cite></cite>.</li>
+                                        <li>• La capacidad para <strong>resistir presiones internas</strong> (incluyendo <u>golpe de ariete</u>) y <strong>externas</strong> <cite></cite>.</li>
+                                        <li>• Las características del <em>agua, caudal, pérdidas de carga</em>, etc. <cite></cite>.</li>
+                                    </ul>
+                                </article>
+                                <article>
+                                    <h3><i class="fas fa-tools"></i> C. CONSIDERACIONES DE INSTALACIÓN Y DISEÑO:</h3>
+                                    <ul>
+                                        <li>• <span class="item-title">Enterramiento y anclaje:</span> <u>Entierro mínimo de 1 m</u> <cite></cite> y <strong>anclajes</strong> en cambios de dirección <cite></cite>.</li>
+                                        <li>• <span class="item-title">Descarga:</span> <em>Especial atención</em> para <u>minimizar turbulencia</u> y liberación de <strong>sulfuro de hidrógeno</strong> <cite></cite>.</li>
+                                        <li>• <span class="item-title">Otros elementos:</span> <u>Pozos de registro, ventosas y desagües</u> <cite></cite>.</li>
+                                    </ul>
+                                </article>
+                                <article>
+                                    <h3><i class="fas fa-map-signs"></i> D. TRAZADO IDEAL: 🗺️📈</h3>
+                                    <p>Perfil <em>ligeramente ascendente</em> para <strong>evitar ventosas y minimizar pérdidas</strong>, aunque en la práctica debe adaptarse al terreno <cite></cite>.</p>
+                                </article>
+                                <article>
+                                    <h3><i class="fas fa-layer-group"></i> E. TIPOS DE TUBERÍAS (Materiales): 🧴🔩🧱</h3>
+                                    <p><u>Plástico</u>, <u>acero</u>, <u>fundición</u>, <u>hormigón</u> o <u>gres</u> <cite></cite>.</p>
+                                </article>
+                                <article>
+                                    <h3><i class="fas fa-calculator"></i> F. CÁLCULO: 📐🔢</h3>
+                                    <p>Debe analizarse el <em>funcionamiento hidráulico</em> (<u>pérdidas de carga</u>) y el <em>comportamiento mecánico</em> (<u>resistencia y anclajes</u>) <cite></cite>.</p>
+                                </article>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="interpretation-guide">
+                        <h3>Cómo interpretar este documento conceptual:</h3>
+                        <ul>
+                            <li><span class="item-title">Título Principal 🗺️:</span> Indica el tema general del documento.</li>
+                            <li><span class="item-title">Secciones (Ej: 1., 2., ...):</span> Representan los grandes epígrafes o capítulos del tema. Son desplegables.</li>
+                            <li><span class="item-title">Subsecciones (Ej: A., B., ...):</span> Desglosan cada epígrafe principal en partes más específicas.</li>
+                            <li><span class="item-title">Puntos Detallados (Ej: I., II., •):</span> Presentan la información concreta.</li>
+                            <li><span class="item-title">Iconos <i class="fas fa-book-open"></i>, <i class="fas fa-cogs"></i>, etc.:</span> Preceden a los títulos para una mejor identificación visual.</li>
+                            <li><span class="item-title"><strong>Negrita</strong>, <em>cursiva</em> y <u>subrayado</u>:</span> Resaltan los términos clave y la información importante.</li>
+                        </ul>
+                    </div>
+                </div>`,
+            regimen: `
+                <div class="max-w-5xl mx-auto">
+                    <header class="mb-10 text-center">
+                        <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2">📜 MEA2T7: RÉGIMEN TRANSITORIO DE LA LEY DE COSTAS ⏳</h1>
+                        <p class="text-xl text-gray-600">🎯 <strong><u>Adaptación de situaciones existentes a la Ley 22/1988 y Ley 2/2013</u></strong></p>
+                    </header>
+                    <!-- Main Card 1 -->
+                    <div class="regimen-card">
+                        <h2 class="text-2xl font-bold text-blue-800">🔵 1. <u>RÉGIMEN TRANSITORIO DE LA LEY 22/1988 Y DE LA LEY 2/2013</u></h2>
+                        <ul>
+                            <li><p class="text-lg font-semibold">🔹 Adaptación y Respeto a Derechos Adquiridos ⚖️</p>
+                                <ul>
+                                    <li>▪️ La ley establece un <strong>cuidadoso régimen transitorio</strong> para adaptar las situaciones preexistentes.</li>
+                                    <li>
+                                        <p>▪️ 🏞️ <strong>Zonas No Urbanizadas (Sin derecho de aprovechamiento consolidado):</strong></p>
+                                        <ul>
+                                            <li>▫️ La ley se aplica plenamente sobre la <strong>zona de servidumbre de protección y de influencia</strong>.</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <p>▪️ 🏘️ <strong>Zonas Urbanas o Urbanizables (Con derechos de aprovechamiento consolidados):</strong></p>
+                                         <ul>
+                                            <li>▫️ <strong>No se aplican</strong> las determinaciones sobre la <strong>zona de influencia</strong>.</li>
+                                            <li>▫️ La anchura de la <strong>servidumbre de protección se limita a 20 metros</strong> (misma extensión que la servidumbre de salvamento de la ley de 1969).</li>
+                                            <li>▫️ ✅ <u>Objetivo</u>: Evitar la incidencia sobre derechos adquiridos que podrían generar una enorme carga indemnizatoria y la revisión del planeamiento.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="mt-6">
+                                <p class="text-lg font-semibold">🔹 Edificaciones Existentes No Compatibles 🏗️</p>
+                                <ul>
+                                    <li>▪️ <strong>Ilegales</strong>: Se abre la posibilidad de <strong>legalizarlas</strong> por razones de interés público.</li>
+                                    <li>▪️ <strong>Legales en Dominio Público</strong>: Se mantiene la concesión hasta su vencimiento.</li>
+                                    <li>▪️ <strong>Legales en DPM-T o Servidumbre de Protección</strong>: Se permiten obras de <strong>reparación y mejora</strong> sin aumento de volumen, superficie o altura.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Main Card 2 -->
+                    <div class="regimen-card">
+                        <h2 class="text-2xl font-bold text-blue-800">🔵 2. <u>LA DISPOSICIÓN TRANSITORIA PRIMERA DE LA LEY 22/1988</u></h2>
+                        <ul>
+                            <li><p class="text-lg font-semibold">🔹 1. Propietarios con Sentencia Judicial Firme ⚖️</p>
+                                <ul>
+                                    <li>▪️ Pasarán a ser titulares de un <strong>derecho de ocupación y aprovechamiento</strong> del DPM-T.</li>
+                                    <li>▪️ 📝 Deben solicitar la concesión en el <strong>plazo de 1 año</strong>. Si no, se otorgará de oficio por el MITECO (salvo renuncia).</li>
+                                    <li>▪️ ⏳ La concesión se otorgará por <strong>30 años, prorrogable por otros 30</strong>, respetando usos existentes y sin obligación de abonar canon.</li>
+                                    <li>▪️ Tendrán <strong>derecho preferente durante 60 años</strong> para obtener concesiones para nuevos usos, que se ajustarán íntegramente a la Ley (incluyendo plazo y canon).</li>
+                                </ul>
+                            </li>
+                            <li class="mt-6">
+                                <p class="text-lg font-semibold">🔹 2. Titulares de terrenos no ocupados por deslinde anterior (amparados por art. 34 Ley Hipotecaria) 📜</p>
+                                <ul>
+                                    <li>▪️ Pasarán a ser titulares de un <strong>derecho de ocupación y aprovechamiento por 30 años</strong>, respetando usos existentes, solicitando la concesión.</li>
+                                    <li>▪️ 🏭 <strong>Industrias (Ley de Prevención y Control de la Contaminación)</strong>: La concesión requiere informe determinante del órgano ambiental de la C.A.</li>
+                                    <li>▪️ 🔑 Si la inscripción registral no puede practicarse, no será obstáculo si los titulares acreditan la posesión mediante escritura pública.</li>
+                                    <li>▪️ 📝 La concesión se otorgará de oficio tras 1 año si no se solicita.</li>
+                                    <li>▪️ Las situaciones incompatibles con la Ley 22/1988 se acomodarán a lo establecido en la <strong>disposición transitoria cuarta</strong>.</li>
+                                </ul>
+                            </li>
+                             <li class="mt-6">
+                                <p class="text-lg font-semibold">🔹 3. Tramos de Costa no Deslindados (o parcialmente) 🗺️</p>
+                                <ul>
+                                    <li>▪️ Se procederá al deslinde, cuya aprobación declara la <strong>posesión y titularidad dominical a favor del Estado</strong>, sin que las inscripciones en el Registro prevalezcan, aunque los terrenos hayan sido ocupados por obras.</li>
+                                    <li>▪️ ⚖️ Titulares registrales amparados por el art. 34 de la Ley Hipotecaria pasarán a ser titulares de un derecho de ocupación y aprovechamiento en los términos del apartado 2.</li>
+                                     <li>▪️ Tendrán <strong>derecho preferente durante 10 años</strong> para nuevas concesiones (con plazo y canon según ley).</li>
+                                     <li>▪️ Titulares con sentencia judicial firme o tracto registral ininterrumpido desde 1880 obtendrán los derechos del apartado 4.</li>
+                                     <li>▪️ ⏳ La solicitud de concesión debe hacerse en <strong>1 año desde la aprobación del deslinde</strong>. El plazo de la concesión computará desde su otorgamiento; si no, desde la aprobación del deslinde.</li>
+                                     <li>▪️ Las obras e instalaciones ilegales o las legales contrarias a la Ley 22/1988 quedarán sujetas a la <strong>disposición transitoria cuarta</strong>.</li>
+                                </ul>
+                            </li>
+                            <li class="mt-6">
+                                <p class="text-lg font-semibold">🔹 4. Tramos de Costa ya Deslindados que requieren nuevo deslinde 🔄</p>
+                                <ul>
+                                    <li>▪️ Los terrenos comprendidos entre la antigua y la nueva delimitación quedarán sujetos al régimen del <strong>apartado 1</strong> de esta disposición.</li>
+                                    <li>▪️ La concesión de oficio computará desde la fecha del nuevo deslinde.</li>
+                                </ul>
+                            </li>
+                            <li class="mt-6">
+                                <p class="text-lg font-semibold">🔹 Prórroga de Concesiones (Ley 2/2013) ⏱️</p>
+                                <ul>
+                                    <li>▪️ Las concesiones de la D.T. 1ª se pueden prorrogar hasta un <strong>límite máximo de 75 años</strong> (excepto las en zona de servicio de puertos).</li>
+                                     <li>▪️ Para industrias contaminantes, la prórroga requiere <strong>informe determinante del órgano ambiental</strong> de la C.A, que determinará los efectos para el medio ambiente y las condiciones a incluir en la concesión. Si la AGE se aparta, deberá motivar las razones de interés general.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Main Card 3 -->
+                    <div class="regimen-card">
+                        <h2 class="text-2xl font-bold text-blue-800">🔵 3. <u>FUNDAMENTOS JURÍDICOS DE LA SENTENCIA DEL TRIBUNAL CONSTITUCIONAL (149/1991)</u></h2>
+                        <ul>
+                            <li><p class="text-lg font-semibold">🔹 Naturaleza de los Títulos Privados en Dominio Público ⚖️</p>
+                                <ul>
+                                    <li>▪️ El TC analiza los títulos privados sobre terrenos que, por imperativo constitucional (art. 132.2 CE), son DPM-T.</li>
+                                    <li>▪️ Aunque exista una sentencia reconociendo una propiedad, esta recae sobre bienes que <strong>eran y son de dominio público y deben cesar como propiedad privada</strong>.</li>
+                                </ul>
+                            </li>
+                            <li class="mt-6">
+                                <p class="text-lg font-semibold">🔹 La Concesión como Indemnización por Expropiación 💰</p>
+                                <ul>
+                                    <li>▪️ La transformación de la propiedad en concesión se considera una <strong>forma singular de expropiación</strong>, cuya utilidad pública está declarada en la Constitución.</li>
+                                    <li>▪️ La indemnización es la propia concesión (de oficio si no se solicita).</li>
+                                    <li>▪️ El TC considera la indemnización (mantenimiento del uso por 60 años sin canon) un <strong>equivalente justo del derecho expropiado</strong>, en unos bienes que aun en manos privadas debían quedar sujetos a las limitaciones de su enclave en dominio público.</li>
+                                </ul>
+                            </li>
+                            <li class="mt-6">
+                                <p class="text-lg font-semibold">🔹 Justificación de la Reducción de Compensación 📉</p>
+                                <ul>
+                                    <li>▪️ Se justifica en casos de mera inscripción registral por la <strong>mayor debilidad del título</strong>, que no da fe de la realidad física del bien.</li>
+                                    <li>▪️ Los titulares registrales pueden ejercitar acciones para obtener la declaración de su propiedad, quedando en la misma situación que los propietarios con sentencia firme, puesto que la ley reconoce la posibilidad de hacer valer sus derechos en el deslinde.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        };
 
-            const gridContainer = document.getElementById('topics-grid');
-            const mainMenuView = document.getElementById('main-menu-view');
-            const mapViewerVIew = document.getElementById('map-viewer-view');
-            const backButton = document.getElementById('back-button');
-            const iframe = document.getElementById('content-frame');
-            const topControlBar = document.getElementById('top-control-bar');
-            const chaptersMenuContainer = document.getElementById('chapters-menu-container');
-            const chaptersButton = document.getElementById('chapters-button');
-            const chaptersDropdown = document.getElementById('chapters-dropdown');
-            const topicAudio = document.getElementById('topic-audio');
-            const playPauseButton = document.getElementById('play-pause-button');
-            const playPauseIcon = document.getElementById('play-pause-icon');
-            const timelineSlider = document.getElementById('timeline-slider');
-            const currentTimeEl = document.getElementById('current-time');
-            const totalDurationEl = document.getElementById('total-duration');
-            const speedButton = document.getElementById('speed-button');
-            const loopButton = document.getElementById('loop-button');
-            const volumeSlider = document.getElementById('volume-slider');
-            const volumeIcon = document.getElementById('volume-icon');
-            
-            let currentChapterEndTime = null;
-            let currentChapterStartTime = null;
+        // Elementos del DOM
+        const selector = document.getElementById('map-selector');
+        const contentContainer = document.getElementById('content-container');
 
-            topics.forEach((topic, index) => {
-                const button = document.createElement('button');
-                const colors = colorPalette[topic.color];
-                button.className = 'topic-button';
-                button.dataset.index = index;
-                button.innerHTML = `<span class="topic-number ${colors.normal}">${index + 1}</span><i class="fas ${topic.icon} topic-icon ${colors.icon}"></i><span class="topic-title">${topic.title}</span>`;
-                gridContainer.appendChild(button);
+        // Función para cargar el contenido del mapa y activar sus scripts
+        function loadMap(mapKey) {
+            // Cargar el HTML correspondiente
+            contentContainer.innerHTML = mapData[mapKey];
+
+            // Limpiar los listeners para evitar duplicados
+            // (esto es una simplificación, para casos complejos se usarían AbortControllers)
+            
+            // Activar los scripts específicos para el mapa cargado
+            if (mapKey === 'costas') {
+                initCostasScripts();
+            } else if (mapKey === 'bombeo') {
+                initBombeoScripts();
+            }
+            // No se necesita un init para 'regimen' ya que no tiene JS interactivo.
+        }
+
+        // Función para inicializar los desplegables del mapa de Costas
+        function initCostasScripts() {
+            const triggers = contentContainer.querySelectorAll('.costas-collapsible-trigger');
+            triggers.forEach(trigger => {
+                if (trigger.dataset.listenerAttached) return; 
+                trigger.dataset.listenerAttached = true;
+                trigger.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const content = this.nextElementSibling;
+                    this.classList.toggle('open');
+                    content.classList.toggle('hidden');
+                });
             });
+        }
 
-            function updateChapters(topic) {
-                chaptersDropdown.innerHTML = '';
-                if (topic.chapters && topic.chapters.length > 0) {
-                    topic.chapters.forEach(chapter => {
-                        const chapterButton = document.createElement('button');
-                        chapterButton.className = 'chapter-button w-full text-left p-2 rounded hover:bg-gray-100 text-sm';
-                        chapterButton.textContent = chapter.title;
-                        chapterButton.dataset.start = chapter.start;
-                        if(chapter.end !== undefined) {
-                           chapterButton.dataset.end = chapter.end;
-                        }
-                        chaptersDropdown.appendChild(chapterButton);
-                    });
-                    chaptersMenuContainer.classList.remove('hidden');
-                } else {
-                    chaptersMenuContainer.classList.add('hidden');
-                }
-            }
-            
-            function showMapView(button) {
-                playPauseButton.disabled = false;
-                playPauseIcon.className = 'fas fa-play';
-                const topicIndex = button.dataset.index;
-                const selectedTopic = topics[topicIndex];
-                
-                mainMenuView.classList.add('hidden');
-                mapViewerVIew.classList.remove('hidden');
-                iframe.src = selectedTopic.file;
-                topicAudio.src = `audios/${selectedTopic.file.replace(/_desplegable\.html$/i, '.mp3')}`;
-                
-                updateChapters(selectedTopic);
-                
-                topControlBar.style.display = 'flex';
-                setTimeout(() => topControlBar.style.opacity = 1, 10);
-            }
-
-            function showMainMenu() {
-                mapViewerVIew.classList.add('hidden');
-                mainMenuView.classList.remove('hidden');
-                topicAudio.pause();
-                iframe.src = '';
-                topControlBar.style.opacity = 0;
-                setTimeout(() => topControlBar.style.display = 'none', 300);
-            }
-
-            gridContainer.addEventListener('click', (e) => e.target.closest('.topic-button') && showMapView(e.target.closest('.topic-button')));
-            backButton.addEventListener('click', showMainMenu);
-
-            const formatTime = (time) => !isNaN(time) ? `${String(Math.floor(time/60)).padStart(2,'0')}:${String(Math.floor(time%60)).padStart(2,'0')}` : "00:00";
-            
-            topicAudio.addEventListener('loadedmetadata', () => { totalDurationEl.textContent = formatTime(topicAudio.duration); timelineSlider.max = topicAudio.duration; });
-            topicAudio.addEventListener('error', () => { playPauseButton.disabled = true; playPauseIcon.className = 'fas fa-times'; totalDurationEl.textContent = "Error"; });
-            
-            playPauseButton.addEventListener('click', () => { currentChapterEndTime = null; currentChapterStartTime = null; topicAudio.paused ? topicAudio.play() : topicAudio.pause(); });
-            topicAudio.addEventListener('play', () => playPauseIcon.classList.replace('fa-play', 'fa-pause'));
-            topicAudio.addEventListener('pause', () => playPauseIcon.classList.replace('fa-pause', 'fa-play'));
-            topicAudio.addEventListener('ended', () => {
-                 if (topicAudio.loop && currentChapterStartTime === null) {
-                    // Loop for the whole audio
-                 } else if (topicAudio.loop && currentChapterStartTime !== null) {
-                    // This case is handled in 'timeupdate'
-                 } else {
-                    playPauseIcon.classList.replace('fa-pause', 'fa-play');
-                 }
-            });
-
-            topicAudio.addEventListener('timeupdate', () => {
-                timelineSlider.value = topicAudio.currentTime;
-                currentTimeEl.textContent = formatTime(topicAudio.currentTime);
-                if (currentChapterEndTime && topicAudio.currentTime >= currentChapterEndTime) {
-                    if (topicAudio.loop) {
-                        topicAudio.currentTime = currentChapterStartTime;
-                        topicAudio.play();
+        // Función para inicializar los desplegables del mapa de Bombeo
+        function initBombeoScripts() {
+            const headers = contentContainer.querySelectorAll('.bombeo-collapsible-header');
+            headers.forEach(header => {
+                if (header.dataset.listenerAttached) return;
+                header.dataset.listenerAttached = true;
+                header.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        content.classList.remove('open');
                     } else {
-                        topicAudio.pause();
-                        currentChapterEndTime = null;
-                        currentChapterStartTime = null;
-                        document.querySelector('.chapter-button.playing')?.classList.remove('playing');
+                        content.classList.add('open');
+                        content.style.maxHeight = content.scrollHeight + "px";
                     }
-                }
+                });
             });
+        }
 
-            timelineSlider.addEventListener('input', () => { currentChapterEndTime = null; currentChapterStartTime = null; topicAudio.currentTime = timelineSlider.value; });
-
-            chaptersButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                chaptersDropdown.classList.toggle('hidden');
-            });
-
-            chaptersDropdown.addEventListener('click', (e) => {
-                if (e.target.tagName === 'BUTTON') {
-                    document.querySelector('.chapter-button.playing')?.classList.remove('playing');
-                    e.target.classList.add('playing');
-                    currentChapterStartTime = parseFloat(e.target.dataset.start);
-                    currentChapterEndTime = e.target.dataset.end ? parseFloat(e.target.dataset.end) : null;
-                    topicAudio.currentTime = currentChapterStartTime;
-                    topicAudio.play();
-                    chaptersDropdown.classList.add('hidden');
-                }
-            });
-
-            const speeds = [1, 1.25, 1.5, 2];
-            let currentSpeedIndex = 0;
-            speedButton.addEventListener('click', () => {
-                currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
-                topicAudio.playbackRate = speeds[currentSpeedIndex];
-                speedButton.textContent = `${speeds[currentSpeedIndex]}x`;
-            });
-
-            loopButton.addEventListener('click', () => {
-                topicAudio.loop = !topicAudio.loop;
-                loopButton.classList.toggle('active');
-            });
-
-            volumeSlider.addEventListener('input', (e) => topicAudio.volume = e.target.value);
-            topicAudio.addEventListener('volumechange', () => {
-                volumeSlider.value = topicAudio.volume;
-                volumeIcon.className = topicAudio.muted || topicAudio.volume === 0 ? "fas fa-volume-mute text-gray-500" : topicAudio.volume < 0.5 ? "fas fa-volume-low text-gray-500" : "fas fa-volume-high text-gray-500";
-            });
-            volumeIcon.addEventListener('click', () => topicAudio.muted = !topicAudio.muted);
-            
-            document.addEventListener('click', (e) => {
-                if (!chaptersMenuContainer.contains(e.target)) {
-                    chaptersDropdown.classList.add('hidden');
-                }
-            });
+        // Event listener para el selector
+        selector.addEventListener('change', (event) => {
+            loadMap(event.target.value);
         });
+
+        // Cargar el primer mapa por defecto al iniciar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMap(selector.value);
+        });
+
     </script>
 </body>
 </html>
+
