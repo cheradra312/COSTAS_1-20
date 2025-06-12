@@ -149,87 +149,39 @@
             }
         }
         
-  <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', async function () {
+            initializeFirebase();
+            await authenticateUser();
+
             const topics = [
                 // Pega aquí tu lista completa de topics que ya tienes configurada
                  { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
                 { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark',
                   chapters: [
-    {
-        "title": "1. Los bienes de DPMT. Clasificación y definiciones.",
-        "start": 0,
-        "end": 186.15
-    },
-    {
-        "title": "2. Prevalencia del DPMT. Potestades de la administración.",
-        "start": 186.15,
-        "end": 237.22
-    },
-    {
-        "title": "3. El deslinde del DPMT. Procedimiento.",
-        "start": 237.22,
-        "end": 543
-    },
-    {
-        "title": "4. Estudios para la justificación del deslinde.",
-        "start": 543,
-        "end": 573
-    },
-    {
-        "title": "5. Proyecto de deslinde. Efectos de la aprobación del deslinde.",
-        "start": 573,
-        "end": 641.23
-    },
-    {
-        "title": "6. Inmatriculación de fincas colindantes con el DPMT. Afectación y desafectación.",
-        "start": 641.23
-    }
-]
+                      { "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 192 },
+                      { "title": "2. Prevalencia del DPMT. Potestades de la administración.", "start": 182, "end": 242 },
+                      { "title": "3. El deslinde del DPMT. Procedimiento.", "start": 232, "end": 543 },
+                      { "title": "4. Estudios para la justificación del deslinde.", "start": 543, "end": 573 },
+                      { "title": "5. Proyecto de deslinde. Efectos de la aprobación del deslinde.", "start": 573, "end": 648 },
+                      { "title": "6. Inmatriculación de fincas colindantes con el DPMT. Afectación y desafectación.", "start": 638 }
+                  ]
                 },
                 { file: 'MEA2T3_DESPLEGABLE.html', title: 'Limitaciones a la propiedad', color: 'sky', icon: 'fa-ban',
                   chapters: [
-    {
-        "title": "1. Limitaciones a la propiedad sobre los terrenos contiguos a la ribera del mar por razones de protección del dominio público marítimo-terrestre.",
-        "start": 0,
-        "end": 65.83
-    },
-    {
-        "title": "2. Servidumbres de protección, tránsito y acceso al mar. Anchura y usos permitidos.",
-        "start": 65.83,
-        "end": 435.47
-    },
-    {
-        "title": "3. La disposición transitoria tercera de la ley 22/1988.",
-        "start": 435.47,
-        "end": 570.34
-    },
-    {
-        "title": "4. Otras limitaciones a la propiedad. Zona de influencia.",
-        "start": 570.34
-    }
-]
+                    { "title": "1. Limitaciones a la propiedad sobre los terrenos contiguos a la ribera del mar por razones de protección del dominio público marítimo-terrestre.", "start": 0, "end": 72 },
+                    { "title": "2. Servidumbres de protección, tránsito y acceso al mar. Anchura y usos permitidos.", "start": 62, "end": 435 },
+                    { "title": "3. La disposición transitoria tercera de la ley 22/1988.", "start": 425, "end": 565 },
+                    { "title": "4. Otras limitaciones a la propiedad. Zona de influencia.", "start": 555 }
+                  ]
                 },
                 { file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPMT', color: 'indigo', icon: 'fa-swimmer',
                   chapters: [
-    {
-        "title": "1. Utilización del DPMT. Disposiciones generales.",
-        "start": 0,
-        "end": 325.33
-    },
-    {
-        "title": "2. Proyectos y obras en el DPMT. Estudios complementarios.",
-        "start": 325.33,
-        "end": 496.12
-    },
-    {
-        "title": "3. Reservas, adscripciones, autorización y concesiones.",
-        "start": 496.12
-    }
-]
+                    { "title": "1. Utilización del DPMT. Disposiciones generales.", "start": 0, "end": 325.41 },
+                    { "title": "2. Proyectos y obras en el DPMT. Estudios complementarios.", "start": 325.41, "end": 497.28 },
+                    { "title": "3. Reservas, adscripciones, autorización y concesiones.", "start": 497.28 }
+                  ]
                 },
                 { file: 'MEA2T5_DESPLEGABLE.html', title: 'Régimen Económico-Financiero', color: 'green', icon: 'fa-coins' },
-                
                 { file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE según la ley 22/1988', color: 'emerald', icon: 'fa-building-columns',
                   chapters: [
                     { "title": "1. Competencias de la AGE según la normativa de costas. Decretos de transferencias a las CCAA.", "start": 0, "end": 258 },
@@ -249,32 +201,17 @@
                 },
                 { file: 'MEA2T9_DESPLEGABLE.html', title: 'Biodiversidad y conservación de ecosistemas marinos y costeros', color: 'yellow', icon: 'fa-seedling',
                   chapters: [
-    {
-        "title": "1. Biodiversidad y conservación de ecosistemas marinos y costeros.",
-        "start": 0,
-        "end": 171.9
-    },
-    {
-        "title": "2. Las zonas húmedas costeras.",
-        "start": 171.9,
-        "end": 443.35
-    },
-    {
-        "title": "3. Las zonas dunares costeras: definición y evolución en la normativa de costas.",
-        "start": 443.35,
-        "end": 534.69
-    },
-    {
-        "title": "4. Las zonas de fanerógamas marinas. Importancia y tratamiento.",
-        "start": 534.69
-    }
-]
+                    { "title": "1. Biodiversidad y conservación de ecosistemas marinos y costeros.", "start": 0, "end": 173 },
+                    { "title": "2. Las zonas húmedas costeras.", "start": 163, "end": 450 },
+                    { "title": "3. Las zonas dunares costeras: definición y evolución en la normativa de costas.", "start": 440, "end": 546 },
+                    { "title": "4. Las zonas de fanerógamas marinas. Importancia y tratamiento.", "start": 536 }
+                  ]
                 },
                 { file: 'MEA2T10_DESPLEGABLE.html', title: 'La gestión integral del litoral', color: 'amber', icon: 'fa-tasks' },
                 { file: 'MEA2T11_DESPLEGABLE.html', title: 'Las distintas teorías de ondas', color: 'orange', icon: 'fa-wave-square',
                   chapters: [
-                    { "title": "1. Las distintas teorías de ondas.", "start": 0, "end": 270 },
-                    { "title": "2. La propagación del oleaje. Los fenómenos de refracción, difracción, transmisión y reflexión del oleaje.", "start": 270 }
+                    { "title": "1. Las distintas teorías de ondas.", "start": 0, "end": 257 },
+                    { "title": "2. La propagación del oleaje. Los fenómenos de refracción, difracción, transmisión y reflexión del oleaje.", "start": 247 }
                   ]
                 },
                 { file: 'MEA2T12_DESPLEGABLE.html', title: 'El transporte sólido litoral', color: 'red', icon: 'fa-arrows-left-right',
