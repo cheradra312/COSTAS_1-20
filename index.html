@@ -142,7 +142,6 @@
                     await signInAnonymously(auth);
                 }
                 userId = auth.currentUser.uid;
-                console.log("Usuario autenticado:", userId);
             } catch (error) {
                 console.error("Error de autenticación:", error);
                 userId = `anon_${crypto.randomUUID()}`;
@@ -154,8 +153,7 @@
             await authenticateUser();
 
             const topics = [
-                // Pega aquí tu lista completa de topics que ya tienes configurada
-                 { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
+                { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
                 { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark',
                   chapters: [
                       { "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 192 },
