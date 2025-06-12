@@ -88,64 +88,63 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-        // --- INICIO DE LA LÓGICA DE LA APLICACIÓN ---
-        
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        let db, auth, userId, currentTopic;
-        let currentChapterEndTime=null, currentChapterStartTime=null, editedChapters=[];
-
-        // Función para inicializar Firebase
-        function initializeFirebase() {
-            let firebaseConfig;
-            try {
-                 // CORRECCIÓN: Usar directamente la configuración proporcionada.
-                firebaseConfig = {
-                    apiKey: "AIzaSyBt0xUQ7Y03L3vlTPUps7ayQIR6ZTKwOVg",
-                    authDomain: "monteagudo-10283.firebaseapp.com",
-                    projectId: "monteagudo-10283",
-                    storageBucket: "monteagudo-10283.appspot.com",
-                    messagingSenderId: "1057163945614",
-                    appId: "1:1057163945614:web:731abb879ff9fc1f9e8bdf",
-                    measurementId: "G-4JX5TVCPH0"
-                };
-
-                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                     const envConfig = JSON.parse(__firebase_config);
-                     if (envConfig.projectId) {
-                        firebaseConfig = envConfig;
-                     }
-                }
-            } catch (e) {
-                console.error("Firebase config error, using fallback:", e);
-            }
-            
-            const app = initializeApp(firebaseConfig);
-            auth = getAuth(app);
-            db = getFirestore(app);
-        }
-        
-        // Autenticación del usuario
-        async function authenticateUser() {
-            try {
-                if (!auth) {
-                    console.error("Firebase Auth no está inicializado.");
-                    return;
-                }
-                const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-                if (token) {
-                    await signInWithCustomToken(auth, token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                userId = auth.currentUser.uid;
-            } catch (error) {
-                console.error("Error de autenticación:", error);
-                userId = `anon_${crypto.randomUUID()}`;
-            }
-        }
         
         document.addEventListener('DOMContentLoaded', async function () {
+            
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            let db, auth, userId, currentTopic;
+            let currentChapterEndTime=null, currentChapterStartTime=null, editedChapters=[];
+
+            // Función para inicializar Firebase
+            function initializeFirebase() {
+                let firebaseConfig;
+                try {
+                    firebaseConfig = {
+                        apiKey: "AIzaSyCKXzSmQ9F1M4W59Vyalu3CWdKFsh7dOmE",
+                        authDomain: "costas-304b9.firebaseapp.com",
+                        projectId: "costas-304b9",
+                        storageBucket: "costas-304b9.appspot.com",
+                        messagingSenderId: "251850800414",
+                        appId: "1:251850800414:web:435e20e5305881732e5d0f",
+                        measurementId: "G-C2NTL72PZH"
+                    };
+
+                    if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                         const envConfig = JSON.parse(__firebase_config);
+                         if (envConfig.projectId) {
+                            firebaseConfig = envConfig;
+                         }
+                    }
+                } catch (e) {
+                    console.error("Firebase config parsing error:", e);
+                }
+                
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+            }
+            
+            // Autenticación del usuario
+            async function authenticateUser() {
+                try {
+                    if (!auth) {
+                        console.error("Firebase Auth no está inicializado.");
+                        return;
+                    }
+                    const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                    if (token) {
+                        await signInWithCustomToken(auth, token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    userId = auth.currentUser.uid;
+                    console.log("Usuario autenticado:", userId);
+                } catch (error) {
+                    console.error("Error de autenticación:", error);
+                    userId = `anon_${crypto.randomUUID()}`;
+                }
+            }
+            
             initializeFirebase();
             await authenticateUser();
 
