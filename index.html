@@ -46,7 +46,7 @@
         }
         .topic-title { font-weight: 600; flex-grow: 1; }
         .topic-icon { font-size: 1.25rem; width: 2rem; text-align: center; transition: color 0.2s ease-in-out; }
-        #top-control-bar { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
+        #top-control-bar, #editor-panel { display: none; opacity: 0; transition: opacity 0.3s ease-in-out; }
         
         input[type="range"]::-webkit-slider-runnable-track { background: #e5e7eb; height: 0.25rem; border-radius: 1rem; }
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; margin-top: -6px; background-color: #3b82f6; height: 1rem; width: 1rem; border-radius: 50%; }
@@ -54,13 +54,30 @@
 
         #play-pause-button:disabled { background-color: #9ca3af; cursor: not-allowed; transform: none; }
 
-        .chapter-button { transition: background-color 0.2s; }
-        .chapter-button.playing { background-color: #dbeafe; font-weight: 700; color: #1e3a8a; }
-        
-        #loop-button.active {
-            color: #ffffff;
-            background-color: #3b82f6;
+        .chapter-button.playing, .edit-chapter-item.active { background-color: #dbeafe; font-weight: 700; color: #1e3a8a; }
+        #loop-button.active { color: #ffffff; background-color: #3b82f6; }
+
+        /* Estilo para el interruptor de Modo Edición */
+        #edit-mode-toggle {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 1.25rem;
+            width: 2.25rem;
         }
+        #edit-mode-toggle:checked::after {
+            transform: translateX(1rem);
+        }
+        #edit-mode-toggle::after {
+            content: '';
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: white;
+            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -82,35 +99,38 @@
                     <i class="fas fa-arrow-left"></i>
                     <span class="hidden sm:inline">Volver</span>
                 </button>
-                <div id="audio-player" class="bg-white p-2 rounded-lg shadow-md flex items-center gap-3 relative">
-                    <div id="chapters-menu-container" class="relative">
-                        <button id="chapters-button" class="text-gray-600 hover:bg-gray-200 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition">
-                            <i class="fas fa-list-ul"></i>
-                        </button>
-                        <div id="chapters-dropdown" class="absolute top-full mt-2 left-0 bg-white shadow-lg rounded-lg p-2 w-80 max-h-72 overflow-y-auto hidden z-10"></div>
+                <div class="flex items-center gap-4">
+                     <div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg shadow-md">
+                        <label for="edit-mode-toggle" class="text-sm font-medium text-gray-700">Editar</label>
+                        <input type="checkbox" id="edit-mode-toggle" class="h-5 w-9 -checked:after:translate-x-full relative inline-flex cursor-pointer items-center rounded-full bg-gray-300 transition checked:bg-blue-500">
                     </div>
-                    <button id="play-pause-button" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition-transform transform hover:scale-110">
-                        <i id="play-pause-icon" class="fas fa-play"></i>
-                    </button>
-                    <div class="flex items-center gap-2 text-xs text-gray-500">
-                        <span id="current-time">00:00</span>
-                        <input type="range" id="timeline-slider" class="w-24 md:w-32" value="0" step="1">
-                        <span id="total-duration">00:00</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                         <button id="loop-button" class="text-gray-500 hover:bg-gray-200 rounded-full w-9 h-9 flex-shrink-0 transition-colors">
-                            <i class="fas fa-retweet"></i>
-                         </button>
-                         <button id="speed-button" class="text-xs font-bold text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full w-9 h-9 flex-shrink-0">1x</button>
-                         <div class="hidden md:flex items-center gap-2">
-                             <i id="volume-icon" class="fas fa-volume-high text-gray-500 cursor-pointer"></i>
-                             <input type="range" id="volume-slider" class="w-16" min="0" max="1" step="0.05" value="1">
-                         </div>
+                    <div id="audio-player" class="bg-white p-2 rounded-lg shadow-md flex items-center gap-3 relative">
+                        <div id="chapters-menu-container" class="relative">
+                            <button id="chapters-button" class="text-gray-600 hover:bg-gray-200 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition"><i class="fas fa-list-ul"></i></button>
+                            <div id="chapters-dropdown" class="absolute top-full mt-2 right-0 md:left-0 bg-white shadow-lg rounded-lg p-2 w-80 max-h-72 overflow-y-auto hidden z-10"></div>
+                        </div>
+                        <button id="play-pause-button" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition-transform transform hover:scale-110"><i id="play-pause-icon" class="fas fa-play"></i></button>
+                        <div class="flex items-center gap-2 text-xs text-gray-500"><span id="current-time">00:00</span><input type="range" id="timeline-slider" class="w-24 md:w-32" value="0" step="1"><span id="total-duration">00:00</span></div>
+                        <div class="flex items-center gap-3"><button id="loop-button" class="text-gray-500 hover:bg-gray-200 rounded-full w-9 h-9 flex-shrink-0 transition-colors"><i class="fas fa-retweet"></i></button><button id="speed-button" class="text-xs font-bold text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full w-9 h-9 flex-shrink-0">1x</button><div class="hidden md:flex items-center gap-2"><i id="volume-icon" class="fas fa-volume-high text-gray-500 cursor-pointer"></i><input type="range" id="volume-slider" class="w-16" min="0" max="1" step="0.05" value="1"></div></div>
                     </div>
                 </div>
             </div>
-            
-            <iframe id="content-frame" class="w-full border-0 rounded-xl shadow-lg" style="min-height: 80vh;" src=""></iframe>
+
+            <div class="flex flex-col lg:flex-row gap-4">
+                <!-- PANEL DE EDICIÓN -->
+                <div id="editor-panel" class="w-full lg:w-1/3 bg-white p-4 rounded-lg shadow-lg border border-gray-200 hidden">
+                    <h3 class="font-bold text-lg mb-2 border-b pb-2">Editor de Capítulos</h3>
+                    <div id="editor-list" class="space-y-2 max-h-[65vh] overflow-y-auto pr-2"></div>
+                    <button id="copy-data-button" class="mt-4 w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 flex items-center justify-center gap-2">
+                        <i class="fas fa-copy"></i> Copiar Datos
+                    </button>
+                    <p id="copy-notification" class="text-center text-green-700 font-semibold mt-2 opacity-0 transition-opacity">¡Copiado al portapapeles!</p>
+                </div>
+                <!-- Iframe -->
+                <div id="iframe-container" class="flex-1 transition-all duration-300">
+                     <iframe id="content-frame" class="w-full border-0 rounded-xl shadow-lg" style="min-height: 80vh;" src=""></iframe>
+                </div>
+            </div>
         </div>
         
         <audio id="topic-audio" src=""></audio>
@@ -118,9 +138,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Lista de temas y capítulos ---
             const topics = [
-                { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
+                // Pega aquí tu lista completa de topics que ya tienes configurada
+                 { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
                 { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark',
                   chapters: [
                       { "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 192 },
@@ -255,170 +275,94 @@
                 }
             ];
             
-            const colorPalette = {
-                blue: { normal: 'bg-blue-100 text-blue-800', icon: 'text-blue-500' }, cyan: { normal: 'bg-cyan-100 text-cyan-800', icon: 'text-cyan-500' }, sky: { normal: 'bg-sky-100 text-sky-800', icon: 'text-sky-500' }, indigo: { normal: 'bg-indigo-100 text-indigo-800', icon: 'text-indigo-500' }, green: { normal: 'bg-green-100 text-green-800', icon: 'text-green-500' }, emerald: { normal: 'bg-emerald-100 text-emerald-800', icon: 'text-emerald-500' }, teal: { normal: 'bg-teal-100 text-teal-800', icon: 'text-teal-500' }, lime: { normal: 'bg-lime-100 text-lime-800', icon: 'text-lime-500' }, yellow: { normal: 'bg-yellow-100 text-yellow-800', icon: 'text-yellow-500' }, amber: { normal: 'bg-amber-100 text-amber-800', icon: 'text-amber-500' }, orange: { normal: 'bg-orange-100 text-orange-800', icon: 'text-orange-500' }, red: { normal: 'bg-red-100 text-red-800', icon: 'text-red-500' }, rose: { normal: 'bg-rose-100 text-rose-800', icon: 'text-rose-500' }, pink: { normal: 'bg-pink-100 text-pink-800', icon: 'text-pink-500' }, fuchsia: { normal: 'bg-fuchsia-100 text-fuchsia-800', icon: 'text-fuchsia-500' }, purple: { normal: 'bg-purple-100 text-purple-800', icon: 'text-purple-500' }, violet: { normal: 'bg-violet-100 text-violet-800', icon: 'text-violet-500' }, gray: { normal: 'bg-gray-100 text-gray-800', icon: 'text-gray-500' }, slate: { normal: 'bg-slate-100 text-slate-800', icon: 'text-slate-500' }, zinc: { normal: 'bg-zinc-100 text-zinc-800', icon: 'text-zinc-500' }
-            };
-
-            const gridContainer = document.getElementById('topics-grid');
-            const mainMenuView = document.getElementById('main-menu-view');
-            const mapViewerVIew = document.getElementById('map-viewer-view');
-            const backButton = document.getElementById('back-button');
-            const iframe = document.getElementById('content-frame');
-            const topControlBar = document.getElementById('top-control-bar');
-            const chaptersMenuContainer = document.getElementById('chapters-menu-container');
-            const chaptersButton = document.getElementById('chapters-button');
-            const chaptersDropdown = document.getElementById('chapters-dropdown');
-            const topicAudio = document.getElementById('topic-audio');
-            const playPauseButton = document.getElementById('play-pause-button');
-            const playPauseIcon = document.getElementById('play-pause-icon');
-            const timelineSlider = document.getElementById('timeline-slider');
-            const currentTimeEl = document.getElementById('current-time');
-            const totalDurationEl = document.getElementById('total-duration');
-            const speedButton = document.getElementById('speed-button');
-            const loopButton = document.getElementById('loop-button');
-            const volumeSlider = document.getElementById('volume-slider');
-            const volumeIcon = document.getElementById('volume-icon');
+            // Lógica de la aplicación...
+            const colorPalette={blue:{normal:"bg-blue-100 text-blue-800",icon:"text-blue-500"},cyan:{normal:"bg-cyan-100 text-cyan-800",icon:"text-cyan-500"},sky:{normal:"bg-sky-100 text-sky-800",icon:"text-sky-500"},indigo:{normal:"bg-indigo-100 text-indigo-800",icon:"text-indigo-500"},green:{normal:"bg-green-100 text-green-800",icon:"text-green-500"},emerald:{normal:"bg-emerald-100 text-emerald-800",icon:"text-emerald-500"},teal:{normal:"bg-teal-100 text-teal-800",icon:"text-teal-500"},lime:{normal:"bg-lime-100 text-lime-800",icon:"text-lime-500"},yellow:{normal:"bg-yellow-100 text-yellow-800",icon:"text-yellow-500"},amber:{normal:"bg-amber-100 text-amber-800",icon:"text-amber-500"},orange:{normal:"bg-orange-100 text-orange-800",icon:"text-orange-500"},red:{normal:"bg-red-100 text-red-800",icon:"text-red-500"},rose:{normal:"bg-rose-100 text-rose-800",icon:"text-rose-500"},pink:{normal:"bg-pink-100 text-pink-800",icon:"text-pink-500"},fuchsia:{normal:"bg-fuchsia-100 text-fuchsia-800",icon:"text-fuchsia-500"},purple:{normal:"bg-purple-100 text-purple-800",icon:"text-purple-500"},violet:{normal:"bg-violet-100 text-violet-800",icon:"text-violet-500"},gray:{normal:"bg-gray-100 text-gray-800",icon:"text-gray-500"},slate:{normal:"bg-slate-100 text-slate-800",icon:"text-slate-500"},zinc:{normal:"bg-zinc-100 text-zinc-800",icon:"text-zinc-500"}};
+            const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),iframe=document.getElementById("content-frame"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),volumeSlider=document.getElementById("volume-slider"),volumeIcon=document.getElementById("volume-icon"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),copyDataButton=document.getElementById("copy-data-button"),copyNotification=document.getElementById("copy-notification"),iframeContainer=document.getElementById("iframe-container");
+            let currentChapterEndTime=null,currentChapterStartTime=null,isEditMode=!1,editedChapters=[];
             
-            let currentChapterEndTime = null;
-            let currentChapterStartTime = null;
-
-            topics.forEach((topic, index) => {
-                const button = document.createElement('button');
-                const colors = colorPalette[topic.color];
-                button.className = 'topic-button';
-                button.dataset.index = index;
-                button.innerHTML = `<span class="topic-number ${colors.normal}">${index + 1}</span><i class="fas ${topic.icon} topic-icon ${colors.icon}"></i><span class="topic-title">${topic.title}</span>`;
-                gridContainer.appendChild(button);
+            topics.forEach((e,t)=>{
+                const o=document.createElement("button"),n=colorPalette[e.color];
+                o.className="topic-button",o.dataset.index=t,o.innerHTML=`<span class="topic-number ${n.normal}">${t+1}</span><i class="fas ${e.icon} topic-icon ${n.icon}"></i><span class="topic-title">${e.title}</span>`,gridContainer.appendChild(o)
             });
 
-            function updateChapters(topic) {
-                chaptersDropdown.innerHTML = '';
-                if (topic.chapters && topic.chapters.length > 0) {
-                    topic.chapters.forEach(chapter => {
-                        const chapterButton = document.createElement('button');
-                        chapterButton.className = 'chapter-button w-full text-left p-2 rounded hover:bg-gray-100 text-sm';
-                        chapterButton.textContent = chapter.title;
-                        chapterButton.dataset.start = chapter.start;
-                        if(chapter.end !== undefined) {
-                           chapterButton.dataset.end = chapter.end;
-                        }
-                        chaptersDropdown.appendChild(chapterButton);
-                    });
-                    chaptersMenuContainer.classList.remove('hidden');
-                } else {
-                    chaptersMenuContainer.classList.add('hidden');
-                }
-            }
-            
-            function showMapView(button) {
-                playPauseButton.disabled = false;
-                playPauseIcon.className = 'fas fa-play';
-                const topicIndex = button.dataset.index;
-                const selectedTopic = topics[topicIndex];
-                
-                mainMenuView.classList.add('hidden');
-                mapViewerVIew.classList.remove('hidden');
-                iframe.src = selectedTopic.file;
-                topicAudio.src = `audios/${selectedTopic.file.replace(/_desplegable\.html$/i, '.mp3')}`;
-                
-                updateChapters(selectedTopic);
-                
-                topControlBar.style.display = 'flex';
-                setTimeout(() => topControlBar.style.opacity = 1, 10);
+            function updateChapters(e) {
+                if(chaptersDropdown.innerHTML="",e.chapters&&e.chapters.length>0) {
+                    e.chapters.forEach(e=>{
+                        const t=document.createElement("button");
+                        t.className="chapter-button w-full text-left p-2 rounded hover:bg-gray-100 text-sm",t.textContent=e.title,t.dataset.start=e.start,void 0!==e.end&&(t.dataset.end=e.end),chaptersDropdown.appendChild(t)
+                    }),chaptersMenuContainer.classList.remove("hidden")
+                } else chaptersMenuContainer.classList.add("hidden")
             }
 
-            function showMainMenu() {
-                mapViewerVIew.classList.add('hidden');
-                mainMenuView.classList.remove('hidden');
-                topicAudio.pause();
-                iframe.src = '';
-                topControlBar.style.opacity = 0;
-                setTimeout(() => topControlBar.style.display = 'none', 300);
+            function updateEditor(e){
+                editorList.innerHTML="",editedChapters=JSON.parse(JSON.stringify(e.chapters||[])),e.chapters&&e.chapters.length>0?e.chapters.forEach((e,t)=>{
+                    const o=document.createElement("div"),n=editedChapters[t].start,a=editedChapters[t].end;
+                    o.className="edit-chapter-item p-2 border-b",o.innerHTML=`
+                        <p class="font-semibold text-sm">${e.title}</p>
+                        <div class="flex items-center justify-between mt-1 text-xs">
+                            <div>
+                                <button data-index="${t}" data-type="start" class="mark-button bg-sky-500 text-white px-2 py-1 rounded-md hover:bg-sky-600">Inicio</button>
+                                <span class="ml-2 font-mono" id="start-time-${t}">${n?formatTime(n):"--:--"}</span>
+                            </div>
+                            <div>
+                                <button data-index="${t}" data-type="end" class="mark-button bg-pink-500 text-white px-2 py-1 rounded-md hover:bg-pink-600">Fin</button>
+                                <span class="ml-2 font-mono" id="end-time-${t}">${a?formatTime(a):"--:--"}</span>
+                            </div>
+                        </div>`,editorList.appendChild(o)
+                }):editorList.innerHTML='<p class="text-gray-500 text-sm">Este tema no tiene capítulos definidos.</p>'
             }
 
-            gridContainer.addEventListener('click', (e) => e.target.closest('.topic-button') && showMapView(e.target.closest('.topic-button')));
-            backButton.addEventListener('click', showMainMenu);
+            function showMapView(e){
+                playPauseButton.disabled=!1,playPauseIcon.className="fas fa-play";
+                const t=e.dataset.index,o=topics[t];
+                mainMenuView.classList.add("hidden"),mapViewerVIew.classList.remove("hidden"),iframe.src=o.file,topicAudio.src=`audios/${o.file.replace(/_desplegable\.html$/i,".mp3")}`,updateChapters(o),updateEditor(o),topControlBar.style.display="flex",setTimeout(()=>{topControlBar.style.opacity=1},10)
+            }
 
-            const formatTime = (time) => !isNaN(time) ? `${String(Math.floor(time/60)).padStart(2,'0')}:${String(Math.floor(time%60)).padStart(2,'0')}` : "00:00";
+            function showMainMenu(){
+                mapViewerVIew.classList.add("hidden"),mainMenuView.classList.remove("hidden"),topicAudio.pause(),iframe.src="",topControlBar.style.opacity=0,setTimeout(()=>{topControlBar.style.display="none"},300)
+            }
+            gridContainer.addEventListener("click",e=>e.target.closest(".topic-button")&&showMapView(e.target.closest(".topic-button"))),backButton.addEventListener("click",showMainMenu);
             
-            topicAudio.addEventListener('loadedmetadata', () => { totalDurationEl.textContent = formatTime(topicAudio.duration); timelineSlider.max = topicAudio.duration; });
-            topicAudio.addEventListener('error', () => { playPauseButton.disabled = true; playPauseIcon.className = 'fas fa-times'; totalDurationEl.textContent = "Error"; });
-            
-            playPauseButton.addEventListener('click', () => { currentChapterEndTime = null; currentChapterStartTime = null; topicAudio.paused ? topicAudio.play() : topicAudio.pause(); });
-            topicAudio.addEventListener('play', () => playPauseIcon.classList.replace('fa-play', 'fa-pause'));
-            topicAudio.addEventListener('pause', () => playPauseIcon.classList.replace('fa-pause', 'fa-play'));
-            topicAudio.addEventListener('ended', () => {
-                 if (topicAudio.loop && currentChapterStartTime === null) {
-                    // Loop for the whole audio
-                 } else if (topicAudio.loop && currentChapterStartTime !== null) {
-                    // This case is handled in 'timeupdate'
-                 } else {
-                    playPauseIcon.classList.replace('fa-pause', 'fa-play');
-                 }
-            });
-
-            topicAudio.addEventListener('timeupdate', () => {
-                timelineSlider.value = topicAudio.currentTime;
-                currentTimeEl.textContent = formatTime(topicAudio.currentTime);
-                if (currentChapterEndTime && topicAudio.currentTime >= currentChapterEndTime) {
-                    if (topicAudio.loop) {
-                        topicAudio.currentTime = currentChapterStartTime;
-                        topicAudio.play();
-                    } else {
-                        topicAudio.pause();
-                        currentChapterEndTime = null;
-                        currentChapterStartTime = null;
-                        document.querySelector('.chapter-button.playing')?.classList.remove('playing');
-                    }
+            const formatTime=e=>isNaN(e)?"00:00":`${String(Math.floor(e/60)).padStart(2,"0")}:${String(Math.floor(e%60)).padStart(2,"0")}`;
+            topicAudio.addEventListener("loadedmetadata",()=>{totalDurationEl.textContent=formatTime(topicAudio.duration),timelineSlider.max=topicAudio.duration}),topicAudio.addEventListener("error",()=>{playPauseButton.disabled=!0,playPauseIcon.className="fas fa-times",totalDurationEl.textContent="Error"}),playPauseButton.addEventListener("click",()=>{currentChapterEndTime=null,currentChapterStartTime=null,topicAudio.paused?topicAudio.play():topicAudio.pause()}),topicAudio.addEventListener("play",()=>playPauseIcon.classList.replace("fa-play","fa-pause")),topicAudio.addEventListener("pause",()=>playPauseIcon.classList.replace("fa-pause","fa-play")),topicAudio.addEventListener("ended",()=>{topicAudio.loop&&null===currentChapterStartTime||topicAudio.loop&&null!==currentChapterStartTime||playPauseIcon.classList.replace("fa-pause","fa-play")}),topicAudio.addEventListener("timeupdate",()=>{
+                if(timelineSlider.value=topicAudio.currentTime,currentTimeEl.textContent=formatTime(topicAudio.currentTime),currentChapterEndTime&&topicAudio.currentTime>=currentChapterEndTime)
+                    if(topicAudio.loop){topicAudio.currentTime=currentChapterStartTime,topicAudio.play();
+                } else{
+                    topicAudio.pause(),currentChapterEndTime=null,currentChapterStartTime=null;
+                    const e=document.querySelector(".chapter-button.playing");
+                    e&&e.classList.remove("playing")
+                }
+            }),timelineSlider.addEventListener("input",()=>{currentChapterEndTime=null,currentChapterStartTime=null,topicAudio.currentTime=timelineSlider.value}),chaptersButton.addEventListener("click",e=>{e.stopPropagation(),chaptersDropdown.classList.toggle("hidden")}),chaptersDropdown.addEventListener("click",e=>{
+                if("BUTTON"===e.target.tagName){
+                    const t=document.querySelector(".chapter-button.playing");
+                    t&&t.classList.remove("playing"),e.target.classList.add("playing"),currentChapterStartTime=parseFloat(e.target.dataset.start),currentChapterEndTime=e.target.dataset.end?parseFloat(e.target.dataset.end):null,topicAudio.currentTime=currentChapterStartTime,topicAudio.play(),chaptersDropdown.classList.add("hidden")
                 }
             });
 
-            timelineSlider.addEventListener('input', () => { currentChapterEndTime = null; currentChapterStartTime = null; topicAudio.currentTime = timelineSlider.value; });
-
-            chaptersButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                chaptersDropdown.classList.toggle('hidden');
-            });
-
-            chaptersDropdown.addEventListener('click', (e) => {
-                if (e.target.tagName === 'BUTTON') {
-                    document.querySelector('.chapter-button.playing')?.classList.remove('playing');
-                    e.target.classList.add('playing');
-                    currentChapterStartTime = parseFloat(e.target.dataset.start);
-                    currentChapterEndTime = e.target.dataset.end ? parseFloat(e.target.dataset.end) : null;
-                    topicAudio.currentTime = currentChapterStartTime;
-                    topicAudio.play();
-                    chaptersDropdown.classList.add('hidden');
-                }
-            });
-
-            const speeds = [1, 1.25, 1.5, 2];
-            let currentSpeedIndex = 0;
-            speedButton.addEventListener('click', () => {
-                currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
-                topicAudio.playbackRate = speeds[currentSpeedIndex];
-                speedButton.textContent = `${speeds[currentSpeedIndex]}x`;
-            });
-
-            loopButton.addEventListener('click', () => {
-                topicAudio.loop = !topicAudio.loop;
-                loopButton.classList.toggle('active');
-            });
-
-            volumeSlider.addEventListener('input', (e) => topicAudio.volume = e.target.value);
-            topicAudio.addEventListener('volumechange', () => {
-                volumeSlider.value = topicAudio.volume;
-                volumeIcon.className = topicAudio.muted || topicAudio.volume === 0 ? "fas fa-volume-mute text-gray-500" : topicAudio.volume < 0.5 ? "fas fa-volume-low text-gray-500" : "fas fa-volume-high text-gray-500";
-            });
-            volumeIcon.addEventListener('click', () => topicAudio.muted = !topicAudio.muted);
+            const speeds=[1,1.25,1.5,2];
+            let currentSpeedIndex=0;
+            speedButton.addEventListener("click",()=>{currentSpeedIndex=(currentSpeedIndex+1)%speeds.length;const e=speeds[currentSpeedIndex];topicAudio.playbackRate=e,speedButton.textContent=`${e}x`}),loopButton.addEventListener("click",()=>{topicAudio.loop=!topicAudio.loop,loopButton.classList.toggle("active")}),volumeSlider.addEventListener("input",e=>topicAudio.volume=e.target.value),topicAudio.addEventListener("volumechange",()=>{volumeSlider.value=topicAudio.volume,volumeIcon.className=topicAudio.muted||0===topicAudio.volume?"fas fa-volume-mute text-gray-500":topicAudio.volume<.5?"fas fa-volume-low text-gray-500":"fas fa-volume-high text-gray-500"}),volumeIcon.addEventListener("click",()=>topicAudio.muted=!topicAudio.muted),document.addEventListener("click",e=>{chaptersMenuContainer.contains(e.target)||chaptersDropdown.classList.add("hidden")});
             
-            document.addEventListener('click', (e) => {
-                if (!chaptersMenuContainer.contains(e.target)) {
-                    chaptersDropdown.classList.add('hidden');
+            editModeToggle.addEventListener("change",()=>{
+                isEditMode=editModeToggle.checked,editorPanel.style.display=isEditMode?"block":"none",iframeContainer.className=isEditMode?"w-full lg:w-2/3":"flex-1",setTimeout(()=>{editorPanel.style.opacity=isEditMode?1:0},10)
+            });
+
+            editorList.addEventListener("click",e=>{
+                const t=e.target.closest(".mark-button");
+                if(t){
+                    const o=t.dataset.index,n=t.dataset.type,a=Math.round(100*topicAudio.currentTime)/100;
+                    editedChapters[o][n]=a,document.getElementById(`${n}-time-${o}`).textContent=formatTime(a)
                 }
             });
+
+            copyDataButton.addEventListener("click",()=>{
+                const e=editedChapters.map((e,t,o)=>{
+                    const n={title:e.title,start:e.start};
+                    return t<o.length-1&&(n.end=e.end),n
+                }),t=JSON.stringify(e,null,4),o=document.createElement("textarea");
+                o.value=t,document.body.appendChild(o),o.select(),document.execCommand("copy"),document.body.removeChild(o),copyNotification.style.opacity=1,setTimeout(()=>{copyNotification.style.opacity=0},2e3)
+            })
         });
     </script>
 </body>
 </html>
-
