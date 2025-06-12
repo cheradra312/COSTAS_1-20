@@ -83,16 +83,12 @@
                     <span class="hidden sm:inline">Volver</span>
                 </button>
                 <div id="audio-player" class="bg-white p-2 rounded-lg shadow-md flex items-center gap-3 relative">
-                    <!-- Menú Desplegable de Capítulos -->
                     <div id="chapters-menu-container" class="relative">
                         <button id="chapters-button" class="text-gray-600 hover:bg-gray-200 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition">
                             <i class="fas fa-list-ul"></i>
                         </button>
-                        <div id="chapters-dropdown" class="absolute top-full mt-2 left-0 bg-white shadow-lg rounded-lg p-2 w-80 max-h-72 overflow-y-auto hidden z-10">
-                            <!-- Los capítulos se insertarán aquí -->
-                        </div>
+                        <div id="chapters-dropdown" class="absolute top-full mt-2 left-0 bg-white shadow-lg rounded-lg p-2 w-80 max-h-72 overflow-y-auto hidden z-10"></div>
                     </div>
-                    
                     <button id="play-pause-button" class="text-white bg-blue-500 hover:bg-blue-600 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition-transform transform hover:scale-110">
                         <i id="play-pause-icon" class="fas fa-play"></i>
                     </button>
@@ -114,9 +110,8 @@
                 </div>
             </div>
             
-            <div class="bg-white p-2 rounded-xl shadow-lg border border-gray-200">
-                <iframe id="content-frame" class="w-full border-0 rounded-lg" style="min-height: 80vh;" src=""></iframe>
-            </div>
+            <!-- CORRECCIÓN: Se elimina el div contenedor del iframe -->
+            <iframe id="content-frame" class="w-full border-0 rounded-xl shadow-lg" style="min-height: 80vh;" src=""></iframe>
         </div>
         
         <audio id="topic-audio" src=""></audio>
