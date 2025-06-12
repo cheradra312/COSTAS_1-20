@@ -97,26 +97,10 @@
 
         // Función para inicializar Firebase
         function initializeFirebase() {
-             let firebaseConfig;
+            let firebaseConfig;
             try {
-                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                    firebaseConfig = JSON.parse(__firebase_config);
-                }
-                
-                if (!firebaseConfig || !firebaseConfig.projectId) {
-                    firebaseConfig = {
-                        apiKey: "AIzaSyBt0xUQ7Y03L3vlTPUps7ayQIR6ZTKwOVg",
-                        authDomain: "monteagudo-10283.firebaseapp.com",
-                        projectId: "monteagudo-10283",
-                        storageBucket: "monteagudo-10283.appspot.com",
-                        messagingSenderId: "1057163945614",
-                        appId: "1:1057163945614:web:731abb879ff9fc1f9e8bdf",
-                        measurementId: "G-4JX5TVCPH0"
-                    };
-                }
-            } catch (e) {
-                console.error("Firebase config parsing error:", e);
-                 firebaseConfig = {
+                 // CORRECCIÓN: Usar directamente la configuración proporcionada.
+                firebaseConfig = {
                     apiKey: "AIzaSyBt0xUQ7Y03L3vlTPUps7ayQIR6ZTKwOVg",
                     authDomain: "monteagudo-10283.firebaseapp.com",
                     projectId: "monteagudo-10283",
@@ -125,6 +109,15 @@
                     appId: "1:1057163945614:web:731abb879ff9fc1f9e8bdf",
                     measurementId: "G-4JX5TVCPH0"
                 };
+
+                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                     const envConfig = JSON.parse(__firebase_config);
+                     if (envConfig.projectId) {
+                        firebaseConfig = envConfig;
+                     }
+                }
+            } catch (e) {
+                console.error("Firebase config error, using fallback:", e);
             }
             
             const app = initializeApp(firebaseConfig);
@@ -135,6 +128,10 @@
         // Autenticación del usuario
         async function authenticateUser() {
             try {
+                if (!auth) {
+                    console.error("Firebase Auth no está inicializado.");
+                    return;
+                }
                 const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
                 if (token) {
                     await signInWithCustomToken(auth, token);
