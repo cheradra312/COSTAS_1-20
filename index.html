@@ -50,7 +50,10 @@
  				<button id="back-button" class="bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-100 flex items-center gap-2"> 
  					<i class="fas fa-arrow-left"></i><span class="hidden sm:inline">Volver</span> 
  				</button> 
- 				<div class="flex items-center gap-4"> 
+ 				<div class="flex items-center gap-2"> 
+					<button id="toggle-video-button" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-red-600 flex items-center gap-2">
+                        <i class="fas fa-video"></i><span class="hidden sm:inline">Ver Vídeo</span>
+                    </button>
 					<button id="toggle-pdf-button" class="bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-600 flex items-center gap-2">
                         <i class="fas fa-file-pdf"></i><span class="hidden sm:inline">Ver PDF</span>
                     </button>
@@ -130,6 +133,14 @@
  			</div> 
  		</div> 
  		 
+        <!-- MODAL DE VÍDEO -->
+        <div id="video-modal-overlay" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 modal-overlay">
+            <div class="bg-black p-4 rounded-lg shadow-2xl w-full max-w-4xl relative aspect-video">
+                <button id="close-video-button" class="absolute -top-4 -right-4 bg-white text-black rounded-full w-8 h-8 flex items-center justify-center text-lg font-bold">&times;</button>
+                <iframe id="video-iframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+
  		<audio id="topic-audio" src=""></audio> 
  	</div> 
 
@@ -204,8 +215,8 @@
  			await loadAllCustomChapters(); 
 
  			const topics = [ 
- 				{ file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' }, 
- 				{ file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark', 
+ 				{ file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel', videoId: '10ppnvLhwAynESlCfbS5_4uQ-NXZGG-95' }, 
+ 				{ file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark', videoId: 'ID_DE_TU_VIDEO_AQUI_2',
  					chapters: [ 
  						{ "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 192 }, 
  						{ "title": "2. Prevalencia del DPMT. Potestades de la administración.", "start": 182, "end": 242 }, 
@@ -215,7 +226,7 @@
  						{ "title": "6. Inmatriculación de fincas colindantes con el DPMT. Afectación y desafectación.", "start": 638 } 
  					] 
  				}, 
- 				{ file: 'MEA2T3_DESPLEGABLE.html', title: 'Limitaciones a la propiedad', color: 'sky', icon: 'fa-ban', 
+ 				{ file: 'MEA2T3_DESPLEGABLE.html', title: 'Limitaciones a la propiedad', color: 'sky', icon: 'fa-ban', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Limitaciones a la propiedad sobre los terrenos contiguos a la ribera del mar por razones de protección del dominio público marítimo-terrestre.", "start": 0, "end": 72 }, 
  						{ "title": "2. Servidumbres de protección, tránsito y acceso al mar. Anchura y usos permitidos.", "start": 62, "end": 435 }, 
@@ -223,15 +234,15 @@
  						{ "title": "4. Otras limitaciones a la propiedad. Zona de influencia.", "start": 555 } 
  					] 
  				}, 
- 				{ file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPMT', color: 'indigo', icon: 'fa-swimmer', 
+ 				{ file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPMT', color: 'indigo', icon: 'fa-swimmer', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Utilización del DPMT. Disposiciones generales.", "start": 0, "end": 325.41 }, 
  						{ "title": "2. Proyectos y obras en el DPMT. Estudios complementarios.", "start": 325.41, "end": 497.28 }, 
  						{ "title": "3. Reservas, adscripciones, autorización y concesiones.", "start": 497.28 } 
  					] 
  				}, 
- 				{ file: 'MEA2T5_DESPLEGABLE.html', title: 'Régimen Económico-Financiero', color: 'green', icon: 'fa-coins' }, 
- 				{ file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE según la ley 22/1988', color: 'emerald', icon: 'fa-building-columns', 
+ 				{ file: 'MEA2T5_DESPLEGABLE.html', title: 'Régimen Económico-Financiero', color: 'green', icon: 'fa-coins', videoId: 'ID_DE_TU_VIDEO_AQUI' }, 
+ 				{ file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE según la ley 22/1988', color: 'emerald', icon: 'fa-building-columns', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Competencias de la AGE según la normativa de costas. Decretos de transferencias a las CCAA.", "start": 0, "end": 258 }, 
  						{ "title": "2. Obras de interés general.", "start": 258, "end": 443 }, 
@@ -240,15 +251,15 @@
  						{ "title": "5. Competencias municipales.", "start": 555 } 
  					] 
  				}, 
- 				{ file: 'MEA2T7_DESPLEGABLE.html', title: 'Régimen Transitorio', color: 'teal', icon: 'fa-history' }, 
- 				{ file: 'MEA2T8_DESPLEGABLE.html', title: 'Las autorizaciones en servidumbre de protección', color: 'lime', icon: 'fa-file-signature', 
+ 				{ file: 'MEA2T7_DESPLEGABLE.html', title: 'Régimen Transitorio', color: 'teal', icon: 'fa-history', videoId: 'ID_DE_TU_VIDEO_AQUI' }, 
+ 				{ file: 'MEA2T8_DESPLEGABLE.html', title: 'Las autorizaciones en servidumbre de protección', color: 'lime', icon: 'fa-file-signature', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Las autorizaciones en servidumbre de protección. Competencia.", "start": 0, "end": 334 }, 
  						{ "title": "2. La declaración responsable. La disposición transitoria cuarta de la ley 22/1988 y su desarrollo reglamentario.", "start": 324, "end": 614 }, 
  						{ "title": "3. Autorización de nuevos usos y construcciones conforme a los instrumentos de ordenación, fachadas marítimas.", "start": 604 } 
  					] 
  				}, 
- 				{ file: 'MEA2T9_DESPLEGABLE.html', title: 'Biodiversidad y conservación de ecosistemas marinos y costeros', color: 'yellow', icon: 'fa-seedling', 
+ 				{ file: 'MEA2T9_DESPLEGABLE.html', title: 'Biodiversidad y conservación de ecosistemas marinos y costeros', color: 'yellow', icon: 'fa-seedling', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Biodiversidad y conservación de ecosistemas marinos y costeros.", "start": 0, "end": 173 }, 
  						{ "title": "2. Las zonas húmedas costeras.", "start": 163, "end": 450 }, 
@@ -256,14 +267,14 @@
  						{ "title": "4. Las zonas de fanerógamas marinas. Importancia y tratamiento.", "start": 536 } 
  					] 
  				}, 
- 				{ file: 'MEA2T10_DESPLEGABLE.html', title: 'La gestión integral del litoral', color: 'amber', icon: 'fa-tasks' }, 
- 				{ file: 'MEA2T11_DESPLEGABLE.html', title: 'Las distintas teorías de ondas', color: 'orange', icon: 'fa-wave-square', 
+ 				{ file: 'MEA2T10_DESPLEGABLE.html', title: 'La gestión integral del litoral', color: 'amber', icon: 'fa-tasks', videoId: 'ID_DE_TU_VIDEO_AQUI' }, 
+ 				{ file: 'MEA2T11_DESPLEGABLE.html', title: 'Las distintas teorías de ondas', color: 'orange', icon: 'fa-wave-square', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Las distintas teorías de ondas.", "start": 0, "end": 257 }, 
  						{ "title": "2. La propagación del oleaje. Los fenómenos de refracción, difracción, transmisión y reflexión del oleaje.", "start": 247 } 
  					] 
  				}, 
- 				{ file: 'MEA2T12_DESPLEGABLE.html', title: 'El transporte sólido litoral', color: 'red', icon: 'fa-arrows-left-right', 
+ 				{ file: 'MEA2T12_DESPLEGABLE.html', title: 'El transporte sólido litoral', color: 'red', icon: 'fa-arrows-left-right', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. El transporte sólido litoral.", "start": 0, "end": 108 }, 
  						{ "title": "2. Distintas formulaciones.", "start": 98, "end": 182 }, 
@@ -273,7 +284,7 @@
  						{ "title": "6. La profundidad de cierre.", "start": 603 } 
  					] 
  				}, 
- 				{ file: 'MEA2T13_DESPLEGABLE.html', title: 'Los efectos del cambio climático sobre el litoral', color: 'rose', icon: 'fa-temperature-high', 
+ 				{ file: 'MEA2T13_DESPLEGABLE.html', title: 'Los efectos del cambio climático sobre el litoral', color: 'rose', icon: 'fa-temperature-high', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Los efectos del cambio climático sobre las dinámicas oceánicas, el litoral, los ecosistemas y los recursos marinos. Factores de degradación del litoral.", "start": 0, "end": 153 }, 
  						{ "title": "2. Adaptación de la costa a los efectos del cambio climático.", "start": 143, "end": 259 }, 
@@ -283,15 +294,15 @@
  						{ "title": "6. Huella de carbono de los proyectos en análisis de ciclo de vida. Principales medidas en infraestructuras para contribuir a la reducción de emisiones de gases de efecto invernadero.", "start": 667 } 
  					] 
  				}, 
- 				{ file: 'MEA2T14_DESPLEGABLE.html', title: 'Las estrategias marinas en España', color: 'pink', icon: 'fa-map' }, 
- 				{ file: 'MEA2T15_DESPLEGABLE.html', title: 'La erosión en los distintos tipos de playas', color: 'fuchsia', icon: 'fa-mountain-sun', 
+ 				{ file: 'MEA2T14_DESPLEGABLE.html', title: 'Las estrategias marinas en España', color: 'pink', icon: 'fa-map', videoId: 'ID_DE_TU_VIDEO_AQUI' }, 
+ 				{ file: 'MEA2T15_DESPLEGABLE.html', title: 'La erosión en los distintos tipos de playas', color: 'fuchsia', icon: 'fa-mountain-sun', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. La erosión en los distintos tipos de playas. Causas de la erosión.", "start": 0, "end": 210 }, 
  						{ "title": "2. Efectos de las infraestructuras litorales sobre las playas. Medidas correctoras y actuaciones.", "start": 200, "end": 616 }, 
  						{ "title": "3. Efectos del cambio climático sobre la erosión costera.", "start": 606 } 
  					] 
  				}, 
- 				{ file: 'MEA2T16_DESPLEGABLE.html', title: 'Proyectos de playas artificiales', color: 'purple', icon: 'fa-umbrella-beach', 
+ 				{ file: 'MEA2T16_DESPLEGABLE.html', title: 'Proyectos de playas artificiales', color: 'purple', icon: 'fa-umbrella-beach', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Proyectos de playas artificiales. Actuaciones en la costa.", "start": 0, "end": 329 }, 
  						{ "title": "2. Formas de playa en planta. La espiral logarítmica y las soluciones parabólicas.", "start": 319, "end": 428 }, 
@@ -299,7 +310,7 @@
  						{ "title": "4. Aspectos ambientales de la regeneración de playas. Efectos sobre las comunidades pelágicas y bentónicas.", "start": 616 } 
  					] 
  				}, 
- 				{ file: 'MEA2T17_DESPLEGABLE.html', title: 'Las fuentes naturales de sedimentos', color: 'violet', icon: 'fa-stream', 
+ 				{ file: 'MEA2T17_DESPLEGABLE.html', title: 'Las fuentes naturales de sedimentos', color: 'violet', icon: 'fa-stream', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Las fuentes naturales de sedimentos.", "start": 0, "end": 99 }, 
  						{ "title": "2. Las zonas de préstamo para alimentación artificial.", "start": 89, "end": 226 }, 
@@ -308,7 +319,7 @@
  						{ "title": "5. Otros métodos de prospección submarina: gravimetría, sondeos y ensayos in-situ.", "start": 657 } 
  					] 
  				}, 
- 				{ file: 'MEA2T18_DESPLEGABLE.html', title: 'El puerto', color: 'gray', icon: 'fa-anchor', 
+ 				{ file: 'MEA2T18_DESPLEGABLE.html', title: 'El puerto', color: 'gray', icon: 'fa-anchor', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. El puerto, aspectos generales y físicos. Objetivos y funciones.", "start": 0, "end": 43 }, 
  						{ "title": "2. El sistema portuario español.", "start": 33, "end": 163 }, 
@@ -320,7 +331,7 @@
  						{ "title": "8. Estudio de capacidad. Ordenación de terminales.", "start": 612 } 
  					] 
  				}, 
- 				{ file: 'MEA2T19_DESPLEGABLE.html', title: 'Obras portuarias (II)', color: 'slate', icon: 'fa-hard-hat', 
+ 				{ file: 'MEA2T19_DESPLEGABLE.html', title: 'Obras portuarias (II)', color: 'slate', icon: 'fa-hard-hat', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Obras de abrigo y portuarias y definición y caracterización de la situación y factores de proyecto.", "start": 0, "end": 202 }, 
  						{ "title": "2. Estados límite últimos. Período de retorno.", "start": 192, "end": 266 }, 
@@ -328,7 +339,7 @@
  						{ "title": "4. Análisis estadístico del oleaje en aguas profundas y poco profundas régimen estremales y régimen medio.", "start": 573 } 
  					] 
  				}, 
- 				{ file: 'MEA2T20_DESPLEGABLE.html', title: 'Obras portuarias (I)', color: 'zinc', icon: 'fa-ship', 
+ 				{ file: 'MEA2T20_DESPLEGABLE.html', title: 'Obras portuarias (I)', color: 'zinc', icon: 'fa-ship', videoId: 'ID_DE_TU_VIDEO_AQUI',
  					chapters: [ 
  						{ "title": "1. Obras de abrigo y portuarias y diseños y dimensionamiento. Diseño en planta.", "start": 0, "end": 185 }, 
  						{ "title": "2. Obras exteriores: Diques verticales, diques en talud, diques rebasables.", "start": 175, "end": 370 }, 
@@ -342,6 +353,7 @@
  			const colorPalette={blue:{normal:"bg-blue-100 text-blue-800",icon:"text-blue-500"},cyan:{normal:"bg-cyan-100 text-cyan-800",icon:"text-cyan-500"},sky:{normal:"bg-sky-100 text-sky-800",icon:"text-sky-500"},indigo:{normal:"bg-indigo-100 text-indigo-800",icon:"text-indigo-500"},green:{normal:"bg-green-100 text-green-800",icon:"text-green-500"},emerald:{normal:"bg-emerald-100 text-emerald-800",icon:"text-emerald-500"},teal:{normal:"bg-teal-100 text-teal-800",icon:"text-teal-500"},lime:{normal:"bg-lime-100 text-lime-800",icon:"text-lime-500"},yellow:{normal:"bg-yellow-100 text-yellow-800",icon:"text-yellow-500"},amber:{normal:"bg-amber-100 text-amber-800",icon:"text-amber-500"},orange:{normal:"bg-orange-100 text-orange-800",icon:"text-orange-500"},red:{normal:"bg-red-100 text-red-800",icon:"text-red-500"},rose:{normal:"bg-rose-100 text-rose-800",icon:"text-rose-500"},pink:{normal:"bg-pink-100 text-pink-800",icon:"text-pink-500"},fuchsia:{normal:"bg-fuchsia-100 text-fuchsia-800",icon:"text-fuchsia-500"},purple:{normal:"bg-purple-100 text-purple-800",icon:"text-purple-500"},violet:{normal:"bg-violet-100 text-violet-800",icon:"text-violet-500"},gray:{normal:"bg-gray-100 text-gray-800",icon:"text-gray-500"},slate:{normal:"bg-slate-100 text-slate-800",icon:"text-slate-500"},zinc:{normal:"bg-zinc-100 text-zinc-800",icon:"text-zinc-500"}}; 
  			const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),rewindButton=document.getElementById("rewind-button"),forwardButton=document.getElementById("forward-button"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),addChapterButton = document.getElementById("add-chapter-button"),passwordModalOverlay=document.getElementById("password-modal-overlay"),passwordInput=document.getElementById("password-input"),confirmEditButton=document.getElementById("confirm-edit-button"),cancelEditButton=document.getElementById("cancel-edit-button"),passwordError=document.getElementById("password-error"),newChapterTitleInput=document.getElementById("new-chapter-title-input"),restoreDefaultsButton = document.getElementById("restore-defaults-button"); 
  			const pdfViewerContainer = document.getElementById('pdf-viewer-container'), pdfCanvas = document.getElementById('pdf-canvas'), pageNumEl = document.getElementById('page-num'), pageCountEl = document.getElementById('page-count'), prevPageBtn = document.getElementById('prev-page'), nextPageBtn = document.getElementById('next-page'), pdfLoadingOverlay = document.getElementById('pdf-loading-overlay'), loadingText = document.getElementById('loading-text'), togglePdfButton = document.getElementById('toggle-pdf-button'), contentFrame = document.getElementById('content-frame');
+            const toggleVideoButton = document.getElementById('toggle-video-button'), videoModalOverlay = document.getElementById('video-modal-overlay'), closeVideoButton = document.getElementById('close-video-button'), videoIframe = document.getElementById('video-iframe');
 
  			topics.forEach((e,t)=>{ 
  				const o=document.createElement("button"),n=colorPalette[e.color]; 
@@ -461,7 +473,6 @@
  				mainMenuView.classList.add("hidden"); 
  				mapViewerVIew.classList.remove("hidden"); 
                 
-                // CORRECCIÓN: Usar el repositorio correcto
                 contentFrame.src = `https://htmlpreview.github.io/?https://github.com/cheradra312/COSTAS_1-20/blob/main/${currentTopic.file}`;
  				
  				updateChapters(chaptersToLoad); 
@@ -670,10 +681,33 @@
                     togglePdfButton.innerHTML = `<i class="fas fa-sitemap"></i><span class="hidden sm:inline">Ver Mapa</span>`;
                      const pdfUrl = 'https://raw.githubusercontent.com/cheradra312/COSTAS_1-20/main/Facilitador%20CICCPE%20Temario%20Condensado%20MEA2%20(versi%C3%B3n%202025-01).pdf';
                      const topicId = currentTopic.file.replace(/_desplegable\.html$/i, '');
-                     if (!pdfDoc) { // Cargar solo si no está cargado
+                     if (!pdfDoc) { 
                         loadPdfAndFind(pdfUrl, topicId);
                      }
                 }
+            });
+
+            toggleVideoButton.addEventListener('click', () => {
+                if (!currentTopic || !currentTopic.videoId || currentTopic.videoId === 'ID_DE_TU_VIDEO_AQUI') {
+                    alert('Este tema no tiene un vídeo asociado.');
+                    return;
+                }
+                
+                let videoUrl;
+                if (currentTopic.videoId.startsWith('http')) {
+                    videoUrl = currentTopic.videoId;
+                } else {
+                    videoUrl = `https://drive.google.com/file/d/${currentTopic.videoId}/embed`;
+                }
+
+                videoIframe.src = videoUrl;
+                videoModalOverlay.classList.remove('hidden');
+                topicAudio.pause();
+            });
+
+            closeVideoButton.addEventListener('click', () => {
+                videoModalOverlay.classList.add('hidden');
+                videoIframe.src = ''; 
             });
  		}); 
  	</script> 
