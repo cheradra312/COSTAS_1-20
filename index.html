@@ -9,6 +9,9 @@
  	<!-- Font Awesome --> 
  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"> 
  	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"> 
+    <!-- PDF.js Library (Version Locked for stability) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
  	<style> 
  		body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; } 
  		.topic-button { background-color: #ffffff; border: 1px solid #d1d5db; color: #374151; padding: 1rem; border-radius: 0.75rem; text-align: left; transition: all 0.2s ease-in-out; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); } 
@@ -48,6 +51,9 @@
  					<i class="fas fa-arrow-left"></i><span class="hidden sm:inline">Volver</span> 
  				</button> 
  				<div class="flex items-center gap-4"> 
+					<button id="toggle-pdf-button" class="bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-600 flex items-center gap-2">
+                        <i class="fas fa-file-pdf"></i><span class="hidden sm:inline">Ver PDF</span>
+                    </button>
  					<div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg shadow-md"> 
  						<label for="edit-mode-toggle" class="text-sm font-medium text-gray-700">Editar</label> 
  						<input type="checkbox" id="edit-mode-toggle" class="h-5 w-9 -checked:after:translate-x-full relative inline-flex cursor-pointer items-center rounded-full bg-gray-300 transition checked:bg-blue-500"> 
@@ -89,9 +95,25 @@
  					</button> 
  					<p id="save-notification" class="text-center text-green-700 font-semibold mt-2 opacity-0 transition-opacity">¡Guardado!</p> 
  				</div> 
- 				<div id="iframe-container" class="flex-1 transition-all duration-300"> 
- 					<iframe id="content-frame" class="w-full border-0 rounded-xl shadow-lg" style="min-height: 90vh;" src=""></iframe> 
- 				</div> 
+                <div id="content-container" class="flex-1">
+                    <iframe id="content-frame" class="w-full h-full border-0 rounded-xl shadow-lg" style="min-height: 90vh;" src=""></iframe>
+                    <div id="pdf-viewer-container" class="hidden flex-1 transition-all duration-300 bg-gray-200 p-2 sm:p-4 flex-col items-center relative rounded-lg" style="min-height: 90vh;">
+                        <div id="pdf-controls" class="mb-2 sm:mb-4 bg-white p-2 rounded-lg shadow-md flex items-center gap-2 sm:gap-4 z-10">
+                            <button id="prev-page" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"><i class="fas fa-arrow-left"></i></button>
+                            <span class="text-sm sm:text-base">Página <span id="page-num">0</span> de <span id="page-count">0</span></span>
+                            <button id="next-page" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"><i class="fas fa-arrow-right"></i></button>
+                        </div>
+                        <div id="pdf-render-area" class="overflow-auto flex-grow w-full flex justify-center">
+                             <canvas id="pdf-canvas" class="border-2 border-gray-400 shadow-lg"></canvas>
+                        </div>
+                         <div id="pdf-loading-overlay" class="absolute inset-0 bg-white bg-opacity-80 flex-col items-center justify-center hidden z-20 rounded-lg">
+                            <div class="text-center">
+                                <i class="fas fa-spinner fa-spin text-4xl text-blue-500"></i>
+                                <p id="loading-text" class="mt-2 text-lg font-semibold">Cargando PDF...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
  			</div> 
  		</div> 
  		 
@@ -118,11 +140,13 @@
  		import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"; 
  		 
  		document.addEventListener('DOMContentLoaded', async function () { 
- 			 
+            pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js`;
+
  			const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id'; 
  			let db, auth, userId, currentTopic; 
  			let currentChapterEndTime=null, currentChapterStartTime=null, editedChapters=[]; 
- 			let userCustomChapters = {}; // Caché local para los capítulos del usuario
+ 			let userCustomChapters = {};
+            let pdfDoc = null, currentPageNum = 1;
 
  			function initializeFirebase() { 
  				let firebaseConfig; 
@@ -162,14 +186,12 @@
  				} 
  			}
 
- 			// Función para cargar todos los datos personalizados del usuario al inicio
  			async function loadAllCustomChapters() {
  				if (!userId) return;
  				const topicsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/topics`);
  				try {
  					const querySnapshot = await getDocs(topicsCollectionRef);
  					querySnapshot.forEach((doc) => {
- 						// Almacenar los capítulos en la caché usando el ID del documento (ej: "MEA2T2")
  						userCustomChapters[doc.id] = doc.data().chapters;
  					});
  				} catch (error) {
@@ -179,7 +201,7 @@
  			 
  			initializeFirebase(); 
  			await authenticateUser(); 
- 			await loadAllCustomChapters(); // Cargar todos los datos después de autenticar
+ 			await loadAllCustomChapters(); 
 
  			const topics = [ 
  				{ file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' }, 
@@ -318,8 +340,9 @@
  			]; 
  			 
  			const colorPalette={blue:{normal:"bg-blue-100 text-blue-800",icon:"text-blue-500"},cyan:{normal:"bg-cyan-100 text-cyan-800",icon:"text-cyan-500"},sky:{normal:"bg-sky-100 text-sky-800",icon:"text-sky-500"},indigo:{normal:"bg-indigo-100 text-indigo-800",icon:"text-indigo-500"},green:{normal:"bg-green-100 text-green-800",icon:"text-green-500"},emerald:{normal:"bg-emerald-100 text-emerald-800",icon:"text-emerald-500"},teal:{normal:"bg-teal-100 text-teal-800",icon:"text-teal-500"},lime:{normal:"bg-lime-100 text-lime-800",icon:"text-lime-500"},yellow:{normal:"bg-yellow-100 text-yellow-800",icon:"text-yellow-500"},amber:{normal:"bg-amber-100 text-amber-800",icon:"text-amber-500"},orange:{normal:"bg-orange-100 text-orange-800",icon:"text-orange-500"},red:{normal:"bg-red-100 text-red-800",icon:"text-red-500"},rose:{normal:"bg-rose-100 text-rose-800",icon:"text-rose-500"},pink:{normal:"bg-pink-100 text-pink-800",icon:"text-pink-500"},fuchsia:{normal:"bg-fuchsia-100 text-fuchsia-800",icon:"text-fuchsia-500"},purple:{normal:"bg-purple-100 text-purple-800",icon:"text-purple-500"},violet:{normal:"bg-violet-100 text-violet-800",icon:"text-violet-500"},gray:{normal:"bg-gray-100 text-gray-800",icon:"text-gray-500"},slate:{normal:"bg-slate-100 text-slate-800",icon:"text-slate-500"},zinc:{normal:"bg-zinc-100 text-zinc-800",icon:"text-zinc-500"}}; 
- 			const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),iframe=document.getElementById("content-frame"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),rewindButton=document.getElementById("rewind-button"),forwardButton=document.getElementById("forward-button"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),iframeContainer=document.getElementById("iframe-container"),addChapterButton = document.getElementById("add-chapter-button"),passwordModalOverlay=document.getElementById("password-modal-overlay"),passwordInput=document.getElementById("password-input"),confirmEditButton=document.getElementById("confirm-edit-button"),cancelEditButton=document.getElementById("cancel-edit-button"),passwordError=document.getElementById("password-error"),newChapterTitleInput=document.getElementById("new-chapter-title-input"),restoreDefaultsButton = document.getElementById("restore-defaults-button"); 
- 			 
+ 			const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),rewindButton=document.getElementById("rewind-button"),forwardButton=document.getElementById("forward-button"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),addChapterButton = document.getElementById("add-chapter-button"),passwordModalOverlay=document.getElementById("password-modal-overlay"),passwordInput=document.getElementById("password-input"),confirmEditButton=document.getElementById("confirm-edit-button"),cancelEditButton=document.getElementById("cancel-edit-button"),passwordError=document.getElementById("password-error"),newChapterTitleInput=document.getElementById("new-chapter-title-input"),restoreDefaultsButton = document.getElementById("restore-defaults-button"); 
+ 			const pdfViewerContainer = document.getElementById('pdf-viewer-container'), pdfCanvas = document.getElementById('pdf-canvas'), pageNumEl = document.getElementById('page-num'), pageCountEl = document.getElementById('page-count'), prevPageBtn = document.getElementById('prev-page'), nextPageBtn = document.getElementById('next-page'), pdfLoadingOverlay = document.getElementById('pdf-loading-overlay'), loadingText = document.getElementById('loading-text'), togglePdfButton = document.getElementById('toggle-pdf-button'), contentFrame = document.getElementById('content-frame');
+
  			topics.forEach((e,t)=>{ 
  				const o=document.createElement("button"),n=colorPalette[e.color]; 
  				o.className="topic-button",o.dataset.index=t,o.innerHTML=`<span class="topic-number ${n.normal}">${t+1}</span><i class="fas ${e.icon} topic-icon ${n.icon}"></i><span class="topic-title">${e.title}</span>`,gridContainer.appendChild(o) 
@@ -379,6 +402,52 @@
  				} 
  			} 
 
+            async function renderPage(num) {
+                if (!pdfDoc) return;
+                const page = await pdfDoc.getPage(num);
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvasContext = pdfCanvas.getContext('2d');
+                pdfCanvas.height = viewport.height;
+                pdfCanvas.width = viewport.width;
+                
+                await page.render({ canvasContext, viewport }).promise;
+                
+                pageNumEl.textContent = num;
+                prevPageBtn.disabled = num <= 1;
+                nextPageBtn.disabled = num >= pdfDoc.numPages;
+            }
+
+            async function loadPdfAndFind(url, searchText) {
+                pdfLoadingOverlay.style.display = 'flex';
+                loadingText.textContent = 'Cargando PDF...';
+
+                try {
+                    // Se elimina el proxy CORS, ya que raw.githubusercontent.com suele permitir el acceso.
+                    const loadingTask = pdfjsLib.getDocument(url);
+                    pdfDoc = await loadingTask.promise;
+                    pageCountEl.textContent = pdfDoc.numPages;
+                    
+                    loadingText.textContent = `Buscando "${searchText}"...`;
+                    let foundPage = 1;
+                    for (let i = 1; i <= pdfDoc.numPages; i++) {
+                        const page = await pdfDoc.getPage(i);
+                        const textContent = await page.getTextContent();
+                        const pageText = textContent.items.map(item => item.str).join('');
+                        if (pageText.includes(searchText)) {
+                            foundPage = i;
+                            break;
+                        }
+                    }
+                    currentPageNum = foundPage;
+                    await renderPage(currentPageNum);
+                } catch (error) {
+                    console.error('Error loading or searching PDF:', error);
+                    alert('No se pudo cargar el PDF. Revisa la URL y asegúrate de que sea un enlace directo (raw) al archivo.');
+                } finally {
+                    pdfLoadingOverlay.style.display = 'none';
+                }
+            }
+ 
  			function showMapView(button){ 
  				playPauseButton.disabled = false;
  				playPauseIcon.className = "fas fa-play";
@@ -386,16 +455,15 @@
  				const baseTopic = topics[topicIndex];
  				const topicId = baseTopic.file.replace(/_desplegable\.html$/i, '');
  				
- 				// Usar los datos de la caché si existen, si no, usar los de por defecto
  				const chaptersToLoad = userCustomChapters[topicId] || (baseTopic.chapters ? JSON.parse(JSON.stringify(baseTopic.chapters)) : []);
 
  				currentTopic = { ...baseTopic, chapters: chaptersToLoad };
  				
  				mainMenuView.classList.add("hidden"); 
  				mapViewerVIew.classList.remove("hidden"); 
- 				iframe.src = currentTopic.file; 
- 				topicAudio.src = `audios/${currentTopic.file.replace(/_desplegable\.html$/i, ".mp3")}`; 
- 				 
+                
+                contentFrame.src = `https://htmlpreview.github.io/?https://github.com/juanjofp/juanjofp/blob/main/${currentTopic.file}`;
+ 				
  				updateChapters(chaptersToLoad); 
  				updateEditor(chaptersToLoad); 
  				 
@@ -404,7 +472,15 @@
  			} 
 
  			function showMainMenu(){ 
- 				mapViewerVIew.classList.add("hidden"),mainMenuView.classList.remove("hidden"),topicAudio.pause(),iframe.src="",topControlBar.style.opacity=0,setTimeout(()=>topControlBar.style.display="none",300) 
+ 				mapViewerVIew.classList.add("hidden");
+                mainMenuView.classList.remove("hidden");
+                topicAudio.pause();
+                pdfDoc = null;
+                contentFrame.src = "";
+                pdfViewerContainer.classList.add('hidden');
+                contentFrame.classList.remove('hidden');
+                topControlBar.style.opacity=0;
+                setTimeout(()=>topControlBar.style.display="none",300); 
  			} 
  			gridContainer.addEventListener("click",(e=>e.target.closest(".topic-button")&&showMapView(e.target.closest(".topic-button")))),backButton.addEventListener("click",showMainMenu); 
  			 
@@ -445,14 +521,12 @@
  					let isEditMode = false; 
  					editorPanel.style.opacity = 0; 
  					setTimeout(() => editorPanel.style.display = 'none', 300); 
- 					iframeContainer.className = "flex-1 transition-all duration-300"; 
  				} 
  			}); 
 
  			function enterEditMode() { 
  				let isEditMode = true; 
  				editorPanel.style.display="block"; 
- 				iframeContainer.className="w-full lg:w-2/3"; 
  				setTimeout(()=>editorPanel.style.opacity=1,10); 
  				passwordModalOverlay.classList.add('hidden'); 
  				passwordInput.value = ''; 
@@ -520,7 +594,6 @@
 
  				try { 
  					await setDoc(docRef, dataToSave);
- 					// Actualizar la caché local y la UI
  					userCustomChapters[topicId] = JSON.parse(JSON.stringify(editedChapters));
  					currentTopic.chapters = userCustomChapters[topicId];
  					updateChapters(currentTopic.chapters);
@@ -557,7 +630,6 @@
 
  				try {
  					await setDoc(docRef, dataToSave);
- 					// Actualizar la caché local y la UI
  					userCustomChapters[topicId] = defaultChapters;
  					currentTopic.chapters = userCustomChapters[topicId];
  					
@@ -572,6 +644,37 @@
  					restoreDefaultsButton.disabled = false;
  				}
  			});
+
+            prevPageBtn.addEventListener('click', () => {
+                if (currentPageNum <= 1) return;
+                currentPageNum--;
+                renderPage(currentPageNum);
+            });
+
+            nextPageBtn.addEventListener('click', () => {
+                if (!pdfDoc || currentPageNum >= pdfDoc.numPages) return;
+                currentPageNum++;
+                renderPage(currentPageNum);
+            });
+
+            togglePdfButton.addEventListener('click', () => {
+                const isPdfVisible = !pdfViewerContainer.classList.contains('hidden');
+                if (isPdfVisible) {
+                    pdfViewerContainer.classList.add('hidden');
+                    contentFrame.classList.remove('hidden');
+                    togglePdfButton.innerHTML = `<i class="fas fa-file-pdf"></i><span class="hidden sm:inline">Ver PDF</span>`;
+
+                } else {
+                    pdfViewerContainer.classList.remove('hidden');
+                    contentFrame.classList.add('hidden');
+                    togglePdfButton.innerHTML = `<i class="fas fa-sitemap"></i><span class="hidden sm:inline">Ver Mapa</span>`;
+                     const pdfUrl = 'https://raw.githubusercontent.com/cheradra312/COSTAS_1-20/main/Facilitador%20CICCPE%20Temario%20Condensado%20MEA2%20(versi%C3%B3n%202025-01).pdf';
+                     const topicId = currentTopic.file.replace(/_desplegable\.html$/i, '');
+                     if (!pdfDoc) { // Cargar solo si no está cargado
+                        loadPdfAndFind(pdfUrl, topicId);
+                     }
+                }
+            });
  		}); 
  	</script> 
  </body> 
