@@ -317,15 +317,11 @@
  				o.className="topic-button",o.dataset.index=t,o.innerHTML=`<span class="topic-number ${n.normal}">${t+1}</span><i class="fas ${e.icon} topic-icon ${n.icon}"></i><span class="topic-title">${e.title}</span>`,gridContainer.appendChild(o) 
  			}); 
 
- 			async function updateChapters(topic) { 
- 				const topicId = topic.file.replace(/_desplegable\.html$/i, ''); 
- 				const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId); 
- 				const docSnap = await getDoc(docRef); 
-
- 				let chaptersToShow = docSnap.exists() ? docSnap.data().chapters : topic.chapters; 
- 				 
+ 			// Esta función ahora recibe directamente la lista de capítulos a mostrar
+ 			function updateChapters(chapters) { 
+ 				const chaptersToShow = chapters || [];
  				chaptersDropdown.innerHTML = ''; 
- 				if (chaptersToShow && chaptersToShow.length > 0) { 
+ 				if (chaptersToShow.length > 0) { 
  					chaptersToShow.forEach(chapter => { 
  						const chapterButton = document.createElement('button'); 
  						chapterButton.className = 'chapter-button w-full text-left p-2 rounded hover:bg-gray-100 text-sm'; 
@@ -342,13 +338,9 @@
  				} 
  			} 
 
- 			async function updateEditor(topic){ 
- 				const topicId = topic.file.replace(/_desplegable\.html$/i, ''); 
- 				const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId); 
- 				const docSnap = await getDoc(docRef); 
-
- 				const chaptersToEdit = docSnap.exists() ? docSnap.data().chapters : (topic.chapters || []); 
- 				 
+ 			// Esta función ahora recibe directamente la lista de capítulos para el editor
+ 			function updateEditor(chapters){ 
+ 				const chaptersToEdit = chapters || [];
  				editedChapters=JSON.parse(JSON.stringify(chaptersToEdit)); 
  				renderEditorList(); 
  			} 
@@ -381,19 +373,39 @@
  				} 
  			} 
 
-
+ 			// Lógica de carga de datos corregida y centralizada
  			async function showMapView(button){ 
- 				playPauseButton.disabled = !1, playPauseIcon.className = "fas fa-play"; 
- 				const topicIndex = button.dataset.index; 
- 				currentTopic = topics[topicIndex]; 
- 				 
+ 				playPauseButton.disabled = false;
+ 				playPauseIcon.className = "fas fa-play";
+ 				const topicIndex = button.dataset.index;
+ 				const baseTopic = topics[topicIndex];
+ 				// Usar los capítulos por defecto como base
+ 				let chaptersToLoad = baseTopic.chapters ? JSON.parse(JSON.stringify(baseTopic.chapters)) : []; 
+
+ 				// Comprobar si hay datos en Firebase
+ 				const topicId = baseTopic.file.replace(/_desplegable\.html$/i, '');
+ 				const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId);
+ 				try {
+ 					const docSnap = await getDoc(docRef);
+ 					if (docSnap.exists() && docSnap.data().chapters) {
+ 						// Si existen datos en Firebase, usarlos
+ 						chaptersToLoad = docSnap.data().chapters;
+ 					}
+ 				} catch (error) {
+ 					console.error("Error al obtener datos de Firestore:", error);
+ 				}
+
+ 				// Configurar el tema actual con los capítulos correctos (de Firebase o por defecto)
+ 				currentTopic = { ...baseTopic, chapters: chaptersToLoad };
+ 				
  				mainMenuView.classList.add("hidden"); 
  				mapViewerVIew.classList.remove("hidden"); 
  				iframe.src = currentTopic.file; 
  				topicAudio.src = `audios/${currentTopic.file.replace(/_desplegable\.html$/i, ".mp3")}`; 
  				 
- 				await updateChapters(currentTopic); 
- 				await updateEditor(currentTopic); 
+ 				// Actualizar la UI con los capítulos cargados
+ 				updateChapters(chaptersToLoad); 
+ 				updateEditor(chaptersToLoad); 
  				 
  				topControlBar.style.display="flex"; 
  				setTimeout(()=>topControlBar.style.opacity=1,10) 
@@ -507,6 +519,7 @@
  				} 
  			}); 
 
+ 			// Lógica de guardado corregida para actualizar la UI inmediatamente
  			saveDataButton.addEventListener("click",async()=>{ 
  				const topicId = currentTopic.file.replace(/_desplegable\.html$/i, ''); 
  				const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId); 
@@ -516,10 +529,15 @@
  				saveText.textContent = "Guardando..."; 
 
  				try { 
- 					await setDoc(docRef, dataToSave); 
+ 					await setDoc(docRef, dataToSave);
+ 					
+ 					// Actualizar el estado de la aplicación con los capítulos recién guardados
+ 					currentTopic.chapters = JSON.parse(JSON.stringify(editedChapters));
+ 					// Actualizar la lista desplegable para reflejar los cambios
+ 					updateChapters(currentTopic.chapters);
+
  					saveNotification.style.opacity=1; 
  					setTimeout(()=>{ saveNotification.style.opacity=0 }, 2000); 
- 					await updateChapters(currentTopic); 
  				} catch (error) { 
  					console.error("Error al guardar en Firestore: ", error); 
  					alert("No se pudo guardar los datos."); 
