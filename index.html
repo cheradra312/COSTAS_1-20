@@ -115,13 +115,14 @@
  	<script type="module"> 
  		import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"; 
  		import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"; 
- 		import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"; 
+ 		import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"; 
  		 
  		document.addEventListener('DOMContentLoaded', async function () { 
  			 
  			const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id'; 
  			let db, auth, userId, currentTopic; 
  			let currentChapterEndTime=null, currentChapterStartTime=null, editedChapters=[]; 
+ 			let userCustomChapters = {}; // Caché local para los capítulos del usuario
 
  			function initializeFirebase() { 
  				let firebaseConfig; 
@@ -159,10 +160,26 @@
  					console.error("Authentication Error:", error); 
  					userId = `anon_${crypto.randomUUID()}`; 
  				} 
- 			} 
+ 			}
+
+ 			// Función para cargar todos los datos personalizados del usuario al inicio
+ 			async function loadAllCustomChapters() {
+ 				if (!userId) return;
+ 				const topicsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/topics`);
+ 				try {
+ 					const querySnapshot = await getDocs(topicsCollectionRef);
+ 					querySnapshot.forEach((doc) => {
+ 						// Almacenar los capítulos en la caché usando el ID del documento (ej: "MEA2T2")
+ 						userCustomChapters[doc.id] = doc.data().chapters;
+ 					});
+ 				} catch (error) {
+ 					console.error("Error loading all custom chapters:", error);
+ 				}
+ 			}
  			 
  			initializeFirebase(); 
  			await authenticateUser(); 
+ 			await loadAllCustomChapters(); // Cargar todos los datos después de autenticar
 
  			const topics = [ 
  				{ file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' }, 
@@ -362,23 +379,15 @@
  				} 
  			} 
 
- 			async function showMapView(button){ 
+ 			function showMapView(button){ 
  				playPauseButton.disabled = false;
  				playPauseIcon.className = "fas fa-play";
  				const topicIndex = button.dataset.index;
  				const baseTopic = topics[topicIndex];
- 				let chaptersToLoad = baseTopic.chapters ? JSON.parse(JSON.stringify(baseTopic.chapters)) : []; 
-
  				const topicId = baseTopic.file.replace(/_desplegable\.html$/i, '');
- 				const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId);
- 				try {
- 					const docSnap = await getDoc(docRef);
- 					if (docSnap.exists() && docSnap.data().chapters && docSnap.data().chapters.length > 0) {
- 						chaptersToLoad = docSnap.data().chapters;
- 					}
- 				} catch (error) {
- 					console.error("Error al obtener datos de Firestore:", error);
- 				}
+ 				
+ 				// Usar los datos de la caché si existen, si no, usar los de por defecto
+ 				const chaptersToLoad = userCustomChapters[topicId] || (baseTopic.chapters ? JSON.parse(JSON.stringify(baseTopic.chapters)) : []);
 
  				currentTopic = { ...baseTopic, chapters: chaptersToLoad };
  				
@@ -511,8 +520,11 @@
 
  				try { 
  					await setDoc(docRef, dataToSave);
- 					currentTopic.chapters = JSON.parse(JSON.stringify(editedChapters));
+ 					// Actualizar la caché local y la UI
+ 					userCustomChapters[topicId] = JSON.parse(JSON.stringify(editedChapters));
+ 					currentTopic.chapters = userCustomChapters[topicId];
  					updateChapters(currentTopic.chapters);
+
  					saveNotification.textContent = "¡Guardado!";
  					saveNotification.style.opacity=1; 
  					setTimeout(()=>{ saveNotification.style.opacity=0 }, 2000); 
@@ -527,19 +539,15 @@
  			restoreDefaultsButton.addEventListener('click', async () => {
  				if (!currentTopic) return;
 
+ 				const topicId = currentTopic.file.replace(/_desplegable\.html$/i, '');
  				const originalTopic = topics.find(t => t.file === currentTopic.file);
- 				if (!originalTopic) {
- 					console.error("Could not find the original topic data.");
- 					return;
- 				}
+ 				if (!originalTopic) return;
 
  				const defaultChapters = originalTopic.chapters ? JSON.parse(JSON.stringify(originalTopic.chapters)) : [];
  				
- 				// Update the UI immediately
  				updateEditor(defaultChapters);
  				updateChapters(defaultChapters);
 
- 				const topicId = currentTopic.file.replace(/_desplegable\.html$/i, '');
  				const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId);
  				const dataToSave = { chapters: defaultChapters };
 
@@ -549,6 +557,9 @@
 
  				try {
  					await setDoc(docRef, dataToSave);
+ 					// Actualizar la caché local y la UI
+ 					userCustomChapters[topicId] = defaultChapters;
+ 					currentTopic.chapters = userCustomChapters[topicId];
  					
  					saveNotification.textContent = "¡Valores por defecto restaurados!";
  					saveNotification.style.opacity = 1;
