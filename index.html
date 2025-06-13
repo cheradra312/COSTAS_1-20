@@ -215,8 +215,8 @@
  			await loadAllCustomChapters(); 
 
  			const topics = [ 
- 				{ file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel', videoId: '10ppnvLhwAynESlCfbS5_4uQ-NXZGG-95' }, 
- 				{ file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark', videoId: 'ID_DE_TU_VIDEO_AQUI_2',
+ 				{ file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel', videoId: 'https://drive.google.com/file/d/10ppnvLhwAynESlCfbS5_4uQ-NXZGG-95/view?usp=sharing' }, 
+ 				{ file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark', videoId: 'https://5w1xb5-my.sharepoint.com/:v:/g/personal/cheradra_5w1xb5_onmicrosoft_com/EV9tuCjHLE9It-hh7V-QmwABMJcyBfgapzpA30gsWduO9g?e=f5Lthi',
  					chapters: [ 
  						{ "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 192 }, 
  						{ "title": "2. Prevalencia del DPMT. Potestades de la administración.", "start": 182, "end": 242 }, 
@@ -473,7 +473,7 @@
  				mainMenuView.classList.add("hidden"); 
  				mapViewerVIew.classList.remove("hidden"); 
                 
-                contentFrame.src = `https://htmlpreview.github.io/?https://github.com/cheradra312/COSTAS_1-20/blob/main/${currentTopic.file}`;
+                contentFrame.src = `https://cheradra312.github.io/COSTAS_1-20/${currentTopic.file}`;
  				
  				updateChapters(chaptersToLoad); 
  				updateEditor(chaptersToLoad); 
