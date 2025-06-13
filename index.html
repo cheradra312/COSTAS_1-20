@@ -34,10 +34,7 @@
     <div class="max-w-7xl mx-auto">
         <!-- VISTA DEL MENÚ PRINCIPAL -->
         <div id="main-menu-view">
-            <header class="text-center mb-8">
-                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">Visor de Mapas Conceptuales</h1>
-                <p class="text-lg text-gray-500 mt-2">Selecciona un tema para comenzar</p>
-            </header>
+            <header class="text-center mb-8"><h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">Visor de Mapas Conceptuales</h1><p class="text-lg text-gray-500 mt-2">Selecciona un tema para comenzar</p></header>
             <div id="topics-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
         </div>
 
@@ -82,7 +79,7 @@
                 </div>
                 <!-- Iframe -->
                 <div id="iframe-container" class="flex-1 transition-all duration-300">
-                     <iframe id="content-frame" class="w-full border-0 rounded-xl shadow-lg" style="min-height: 80vh;" src=""></iframe>
+                     <iframe id="content-frame" class="w-full border-0 rounded-xl" style="min-height: 80vh;" src=""></iframe>
                 </div>
             </div>
         </div>
@@ -108,307 +105,217 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
         
-        document.addEventListener('DOMContentLoaded', async function () {
-            
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            let db, auth, userId, currentTopic;
-            let currentChapterEndTime=null, currentChapterStartTime=null, editedChapters=[];
+        // --- Declaración de variables globales y constantes ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        let db, auth, userId, currentTopic;
+        let currentChapterEndTime=null, currentChapterStartTime=null, editedChapters=[];
 
-            // Función para inicializar Firebase
-            function initializeFirebase() {
-                let firebaseConfig;
-                try {
-                    // CORRECCIÓN: Se usa la configuración que proporcionaste como primaria
-                    firebaseConfig = {
-                        apiKey: "AIzaSyCKXzSmQ9F1M4W59Vyalu3CWdKFsh7dOmE",
-                        authDomain: "costas-304b9.firebaseapp.com",
-                        projectId: "costas-304b9",
-                        storageBucket: "costas-304b9.appspot.com",
-                        messagingSenderId: "251850800414",
-                        appId: "1:251850800414:web:435e20e5305881732e5d0f",
-                        measurementId: "G-C2NTL72PZH"
-                    };
-                    // Sobrescribir con la configuración del entorno si está disponible
-                    if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                         const envConfig = JSON.parse(__firebase_config);
-                         if (envConfig.projectId) firebaseConfig = envConfig;
-                    }
-                } catch (e) { console.error("Firebase config parsing error:", e); }
-                
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-            }
-            
-            // Autenticación del usuario
-            async function authenticateUser() {
-                try {
-                    const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-                    if (token) await signInWithCustomToken(auth, token);
-                    else await signInAnonymously(auth);
-                    userId = auth.currentUser.uid;
-                } catch (error) {
-                    console.error("Error de autenticación:", error);
-                    userId = `anon_${crypto.randomUUID()}`;
-                }
-            }
-            
+        // Declaración de Elementos del DOM
+        const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),iframe=document.getElementById("content-frame"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),volumeSlider=document.getElementById("volume-slider"),volumeIcon=document.getElementById("volume-icon"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),iframeContainer=document.getElementById("iframe-container"),addChapterButton = document.getElementById("add-chapter-button"),passwordModalOverlay=document.getElementById("password-modal-overlay"),passwordInput=document.getElementById("password-input"),confirmEditButton=document.getElementById("confirm-edit-button"),cancelEditButton=document.getElementById("cancel-edit-button"),passwordError=document.getElementById("password-error"),newChapterTitleInput=document.getElementById("new-chapter-title-input");
+        
+        const colorPalette={blue:{normal:"bg-blue-100 text-blue-800",icon:"text-blue-500"},cyan:{normal:"bg-cyan-100 text-cyan-800",icon:"text-cyan-500"},sky:{normal:"bg-sky-100 text-sky-800",icon:"text-sky-500"},indigo:{normal:"bg-indigo-100 text-indigo-800",icon:"text-indigo-500"},green:{normal:"bg-green-100 text-green-800",icon:"text-green-500"},emerald:{normal:"bg-emerald-100 text-emerald-800",icon:"text-emerald-500"},teal:{normal:"bg-teal-100 text-teal-800",icon:"text-teal-500"},lime:{normal:"bg-lime-100 text-lime-800",icon:"text-lime-500"},yellow:{normal:"bg-yellow-100 text-yellow-800",icon:"text-yellow-500"},amber:{normal:"bg-amber-100 text-amber-800",icon:"text-amber-500"},orange:{normal:"bg-orange-100 text-orange-800",icon:"text-orange-500"},red:{normal:"bg-red-100 text-red-800",icon:"text-red-500"},rose:{normal:"bg-rose-100 text-rose-800",icon:"text-rose-500"},pink:{normal:"bg-pink-100 text-pink-800",icon:"text-pink-500"},fuchsia:{normal:"bg-fuchsia-100 text-fuchsia-800",icon:"text-fuchsia-500"},purple:{normal:"bg-purple-100 text-purple-800",icon:"text-purple-500"},violet:{normal:"bg-violet-100 text-violet-800",icon:"text-violet-500"},gray:{normal:"bg-gray-100 text-gray-800",icon:"text-gray-500"},slate:{normal:"bg-slate-100 text-slate-800",icon:"text-slate-500"},zinc:{normal:"bg-zinc-100 text-zinc-800",icon:"text-zinc-500"}};
+        let topics = []; // Se llenará desde Firebase
+
+        // --- Lógica Principal ---
+        async function main() {
             initializeFirebase();
             await authenticateUser();
+            await loadTopicsFromFirebase();
+            setupEventListeners();
+        }
 
-            const topics = [
+        function initializeFirebase() {
+            let firebaseConfig;
+            try {
+                // CORRECCIÓN: Usar la configuración proporcionada directamente.
+                firebaseConfig = {
+                    apiKey: "AIzaSyCKXzSmQ9F1M4W59Vyalu3CWdKFsh7dOmE",
+                    authDomain: "costas-304b9.firebaseapp.com",
+                    projectId: "costas-304b9",
+                    storageBucket: "costas-304b9.appspot.com",
+                    messagingSenderId: "251850800414",
+                    appId: "1:251850800414:web:435e20e5305881732e5d0f",
+                    measurementId: "G-C2NTL72PZH"
+                };
+                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                     const envConfig = JSON.parse(__firebase_config);
+                     if (envConfig.projectId) firebaseConfig = envConfig;
+                }
+            } catch (e) { console.error("Firebase config parsing error:", e); }
+            
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        }
+
+        async function authenticateUser() {
+            try {
+                if (!auth) { console.error("Firebase Auth no está inicializado."); return; }
+                const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                if (token) await signInWithCustomToken(auth, token);
+                else await signInAnonymously(auth);
+                userId = auth.currentUser.uid;
+            } catch (error) {
+                console.error("Error de autenticación:", error);
+                userId = `anon_${crypto.randomUUID()}`;
+            }
+        }
+
+        async function loadTopicsFromFirebase() {
+            const defaultTopics = [
                  { file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel' },
-                { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark',
-                  chapters: [
-                      { "title": "1. Los bienes de DPMT. Clasificación y definiciones.", "start": 0, "end": 192 },
-                      { "title": "2. Prevalencia del DPMT. Potestades de la administración.", "start": 182, "end": 242 },
-                      { "title": "3. El deslinde del DPMT. Procedimiento.", "start": 232, "end": 543 },
-                      { "title": "4. Estudios para la justificación del deslinde.", "start": 543, "end": 573 },
-                      { "title": "5. Proyecto de deslinde. Efectos de la aprobación del deslinde.", "start": 573, "end": 648 },
-                      { "title": "6. Inmatriculación de fincas colindantes con el DPMT. Afectación y desafectación.", "start": 638 }
-                  ]
-                },
-                { file: 'MEA2T3_DESPLEGABLE.html', title: 'Limitaciones a la propiedad', color: 'sky', icon: 'fa-ban',
-                  chapters: [
-                    { "title": "1. Limitaciones a la propiedad sobre los terrenos contiguos a la ribera del mar por razones de protección del dominio público marítimo-terrestre.", "start": 0, "end": 72 },
-                    { "title": "2. Servidumbres de protección, tránsito y acceso al mar. Anchura y usos permitidos.", "start": 62, "end": 435 },
-                    { "title": "3. La disposición transitoria tercera de la ley 22/1988.", "start": 425, "end": 565 },
-                    { "title": "4. Otras limitaciones a la propiedad. Zona de influencia.", "start": 555 }
-                  ]
-                },
-                { file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPMT', color: 'indigo', icon: 'fa-swimmer',
-                  chapters: [
-                    { "title": "1. Utilización del DPMT. Disposiciones generales.", "start": 0, "end": 325.41 },
-                    { "title": "2. Proyectos y obras en el DPMT. Estudios complementarios.", "start": 325.41, "end": 497.28 },
-                    { "title": "3. Reservas, adscripciones, autorización y concesiones.", "start": 497.28 }
-                  ]
-                },
+                { file: 'MEA2T2_DESPLEGABLE.html', title: 'Bienes de Dominio Público Marítimo-Terrestre', color: 'cyan', icon: 'fa-landmark' },
+                { file: 'MEA2T3_DESPLEGABLE.html', title: 'Limitaciones a la propiedad', color: 'sky', icon: 'fa-ban' },
+                { file: 'MEA2T4_DESPLEGABLE.html', title: 'Utilización del DPMT', color: 'indigo', icon: 'fa-swimmer' },
                 { file: 'MEA2T5_DESPLEGABLE.html', title: 'Régimen Económico-Financiero', color: 'green', icon: 'fa-coins' },
-                { file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE según la ley 22/1988', color: 'emerald', icon: 'fa-building-columns',
-                  chapters: [
-                    { "title": "1. Competencias de la AGE según la normativa de costas. Decretos de transferencias a las CCAA.", "start": 0, "end": 258 },
-                    { "title": "2. Obras de interés general.", "start": 258, "end": 443 },
-                    { "title": "3. Informes preceptivos y vinculantes.", "start": 433, "end": 531 },
-                    { "title": "4. Competencias de las Comunidades Autónomas.", "start": 521, "end": 565 },
-                    { "title": "5. Competencias municipales.", "start": 555 }
-                  ]
-                },
+                { file: 'MEA2T6_DESPLEGABLE.html', title: 'Competencias de la AGE según la ley 22/1988', color: 'emerald', icon: 'fa-building-columns' },
                 { file: 'MEA2T7_DESPLEGABLE.html', title: 'Régimen Transitorio', color: 'teal', icon: 'fa-history' },
-                { file: 'MEA2T8_DESPLEGABLE.html', title: 'Las autorizaciones en servidumbre de protección', color: 'lime', icon: 'fa-file-signature',
-                  chapters: [
-                    { "title": "1. Las autorizaciones en servidumbre de protección. Competencia.", "start": 0, "end": 334 },
-                    { "title": "2. La declaración responsable. La disposición transitoria cuarta de la ley 22/1988 y su desarrollo reglamentario.", "start": 324, "end": 614 },
-                    { "title": "3. Autorización de nuevos usos y construcciones conforme a los instrumentos de ordenación, fachadas marítimas.", "start": 604 }
-                  ]
-                },
-                { file: 'MEA2T9_DESPLEGABLE.html', title: 'Biodiversidad y conservación de ecosistemas marinos y costeros', color: 'yellow', icon: 'fa-seedling',
-                  chapters: [
-                    { "title": "1. Biodiversidad y conservación de ecosistemas marinos y costeros.", "start": 0, "end": 173 },
-                    { "title": "2. Las zonas húmedas costeras.", "start": 163, "end": 450 },
-                    { "title": "3. Las zonas dunares costeras: definición y evolución en la normativa de costas.", "start": 440, "end": 546 },
-                    { "title": "4. Las zonas de fanerógamas marinas. Importancia y tratamiento.", "start": 536 }
-                  ]
-                },
+                { file: 'MEA2T8_DESPLEGABLE.html', title: 'Las autorizaciones en servidumbre de protección', color: 'lime', icon: 'fa-file-signature' },
+                { file: 'MEA2T9_DESPLEGABLE.html', title: 'Biodiversidad y conservación de ecosistemas marinos y costeros', color: 'yellow', icon: 'fa-seedling' },
                 { file: 'MEA2T10_DESPLEGABLE.html', title: 'La gestión integral del litoral', color: 'amber', icon: 'fa-tasks' },
-                { file: 'MEA2T11_DESPLEGABLE.html', title: 'Las distintas teorías de ondas', color: 'orange', icon: 'fa-wave-square',
-                  chapters: [
-                    { "title": "1. Las distintas teorías de ondas.", "start": 0, "end": 257 },
-                    { "title": "2. La propagación del oleaje. Los fenómenos de refracción, difracción, transmisión y reflexión del oleaje.", "start": 247 }
-                  ]
-                },
-                { file: 'MEA2T12_DESPLEGABLE.html', title: 'El transporte sólido litoral', color: 'red', icon: 'fa-arrows-left-right',
-                  chapters: [
-                    { "title": "1. El transporte sólido litoral.", "start": 0, "end": 108 },
-                    { "title": "2. Distintas formulaciones.", "start": 98, "end": 182 },
-                    { "title": "3. Evolución de la línea de costa. Modelos.", "start": 172, "end": 352 },
-                    { "title": "4. El perfil de playa. Distintas formulaciones teóricas.", "start": 342, "end": 482 },
-                    { "title": "5. Variaciones del perfil.", "start": 472, "end": 613 },
-                    { "title": "6. La profundidad de cierre.", "start": 603 }
-                  ]
-                },
-                { file: 'MEA2T13_DESPLEGABLE.html', title: 'Los efectos del cambio climático sobre el litoral', color: 'rose', icon: 'fa-temperature-high',
-                  chapters: [
-                    { "title": "1. Los efectos del cambio climático sobre las dinámicas oceánicas, el litoral, los ecosistemas y los recursos marinos. Factores de degradación del litoral.", "start": 0, "end": 153 },
-                    { "title": "2. Adaptación de la costa a los efectos del cambio climático.", "start": 143, "end": 259 },
-                    { "title": "3. Evaluación de riesgo de inundación en zonas costeras.", "start": 249, "end": 538 },
-                    { "title": "4. Efectos del cambio climático sobre la inundación costera.", "start": 528, "end": 596 },
-                    { "title": "5. Las infraestructuras costeras ante los impactos del cambio climático: análisis y diseño de medidas de adaptación.", "start": 586, "end": 677 },
-                    { "title": "6. Huella de carbono de los proyectos en análisis de ciclo de vida. Principales medidas en infraestructuras para contribuir a la reducción de emisiones de gases de efecto invernadero.", "start": 667 }
-                  ]
-                },
+                { file: 'MEA2T11_DESPLEGABLE.html', title: 'Las distintas teorías de ondas', color: 'orange', icon: 'fa-wave-square' },
+                { file: 'MEA2T12_DESPLEGABLE.html', title: 'El transporte sólido litoral', color: 'red', icon: 'fa-arrows-left-right' },
+                { file: 'MEA2T13_DESPLEGABLE.html', title: 'Los efectos del cambio climático sobre el litoral', color: 'rose', icon: 'fa-temperature-high' },
                 { file: 'MEA2T14_DESPLEGABLE.html', title: 'Las estrategias marinas en España', color: 'pink', icon: 'fa-map' },
-                { file: 'MEA2T15_DESPLEGABLE.html', title: 'La erosión en los distintos tipos de playas', color: 'fuchsia', icon: 'fa-mountain-sun',
-                  chapters: [
-                    { "title": "1. La erosión en los distintos tipos de playas. Causas de la erosión.", "start": 0, "end": 210 },
-                    { "title": "2. Efectos de las infraestructuras litorales sobre las playas. Medidas correctoras y actuaciones.", "start": 200, "end": 616 },
-                    { "title": "3. Efectos del cambio climático sobre la erosión costera.", "start": 606 }
-                  ]
-                },
-                { file: 'MEA2T16_DESPLEGABLE.html', title: 'Proyectos de playas artificiales', color: 'purple', icon: 'fa-umbrella-beach',
-                  chapters: [
-                    { "title": "1. Proyectos de playas artificiales. Actuaciones en la costa.", "start": 0, "end": 329 },
-                    { "title": "2. Formas de playa en planta. La espiral logarítmica y las soluciones parabólicas.", "start": 319, "end": 428 },
-                    { "title": "3. La granulometría de la arena como condicionante del diseño.", "start": 418, "end": 626 },
-                    { "title": "4. Aspectos ambientales de la regeneración de playas. Efectos sobre las comunidades pelágicas y bentónicas.", "start": 616 }
-                  ]
-                },
-                { file: 'MEA2T17_DESPLEGABLE.html', title: 'Las fuentes naturales de sedimentos', color: 'violet', icon: 'fa-stream',
-                  chapters: [
-                    { "title": "1. Las fuentes naturales de sedimentos.", "start": 0, "end": 99 },
-                    { "title": "2. Las zonas de préstamo para alimentación artificial.", "start": 89, "end": 226 },
-                    { "title": "3. Aspectos ambientales de la extracción de materiales del fondo marino. Directrices para la caracterización del material de dragado y su reubicación en aguas del dominio público marítimo-terrestre.", "start": 216, "end": 515 },
-                    { "title": "4. Métodos de prospección submarina.", "start": 505, "end": 667 },
-                    { "title": "5. Otros métodos de prospección submarina: gravimetría, sondeos y ensayos in-situ.", "start": 657 }
-                  ]
-                },
-                { file: 'MEA2T18_DESPLEGABLE.html', title: 'El puerto', color: 'gray', icon: 'fa-anchor',
-                  chapters: [
-                    { "title": "1. El puerto, aspectos generales y físicos. Objetivos y funciones.", "start": 0, "end": 43 },
-                    { "title": "2. El sistema portuario español.", "start": 33, "end": 163 },
-                    { "title": "3. Real Decreto Legislativo 2/2011 por el que se aprueba el TRL de puertos del Estado y de la Marina Mercante.", "start": 153, "end": 217 },
-                    { "title": "4. Financiación de puertos.", "start": 207, "end": 357 },
-                    { "title": "5. Modelos de gestión.", "start": 347, "end": 409 },
-                    { "title": "6. Planificación portuaria. Fundamentos y planes.", "start": 399, "end": 507 },
-                    { "title": "7. Previsiones de tráfico.", "start": 497, "end": 622 },
-                    { "title": "8. Estudio de capacidad. Ordenación de terminales.", "start": 612 }
-                  ]
-                },
-                { file: 'MEA2T19_DESPLEGABLE.html', title: 'Obras portuarias (II)', color: 'slate', icon: 'fa-hard-hat',
-                  chapters: [
-                    { "title": "1. Obras de abrigo y portuarias y definición y caracterización de la situación y factores de proyecto.", "start": 0, "end": 202 },
-                    { "title": "2. Estados límite últimos. Período de retorno.", "start": 192, "end": 266 },
-                    { "title": "3. Bases de datos. Clima marítimo, caracterización estadística de oleaje, parámetros.", "start": 256, "end": 583 },
-                    { "title": "4. Análisis estadístico del oleaje en aguas profundas y poco profundas régimen estremales y régimen medio.", "start": 573 }
-                  ]
-                },
-                { file: 'MEA2T20_DESPLEGABLE.html', title: 'Obras portuarias (I)', color: 'zinc', icon: 'fa-ship',
-                  chapters: [
-                    { "title": "1. Obras de abrigo y portuarias y diseños y dimensionamiento. Diseño en planta.", "start": 0, "end": 185 },
-                    { "title": "2. Obras exteriores: Diques verticales, diques en talud, diques rebasables.", "start": 175, "end": 370 },
-                    { "title": "3. Obras interiores: muelles, dársenas, amarres, fondeo.", "start": 360, "end": 535 },
-                    { "title": "4. Superficies portuarias.", "start": 525, "end": 680 },
-                    { "title": "5. Profundidades accesorias, maniobrabilidad de buques.", "start": 670 }
-                  ]
-                }
+                { file: 'MEA2T15_DESPLEGABLE.html', title: 'La erosión en los distintos tipos de playas', color: 'fuchsia', icon: 'fa-mountain-sun' },
+                { file: 'MEA2T16_DESPLEGABLE.html', title: 'Proyectos de playas artificiales', color: 'purple', icon: 'fa-umbrella-beach' },
+                { file: 'MEA2T17_DESPLEGABLE.html', title: 'Las fuentes naturales de sedimentos', color: 'violet', icon: 'fa-stream' },
+                { file: 'MEA2T18_DESPLEGABLE.html', title: 'El puerto', color: 'gray', icon: 'fa-anchor' },
+                { file: 'MEA2T19_DESPLEGABLE.html', title: 'Obras portuarias (II)', color: 'slate', icon: 'fa-hard-hat' },
+                { file: 'MEA2T20_DESPLEGABLE.html', title: 'Obras portuarias (I)', color: 'zinc', icon: 'fa-ship' }
             ];
-            
-            // Lógica de la aplicación...
-            const colorPalette={blue:{normal:"bg-blue-100 text-blue-800",icon:"text-blue-500"},cyan:{normal:"bg-cyan-100 text-cyan-800",icon:"text-cyan-500"},sky:{normal:"bg-sky-100 text-sky-800",icon:"text-sky-500"},indigo:{normal:"bg-indigo-100 text-indigo-800",icon:"text-indigo-500"},green:{normal:"bg-green-100 text-green-800",icon:"text-green-500"},emerald:{normal:"bg-emerald-100 text-emerald-800",icon:"text-emerald-500"},teal:{normal:"bg-teal-100 text-teal-800",icon:"text-teal-500"},lime:{normal:"bg-lime-100 text-lime-800",icon:"text-lime-500"},yellow:{normal:"bg-yellow-100 text-yellow-800",icon:"text-yellow-500"},amber:{normal:"bg-amber-100 text-amber-800",icon:"text-amber-500"},orange:{normal:"bg-orange-100 text-orange-800",icon:"text-orange-500"},red:{normal:"bg-red-100 text-red-800",icon:"text-red-500"},rose:{normal:"bg-rose-100 text-rose-800",icon:"text-rose-500"},pink:{normal:"bg-pink-100 text-pink-800",icon:"text-pink-500"},fuchsia:{normal:"bg-fuchsia-100 text-fuchsia-800",icon:"text-fuchsia-500"},purple:{normal:"bg-purple-100 text-purple-800",icon:"text-purple-500"},violet:{normal:"bg-violet-100 text-violet-800",icon:"text-violet-500"},gray:{normal:"bg-gray-100 text-gray-800",icon:"text-gray-500"},slate:{normal:"bg-slate-100 text-slate-800",icon:"text-slate-500"},zinc:{normal:"bg-zinc-100 text-zinc-800",icon:"text-zinc-500"}};
-            const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),iframe=document.getElementById("content-frame"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),volumeSlider=document.getElementById("volume-slider"),volumeIcon=document.getElementById("volume-icon"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),iframeContainer=document.getElementById("iframe-container"),addChapterButton = document.getElementById("add-chapter-button"),passwordModalOverlay=document.getElementById("password-modal-overlay"),passwordInput=document.getElementById("password-input"),confirmEditButton=document.getElementById("confirm-edit-button"),cancelEditButton=document.getElementById("cancel-edit-button"),passwordError=document.getElementById("password-error"),newChapterTitleInput=document.getElementById("new-chapter-title-input");
-            
-            topics.forEach((e,t)=>{
-                const o=document.createElement("button"),n=colorPalette[e.color];
-                o.className="topic-button",o.dataset.index=t,o.innerHTML=`<span class="topic-number ${n.normal}">${t+1}</span><i class="fas ${e.icon} topic-icon ${n.icon}"></i><span class="topic-title">${e.title}</span>`,gridContainer.appendChild(o)
+
+            try {
+                const topicsRef = collection(db, `artifacts/${appId}/users/${userId}/topics`);
+                const querySnapshot = await getDocs(topicsRef);
+                const firebaseTopics = {};
+                querySnapshot.forEach(doc => {
+                    firebaseTopics[doc.id] = doc.data();
+                });
+                topics = defaultTopics.map(defaultTopic => {
+                    const topicId = defaultTopic.file.replace(/_desplegable\.html$/i, '');
+                    return firebaseTopics[topicId] ? { ...defaultTopic, ...firebaseTopics[topicId] } : defaultTopic;
+                });
+            } catch(e) {
+                console.error("Error cargando datos de Firebase. Usando datos por defecto.", e);
+                topics = defaultTopics;
+            } finally {
+                renderTopicGrid();
+            }
+        }
+        
+        function renderTopicGrid() {
+             gridContainer.innerHTML = '';
+             topics.forEach((topic, index) => {
+                const button = document.createElement("button");
+                const colors = colorPalette[topic.color];
+                button.className = "topic-button";
+                button.dataset.index = index;
+                button.innerHTML = `<span class="topic-number ${colors.normal}">${index + 1}</span><i class="fas ${topic.icon} topic-icon ${colors.icon}"></i><span class="topic-title">${topic.title}</span>`;
+                gridContainer.appendChild(button);
             });
-
-            async function updateChapters(topic) {
-                const topicId = topic.file.replace(/_desplegable\.html$/i, '');
-                const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId);
-                const docSnap = await getDoc(docRef);
-
-                let chaptersToShow = docSnap.exists() ? docSnap.data().chapters : topic.chapters;
-                
-                chaptersDropdown.innerHTML = '';
-                if (chaptersToShow && chaptersToShow.length > 0) {
-                    chaptersToShow.forEach(chapter => {
-                        const chapterButton = document.createElement('button');
-                        chapterButton.className = 'chapter-button w-full text-left p-2 rounded hover:bg-gray-100 text-sm';
-                        chapterButton.textContent = chapter.title;
-                        chapterButton.dataset.start = chapter.start;
-                        if(chapter.end !== undefined) {
-                           chapterButton.dataset.end = chapter.end;
-                        }
-                        chaptersDropdown.appendChild(chapterButton);
-                    });
-                    chaptersMenuContainer.classList.remove('hidden');
-                } else {
-                    chaptersMenuContainer.classList.add('hidden');
-                }
-            }
-
-            async function updateEditor(topic){
-                const topicId = topic.file.replace(/_desplegable\.html$/i, '');
-                const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId);
-                const docSnap = await getDoc(docRef);
-
-                const chaptersToEdit = docSnap.exists() ? docSnap.data().chapters : (topic.chapters || []);
-                
-                editedChapters=JSON.parse(JSON.stringify(chaptersToEdit));
-                renderEditorList();
-            }
+        }
+        
+        async function updateChapters(topic) {
+            const topicId = topic.file.replace(/_desplegable\.html$/i, '');
+            const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId);
+            const docSnap = await getDoc(docRef);
+            const chaptersToShow = docSnap.exists() ? docSnap.data().chapters : (topic.chapters || []);
             
-            function renderEditorList() {
-                editorList.innerHTML = "";
-                 if(editedChapters.length > 0) {
-                    editedChapters.forEach((chapter, index) => {
-                        const item = document.createElement("div");
-                        item.className = "edit-chapter-item p-2 border-b";
-                        item.innerHTML = `
-                            <div class="flex items-center gap-2">
-                                <input type="text" value="${chapter.title}" class="w-full font-semibold text-sm bg-gray-100 p-1 rounded border" data-index="${index}">
-                                <button data-index="${index}" class="delete-chapter-button text-red-500 hover:text-red-700 p-1"><i class="fas fa-trash-alt"></i></button>
-                            </div>
-                            <div class="flex items-center justify-between mt-1 text-xs">
-                                <div>
-                                    <button data-index="${index}" data-type="start" class="mark-button bg-sky-500 text-white px-2 py-1 rounded-md hover:bg-sky-600">Inicio</button>
-                                    <span class="ml-2 font-mono" id="start-time-${index}">${chapter.start ? formatTime(chapter.start) : "--:--"}</span>
-                                </div>
-                                <div>
-                                    <button data-index="${index}" data-type="end" class="mark-button bg-pink-500 text-white px-2 py-1 rounded-md hover:bg-pink-600">Fin</button>
-                                    <span class="ml-2 font-mono" id="end-time-${index}">${chapter.end ? formatTime(chapter.end) : "--:--"}</span>
-                                </div>
-                            </div>`;
-                        editorList.appendChild(item);
-                    });
-                } else {
-                    editorList.innerHTML='<p class="text-gray-500 text-sm">Este tema no tiene capítulos. Añade uno para empezar.</p>';
-                }
+            chaptersDropdown.innerHTML = '';
+            if (chaptersToShow.length > 0) {
+                chaptersToShow.forEach(chapter => {
+                    const chapterButton = document.createElement('button');
+                    chapterButton.className = 'chapter-button w-full text-left p-2 rounded hover:bg-gray-100 text-sm';
+                    chapterButton.textContent = chapter.title;
+                    chapterButton.dataset.start = chapter.start;
+                    if(chapter.end !== undefined) chapterButton.dataset.end = chapter.end;
+                    chaptersDropdown.appendChild(chapterButton);
+                });
+                chaptersMenuContainer.classList.remove('hidden');
+            } else {
+                chaptersMenuContainer.classList.add('hidden');
             }
-
-
-            async function showMapView(button){
-                playPauseButton.disabled = !1, playPauseIcon.className = "fas fa-play";
-                const topicIndex = button.dataset.index;
-                currentTopic = topics[topicIndex];
-                
-                mainMenuView.classList.add("hidden");
-                mapViewerVIew.classList.remove("hidden");
-                iframe.src = currentTopic.file;
-                topicAudio.src = `audios/${currentTopic.file.replace(/_desplegable\.html$/i, ".mp3")}`;
-                
-                await updateChapters(currentTopic);
-                await updateEditor(currentTopic);
-                
-                topControlBar.style.display="flex";
-                setTimeout(()=>topControlBar.style.opacity=1,10)
+        }
+        
+        async function updateEditor(topic){
+            const topicId = topic.file.replace(/_desplegable\.html$/i, '');
+            const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId);
+            const docSnap = await getDoc(docRef);
+            const chaptersToEdit = docSnap.exists() ? docSnap.data().chapters : (topic.chapters || []);
+            editedChapters=JSON.parse(JSON.stringify(chaptersToEdit));
+            renderEditorList();
+        }
+        
+        function renderEditorList() {
+            editorList.innerHTML = "";
+            if(editedChapters.length > 0) {
+                editedChapters.forEach((chapter, index) => {
+                    const item = document.createElement("div");
+                    item.className = "edit-chapter-item p-2 border-b";
+                    item.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <input type="text" value="${chapter.title}" class="w-full font-semibold text-sm bg-gray-100 p-1 rounded border" data-index="${index}">
+                            <button data-index="${index}" class="delete-chapter-button text-red-500 hover:text-red-700 p-1"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                        <div class="flex items-center justify-between mt-1 text-xs">
+                            <div><button data-index="${index}" data-type="start" class="mark-button bg-sky-500 text-white px-2 py-1 rounded-md hover:bg-sky-600">Inicio</button><span class="ml-2 font-mono" id="start-time-${index}">${chapter.start ? formatTime(chapter.start) : "--:--"}</span></div>
+                            <div><button data-index="${index}" data-type="end" class="mark-button bg-pink-500 text-white px-2 py-1 rounded-md hover:bg-pink-600">Fin</button><span class="ml-2 font-mono" id="end-time-${index}">${chapter.end ? formatTime(chapter.end) : "--:--"}</span></div>
+                        </div>`;
+                    editorList.appendChild(item);
+                });
+            } else {
+                editorList.innerHTML='<p class="text-gray-500 text-sm">Este tema no tiene capítulos. Añade uno para empezar.</p>';
             }
+        }
 
-            function showMainMenu(){
-                mapViewerVIew.classList.add("hidden"),mainMenuView.classList.remove("hidden"),topicAudio.pause(),iframe.src="",topControlBar.style.opacity=0,setTimeout(()=>topControlBar.style.display="none",300)
-            }
-            gridContainer.addEventListener("click",(e=>e.target.closest(".topic-button")&&showMapView(e.target.closest(".topic-button")))),backButton.addEventListener("click",showMainMenu);
-            
-            const formatTime=e=>isNaN(e)?"00:00":`${String(Math.floor(e/60)).padStart(2,"0")}:${String(Math.floor(e%60)).padStart(2,"0")}`;
-            topicAudio.addEventListener("loadedmetadata",()=>{totalDurationEl.textContent=formatTime(topicAudio.duration),timelineSlider.max=topicAudio.duration}),topicAudio.addEventListener("error",()=>{playPauseButton.disabled=!0,playPauseIcon.className="fas fa-times",totalDurationEl.textContent="Error"}),playPauseButton.addEventListener("click",()=>{currentChapterEndTime=null,currentChapterStartTime=null,topicAudio.paused?topicAudio.play():topicAudio.pause()}),topicAudio.addEventListener("play",()=>playPauseIcon.classList.replace("fa-play","fa-pause")),topicAudio.addEventListener("pause",()=>playPauseIcon.classList.replace("fa-pause","fa-play")),topicAudio.addEventListener("ended",()=>{topicAudio.loop&&null===currentChapterStartTime||topicAudio.loop&&null!==currentChapterStartTime||playPauseIcon.classList.replace("fa-pause","fa-play")}),topicAudio.addEventListener("timeupdate",()=>{
-                if(timelineSlider.value=topicAudio.currentTime,currentTimeEl.textContent=formatTime(topicAudio.currentTime),currentChapterEndTime&&topicAudio.currentTime>=currentChapterEndTime)
-                    if(topicAudio.loop){topicAudio.currentTime=currentChapterStartTime,topicAudio.play();
-                } else{
-                    topicAudio.pause(),currentChapterEndTime=null,currentChapterStartTime=null;
-                    const e=document.querySelector(".chapter-button.playing");
-                    e&&e.classList.remove("playing")
-                }
-            }),timelineSlider.addEventListener("input",()=>{currentChapterEndTime=null,currentChapterStartTime=null,topicAudio.currentTime=timelineSlider.value}),chaptersButton.addEventListener("click",e=>{e.stopPropagation(),chaptersDropdown.classList.toggle("hidden")}),chaptersDropdown.addEventListener("click",e=>{
+        async function showMapView(button){
+            playPauseButton.disabled = !1, playPauseIcon.className = "fas fa-play";
+            currentTopic = topics[button.dataset.index];
+            mainMenuView.classList.add("hidden"), mapViewerVIew.classList.remove("hidden"), iframe.src = currentTopic.file, topicAudio.src = `audios/${currentTopic.file.replace(/_desplegable\.html$/i,".mp3")}`;
+            await updateChapters(currentTopic);
+            await updateEditor(currentTopic);
+            topControlBar.style.display="flex", setTimeout(()=>topControlBar.style.opacity=1,10);
+        }
+
+        function showMainMenu(){ mapViewerVIew.classList.add("hidden"),mainMenuView.classList.remove("hidden"),topicAudio.pause(),iframe.src="",topControlBar.style.opacity=0,setTimeout(()=>topControlBar.style.display="none",300); }
+        
+        const formatTime=e=>isNaN(e)?"00:00":`${String(Math.floor(e/60)).padStart(2,"0")}:${String(Math.floor(e%60)).padStart(2,"0")}`;
+
+        function setupEventListeners() {
+            gridContainer.addEventListener("click",(e=>e.target.closest(".topic-button")&&showMapView(e.target.closest(".topic-button"))));
+            backButton.addEventListener("click",showMainMenu);
+            topicAudio.addEventListener("loadedmetadata",()=>{totalDurationEl.textContent=formatTime(topicAudio.duration),timelineSlider.max=topicAudio.duration});
+            topicAudio.addEventListener("error",()=>{playPauseButton.disabled=!0,playPauseIcon.className="fas fa-times",totalDurationEl.textContent="Error"});
+            playPauseButton.addEventListener("click",()=>{currentChapterEndTime=null,currentChapterStartTime=null,topicAudio.paused?topicAudio.play():topicAudio.pause()});
+            topicAudio.addEventListener("play",()=>playPauseIcon.classList.replace("fa-play","fa-pause"));
+            topicAudio.addEventListener("pause",()=>playPauseIcon.classList.replace("fa-pause","fa-play"));
+            topicAudio.addEventListener("ended",()=>{ if(!topicAudio.loop) playPauseIcon.classList.replace("fa-pause","fa-play")});
+            topicAudio.addEventListener("timeupdate",()=>{
+                timelineSlider.value=topicAudio.currentTime;
+                currentTimeEl.textContent=formatTime(topicAudio.currentTime);
+                if(currentChapterEndTime&&topicAudio.currentTime>=currentChapterEndTime)
+                    if(topicAudio.loop){ topicAudio.currentTime=currentChapterStartTime,topicAudio.play(); }
+                    else{ topicAudio.pause(),currentChapterEndTime=null,currentChapterStartTime=null;const e=document.querySelector(".chapter-button.playing");e&&e.classList.remove("playing")}
+            });
+            timelineSlider.addEventListener("input",()=>{currentChapterEndTime=null,currentChapterStartTime=null,topicAudio.currentTime=timelineSlider.value});
+            chaptersButton.addEventListener("click",e=>{e.stopPropagation(),chaptersDropdown.classList.toggle("hidden")});
+            chaptersDropdown.addEventListener("click",e=>{
                 if("BUTTON"===e.target.tagName){
                     const t=document.querySelector(".chapter-button.playing");
                     t&&t.classList.remove("playing"),e.target.classList.add("playing"),currentChapterStartTime=parseFloat(e.target.dataset.start),currentChapterEndTime=e.target.dataset.end?parseFloat(e.target.dataset.end):null,topicAudio.currentTime=currentChapterStartTime,topicAudio.play(),chaptersDropdown.classList.add("hidden")
                 }
             });
-
             const speeds=[1,1.25,1.5,2];
             let currentSpeedIndex=0;
-            speedButton.addEventListener("click",()=>{currentSpeedIndex=(currentSpeedIndex+1)%speeds.length;const e=speeds[currentSpeedIndex];topicAudio.playbackRate=e,speedButton.textContent=`${e}x`}),loopButton.addEventListener("click",()=>{topicAudio.loop=!topicAudio.loop,loopButton.classList.toggle("active")}),volumeSlider.addEventListener("input",e=>topicAudio.volume=e.target.value),topicAudio.addEventListener("volumechange",()=>{volumeSlider.value=topicAudio.volume,volumeIcon.className=topicAudio.muted||0===topicAudio.volume?"fas fa-volume-mute text-gray-500":topicAudio.volume<.5?"fas fa-volume-low text-gray-500":"fas fa-volume-high text-gray-500"}),volumeIcon.addEventListener("click",()=>topicAudio.muted=!topicAudio.muted),document.addEventListener("click",e=>{chaptersMenuContainer.contains(e.target)||chaptersDropdown.classList.add("hidden")});
+            speedButton.addEventListener("click",()=>{currentSpeedIndex=(currentSpeedIndex+1)%speeds.length;const e=speeds[currentSpeedIndex];topicAudio.playbackRate=e,speedButton.textContent=`${e}x`});
+            loopButton.addEventListener("click",()=>{topicAudio.loop=!topicAudio.loop,loopButton.classList.toggle("active")});
+            volumeSlider.addEventListener("input",e=>topicAudio.volume=e.target.value);
+            topicAudio.addEventListener("volumechange",()=>{volumeSlider.value=topicAudio.volume,volumeIcon.className=topicAudio.muted||0===topicAudio.volume?"fas fa-volume-mute text-gray-500":topicAudio.volume<.5?"fas fa-volume-low text-gray-500":"fas fa-volume-high text-gray-500"});
+            volumeIcon.addEventListener("click",()=>topicAudio.muted=!topicAudio.muted);
+            document.addEventListener("click",e=>{chaptersMenuContainer.contains(e.target)||chaptersDropdown.classList.add("hidden")});
             
             editModeToggle.addEventListener("change",()=>{
                 if (editModeToggle.checked) {
@@ -420,78 +327,53 @@
                     iframeContainer.className = "flex-1 transition-all duration-300";
                 }
             });
-
-            function enterEditMode() {
-                let isEditMode = true;
-                editorPanel.style.display="block";
-                iframeContainer.className="w-full lg:w-2/3";
-                setTimeout(()=>editorPanel.style.opacity=1,10);
-                passwordModalOverlay.classList.add('hidden');
-                passwordInput.value = '';
-                passwordError.classList.add('hidden');
-            }
-
-            function closePasswordModal() {
-                 passwordModalOverlay.classList.add('hidden');
-                 editModeToggle.checked = false;
-                 passwordInput.value = '';
-                 passwordError.classList.add('hidden');
-            }
-            
             confirmEditButton.addEventListener('click', () => {
                 if (passwordInput.value === "1234") {
-                    enterEditMode();
+                    let isEditMode = true;
+                    editorPanel.style.display="block";
+                    iframeContainer.className="w-full lg:w-2/3";
+                    setTimeout(()=>editorPanel.style.opacity=1,10);
+                    passwordModalOverlay.classList.add('hidden');
+                    passwordInput.value = '';
+                    passwordError.classList.add('hidden');
                 } else {
                     passwordError.classList.remove('hidden');
                 }
             });
-            cancelEditButton.addEventListener('click', closePasswordModal);
-            passwordModalOverlay.addEventListener('click', (e) => {
-                if (e.target === passwordModalOverlay) {
-                    closePasswordModal();
-                }
+            cancelEditButton.addEventListener('click', ()=> {
+                 passwordModalOverlay.classList.add('hidden');
+                 editModeToggle.checked = false;
+                 passwordInput.value = '';
+                 passwordError.classList.add('hidden');
             });
-
+            passwordModalOverlay.addEventListener('click', (e) => { if (e.target === passwordModalOverlay) cancelEditButton.click(); });
+            
             editorList.addEventListener("click",e=>{
                 const t=e.target.closest(".mark-button, .delete-chapter-button");
-                if(t){
-                    const o=t.dataset.index;
-                    if (t.classList.contains('mark-button')) {
-                        const n=t.dataset.type, a=Math.round(100*topicAudio.currentTime)/100;
-                        editedChapters[o][n]=a,document.getElementById(`${n}-time-${o}`).textContent=formatTime(a);
-                    } else if (t.classList.contains('delete-chapter-button')) {
-                        editedChapters.splice(o, 1);
-                        renderEditorList();
-                    }
-                }
+                if(!t)return;
+                const o=t.dataset.index;
+                if(t.classList.contains("mark-button")){
+                    const n=t.dataset.type,a=Math.round(100*topicAudio.currentTime)/100;
+                    editedChapters[o][n]=a,document.getElementById(`${n}-time-${o}`).textContent=formatTime(a);
+                } else t.classList.contains("delete-chapter-button")&&(editedChapters.splice(o,1),renderEditorList())
             });
 
-            editorList.addEventListener('input', e => {
-                if (e.target.tagName === 'INPUT' && e.target.type === 'text') {
-                    const index = e.target.dataset.index;
-                    editedChapters[index].title = e.target.value;
-                }
-            });
+            editorList.addEventListener('input', e => { if (e.target.tagName === 'INPUT' && e.target.type === 'text') editedChapters[e.target.dataset.index].title = e.target.value; });
             
             addChapterButton.addEventListener('click', () => {
                 const newTitle = newChapterTitleInput.value.trim();
-                if (newTitle) {
-                    editedChapters.push({ title: newTitle, start: 0, end: 0 });
-                    renderEditorList();
-                    newChapterTitleInput.value = '';
-                }
+                if(newTitle) { editedChapters.push({ title: newTitle, start: 0 }); renderEditorList(); newChapterTitleInput.value = ''; }
             });
 
             saveDataButton.addEventListener("click",async()=>{
                 const topicId = currentTopic.file.replace(/_desplegable\.html$/i, '');
                 const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId);
-                const dataToSave = { chapters: editedChapters };
-
-                saveIcon.className = "fas fa-spinner fa-spin";
-                saveText.textContent = "Guardando...";
-
+                const dataToSave = { ...topics.find(t => t.file === currentTopic.file), chapters: editedChapters };
+                saveIcon.className = "fas fa-spinner fa-spin",saveText.textContent = "Guardando...";
                 try {
                     await setDoc(docRef, dataToSave);
+                    const topicIndex = topics.findIndex(t => t.file === currentTopic.file);
+                    if (topicIndex > -1) topics[topicIndex] = dataToSave;
                     saveNotification.style.opacity=1;
                     setTimeout(()=>{ saveNotification.style.opacity=0 }, 2000);
                     await updateChapters(currentTopic);
@@ -499,12 +381,12 @@
                     console.error("Error al guardar en Firestore: ", error);
                     alert("No se pudo guardar los datos.");
                 } finally {
-                    saveIcon.className = "fas fa-cloud-upload-alt";
-                    saveText.textContent = "Guardar en la Nube";
+                    saveIcon.className = "fas fa-cloud-upload-alt",saveText.textContent = "Guardar en la Nube";
                 }
             });
-        });
+        }
+        
+        main();
     </script>
 </body>
 </html>
-
