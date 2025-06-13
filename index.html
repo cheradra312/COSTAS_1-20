@@ -422,7 +422,6 @@
                 loadingText.textContent = 'Cargando PDF...';
 
                 try {
-                    // Se elimina el proxy CORS, ya que raw.githubusercontent.com suele permitir el acceso.
                     const loadingTask = pdfjsLib.getDocument(url);
                     pdfDoc = await loadingTask.promise;
                     pageCountEl.textContent = pdfDoc.numPages;
@@ -462,7 +461,8 @@
  				mainMenuView.classList.add("hidden"); 
  				mapViewerVIew.classList.remove("hidden"); 
                 
-                contentFrame.src = `https://htmlpreview.github.io/?https://github.com/juanjofp/juanjofp/blob/main/${currentTopic.file}`;
+                // CORRECCIÓN: Usar el repositorio correcto
+                contentFrame.src = `https://htmlpreview.github.io/?https://github.com/cheradra312/COSTAS_1-20/blob/main/${currentTopic.file}`;
  				
  				updateChapters(chaptersToLoad); 
  				updateEditor(chaptersToLoad); 
