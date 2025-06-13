@@ -37,9 +37,10 @@
  	<div class="mx-auto"> 
  		<!-- VISTA DEL MENÚ PRINCIPAL --> 
  		<div id="main-menu-view"> 
- 			<header class="text-center mb-8"> 
+ 			<header class="text-center mb-8 relative"> 
  				<h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">Visor de Mapas Conceptuales</h1> 
  				<p class="text-lg text-gray-500 mt-2">Selecciona un tema para comenzar</p> 
+                <button id="change-session-button" class="absolute top-0 right-0 bg-gray-200 text-gray-800 px-3 py-1 rounded-md hover:bg-gray-300 text-xs">Cambiar Sesión</button>
  			</header> 
  			<div id="topics-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div> 
  		</div> 
@@ -120,6 +121,16 @@
  			</div> 
  		</div> 
  		 
+        <!-- MODAL DE SESIÓN -->
+        <div id="session-modal-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-50 modal-overlay">
+            <div class="bg-white p-6 rounded-lg shadow-2xl w-full max-w-sm text-center">
+                <h2 class="text-lg font-bold mb-4">ID de Sesión</h2>
+                <p class="text-sm text-gray-600 mb-2">Introduce un ID para sincronizar tus datos entre dispositivos. Usa el mismo ID en todos tus aparatos.</p>
+                <input type="text" id="session-id-input" class="w-full border border-gray-300 p-2 rounded-md mb-2" value="cheradra">
+                <button id="start-session-button" class="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Comenzar</button>
+            </div>
+        </div>
+
  		<div id="password-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 modal-overlay"> 
  			<div class="bg-white p-6 rounded-lg shadow-2xl w-full max-w-sm"> 
  				<h2 class="text-lg font-bold mb-4">Modo Edición Protegido</h2> 
@@ -147,7 +158,7 @@
  	<!-- Firebase SDKs --> 
  	<script type="module"> 
  		import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"; 
- 		import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"; 
+ 		import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"; 
  		import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"; 
  		 
  		document.addEventListener('DOMContentLoaded', async function () { 
@@ -182,24 +193,20 @@
  				db = getFirestore(app);
  			} 
  			 
- 			async function authenticateUser() { 
- 				try { 
- 					const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; 
- 					if (token) {
- 						await signInWithCustomToken(auth, token);
- 					} else {
- 						await signInAnonymously(auth);
- 					}
- 					userId = auth.currentUser.uid; 
- 				} catch (error) { 
- 					console.error("Authentication Error:", error); 
- 					userId = `anon_${crypto.randomUUID()}`; 
- 				} 
- 			}
+            function handleSession() {
+                const sessionId = localStorage.getItem('sessionId');
+                if (sessionId) {
+                    userId = sessionId;
+                    document.getElementById('session-modal-overlay').classList.add('hidden');
+                    loadAllCustomChapters();
+                } else {
+                    document.getElementById('session-modal-overlay').classList.remove('hidden');
+                }
+            }
 
  			async function loadAllCustomChapters() {
  				if (!userId) return;
- 				const topicsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/topics`);
+ 				const topicsCollectionRef = collection(db, `artifacts/${appId}/public/data/${userId}`);
  				try {
  					const querySnapshot = await getDocs(topicsCollectionRef);
  					querySnapshot.forEach((doc) => {
@@ -211,8 +218,7 @@
  			}
  			 
  			initializeFirebase(); 
- 			await authenticateUser(); 
- 			await loadAllCustomChapters(); 
+            handleSession();
 
  			const topics = [ 
  				{ file: 'MEA2T1_Desplegable.html', title: 'La Legislación de Costas', color: 'blue', icon: 'fa-gavel', videoId: '10ppnvLhwAynESlCfbS5_4uQ-NXZGG-95' }, 
@@ -353,7 +359,7 @@
  			const colorPalette={blue:{normal:"bg-blue-100 text-blue-800",icon:"text-blue-500"},cyan:{normal:"bg-cyan-100 text-cyan-800",icon:"text-cyan-500"},sky:{normal:"bg-sky-100 text-sky-800",icon:"text-sky-500"},indigo:{normal:"bg-indigo-100 text-indigo-800",icon:"text-indigo-500"},green:{normal:"bg-green-100 text-green-800",icon:"text-green-500"},emerald:{normal:"bg-emerald-100 text-emerald-800",icon:"text-emerald-500"},teal:{normal:"bg-teal-100 text-teal-800",icon:"text-teal-500"},lime:{normal:"bg-lime-100 text-lime-800",icon:"text-lime-500"},yellow:{normal:"bg-yellow-100 text-yellow-800",icon:"text-yellow-500"},amber:{normal:"bg-amber-100 text-amber-800",icon:"text-amber-500"},orange:{normal:"bg-orange-100 text-orange-800",icon:"text-orange-500"},red:{normal:"bg-red-100 text-red-800",icon:"text-red-500"},rose:{normal:"bg-rose-100 text-rose-800",icon:"text-rose-500"},pink:{normal:"bg-pink-100 text-pink-800",icon:"text-pink-500"},fuchsia:{normal:"bg-fuchsia-100 text-fuchsia-800",icon:"text-fuchsia-500"},purple:{normal:"bg-purple-100 text-purple-800",icon:"text-purple-500"},violet:{normal:"bg-violet-100 text-violet-800",icon:"text-violet-500"},gray:{normal:"bg-gray-100 text-gray-800",icon:"text-gray-500"},slate:{normal:"bg-slate-100 text-slate-800",icon:"text-slate-500"},zinc:{normal:"bg-zinc-100 text-zinc-800",icon:"text-zinc-500"}}; 
  			const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),rewindButton=document.getElementById("rewind-button"),forwardButton=document.getElementById("forward-button"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),addChapterButton = document.getElementById("add-chapter-button"),passwordModalOverlay=document.getElementById("password-modal-overlay"),passwordInput=document.getElementById("password-input"),confirmEditButton=document.getElementById("confirm-edit-button"),cancelEditButton=document.getElementById("cancel-edit-button"),passwordError=document.getElementById("password-error"),newChapterTitleInput=document.getElementById("new-chapter-title-input"),restoreDefaultsButton = document.getElementById("restore-defaults-button"); 
  			const pdfViewerContainer = document.getElementById('pdf-viewer-container'), pdfCanvas = document.getElementById('pdf-canvas'), pageNumEl = document.getElementById('page-num'), pageCountEl = document.getElementById('page-count'), prevPageBtn = document.getElementById('prev-page'), nextPageBtn = document.getElementById('next-page'), pdfLoadingOverlay = document.getElementById('pdf-loading-overlay'), loadingText = document.getElementById('loading-text'), togglePdfButton = document.getElementById('toggle-pdf-button'), contentFrame = document.getElementById('content-frame');
-            const toggleVideoButton = document.getElementById('toggle-video-button'), videoModalOverlay = document.getElementById('video-modal-overlay'), closeVideoButton = document.getElementById('close-video-button'), videoIframe = document.getElementById('video-iframe');
+            const toggleVideoButton = document.getElementById('toggle-video-button'), videoModalOverlay = document.getElementById('video-modal-overlay'), closeVideoButton = document.getElementById('close-video-button'), videoIframe = document.getElementById('video-iframe'), changeSessionButton = document.getElementById('change-session-button'), sessionModalOverlay = document.getElementById('session-modal-overlay'), sessionIdInput = document.getElementById('session-id-input'), startSessionButton = document.getElementById('start-session-button');
 
  			topics.forEach((e,t)=>{ 
  				const o=document.createElement("button"),n=colorPalette[e.color]; 
@@ -598,7 +604,7 @@
 
  			saveDataButton.addEventListener("click",async()=>{ 
  				const topicId = currentTopic.file.replace(/_desplegable\.html$/i, ''); 
- 				const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId); 
+ 				const docRef = doc(db, `artifacts/${appId}/public/data/${userId}/${topicId}`);
  				const dataToSave = { chapters: editedChapters }; 
 
  				saveIcon.className = "fas fa-spinner fa-spin"; 
@@ -633,7 +639,7 @@
  				updateEditor(defaultChapters);
  				updateChapters(defaultChapters);
 
- 				const docRef = doc(db, `artifacts/${appId}/users/${userId}/topics`, topicId);
+ 				const docRef = doc(db, `artifacts/${appId}/public/data/${userId}/${topicId}`);
  				const dataToSave = { chapters: defaultChapters };
 
  				const originalButtonText = restoreDefaultsButton.innerHTML;
@@ -709,6 +715,19 @@
             closeVideoButton.addEventListener('click', () => {
                 videoModalOverlay.classList.add('hidden');
                 videoIframe.src = ''; 
+            });
+
+            startSessionButton.addEventListener('click', () => {
+                const sessionId = sessionIdInput.value.trim();
+                if (sessionId) {
+                    localStorage.setItem('sessionId', sessionId);
+                    handleSession();
+                }
+            });
+
+            changeSessionButton.addEventListener('click', () => {
+                localStorage.removeItem('sessionId');
+                window.location.reload();
             });
  		}); 
  	</script> 
