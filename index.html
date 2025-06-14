@@ -25,7 +25,7 @@
  		input[type="range"] { -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; } 
  		#play-pause-button:disabled { background-color: #9ca3af; cursor: not-allowed; transform: none; } 
  		.chapter-button.playing, .edit-chapter-item.active { background-color: #dbeafe; font-weight: 700; color: #1e3a8a; } 
- 		#loop-button.active { color: #ffffff; background-color: #3b82f6; } 
+ 		#loop-button.active, #play-x3-button.active { color: #ffffff; background-color: #3b82f6; } 
  		#edit-mode-toggle { -webkit-appearance: none; appearance: none; height: 1.25rem; width: 2.25rem; } 
  		#edit-mode-toggle:checked::after { transform: translateX(1rem); } 
  		#edit-mode-toggle::after { content: ''; display: inline-block; width: 1rem; height: 1rem; border-radius: 50%; background: white; transition: transform 0.2s ease-in-out; box-shadow: 0 1px 3px rgba(0,0,0,0.2); } 
@@ -75,6 +75,8 @@
  						<button id="forward-button" title="Adelantar 3s" class="text-gray-600 hover:bg-gray-200 rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition"><i class="fas fa-redo-alt"></i></button>
  						<div class="flex items-center gap-2 text-xs text-gray-500"><span id="current-time">00:00</span><input type="range" id="timeline-slider" class="w-24 md:w-32" value="0" step="1"><span id="total-duration">00:00</span></div> 
  						<div class="flex items-center gap-3">
+                            <button id="play-selection-button" title="Reproducir Selección" class="text-gray-500 hover:bg-gray-200 rounded-full w-9 h-9 flex-shrink-0 transition-colors"><i class="fas fa-play-circle"></i></button>
+                            <button id="play-x3-button" title="Reproducir cada epígrafe 3 veces" class="text-gray-500 hover:bg-gray-200 rounded-full w-9 h-9 flex-shrink-0 transition-colors"><i class="fas fa-layer-group"></i></button>
  							<button id="loop-button" class="text-gray-500 hover:bg-gray-200 rounded-full w-9 h-9 flex-shrink-0 transition-colors"><i class="fas fa-retweet"></i></button>
  							<button id="speed-button" class="text-xs font-bold text-blue-500 bg-blue-100 hover:bg-blue-200 rounded-full w-9 h-9 flex-shrink-0">1x</button>
  						</div> 
@@ -182,7 +184,9 @@
  			let userCustomChapters = {};
             let pdfDoc = null, currentPageNum = 1;
             let oralPdfDoc = null, oralCurrentPageNum = 1;
-            let oralViewState = 0; // 0: map, 1: flashcards, 2: oral pdf
+            let oralViewState = 0;
+            let selectedChapters = [];
+            let x3LoopState = { active: false, queue: [], currentIndex: 0, playCount: 0 };
 
  			function initializeFirebase() { 
  				let firebaseConfig; 
@@ -376,7 +380,7 @@
  			const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),rewindButton=document.getElementById("rewind-button"),forwardButton=document.getElementById("forward-button"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),addChapterButton = document.getElementById("add-chapter-button"),passwordModalOverlay=document.getElementById("password-modal-overlay"),passwordInput=document.getElementById("password-input"),confirmEditButton=document.getElementById("confirm-edit-button"),cancelEditButton=document.getElementById("cancel-edit-button"),passwordError=document.getElementById("password-error"),newChapterTitleInput=document.getElementById("new-chapter-title-input"),restoreDefaultsButton = document.getElementById("restore-defaults-button"); 
  			const pdfViewerContainer = document.getElementById('pdf-viewer-container'), pdfCanvas = document.getElementById('pdf-canvas'), pageNumEl = document.getElementById('page-num'), pageCountEl = document.getElementById('page-count'), prevPageBtn = document.getElementById('prev-page'), nextPageBtn = document.getElementById('next-page'), pdfLoadingOverlay = document.getElementById('pdf-loading-overlay'), loadingText = document.getElementById('loading-text'), togglePdfButton = document.getElementById('toggle-pdf-button'), contentFrame = document.getElementById('content-frame');
             const toggleVideoButton = document.getElementById('toggle-video-button'), changeSessionButton = document.getElementById('change-session-button'), sessionModalOverlay = document.getElementById('session-modal-overlay'), sessionIdInput = document.getElementById('session-id-input'), startSessionButton = document.getElementById('start-session-button');
-            const toggleOralButton = document.getElementById('toggle-oral-button'), oralPdfViewerContainer = document.getElementById('oral-pdf-viewer-container'), flashcardsFrame = document.getElementById('flashcards-frame');
+            const toggleOralButton = document.getElementById('toggle-oral-button'), oralPdfViewerContainer = document.getElementById('oral-pdf-viewer-container'), flashcardsFrame = document.getElementById('flashcards-frame'), playSelectionButton = document.getElementById('play-selection-button'), playX3Button = document.getElementById('play-x3-button');
 
  			topics.forEach((e,t)=>{ 
  				const o=document.createElement("button"),n=colorPalette[e.color]; 
@@ -388,13 +392,12 @@
  				chaptersDropdown.innerHTML = ''; 
  				if (chaptersToShow.length > 0) { 
  					chaptersToShow.forEach(chapter => { 
- 						const chapterButton = document.createElement('button'); 
- 						chapterButton.className = 'chapter-button w-full text-left p-2 rounded hover:bg-gray-100 text-sm'; 
- 						chapterButton.textContent = chapter.title; 
- 						chapterButton.dataset.start = chapter.start; 
- 						if(chapter.end !== undefined) { 
- 							chapterButton.dataset.end = chapter.end; 
- 						} 
+ 						const chapterButton = document.createElement('div'); 
+                        chapterButton.className = 'flex items-center p-2 rounded hover:bg-gray-100';
+ 						chapterButton.innerHTML = `
+                            <input type="checkbox" class="chapter-checkbox h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3" data-start="${chapter.start}" data-end="${chapter.end}">
+                            <span class="chapter-title flex-grow text-sm cursor-pointer">${chapter.title}</span>
+                        `;
  						chaptersDropdown.appendChild(chapterButton); 
  					}); 
  					chaptersMenuContainer.classList.remove('hidden'); 
@@ -531,19 +534,69 @@
  			gridContainer.addEventListener("click",(e=>e.target.closest(".topic-button")&&showMapView(e.target.closest(".topic-button")))),backButton.addEventListener("click",showMainMenu); 
  			 
  			const formatTime=e=>isNaN(e)?"00:00":`${String(Math.floor(e/60)).padStart(2,"0")}:${String(Math.floor(e%60)).padStart(2,"0")}`; 
- 			topicAudio.addEventListener("loadedmetadata",()=>{totalDurationEl.textContent=formatTime(topicAudio.duration),timelineSlider.max=topicAudio.duration}),topicAudio.addEventListener("error",()=>{playPauseButton.disabled=!0,playPauseIcon.className="fas fa-times",totalDurationEl.textContent="Error"}),playPauseButton.addEventListener("click",()=>{currentChapterEndTime=null,currentChapterStartTime=null,topicAudio.paused?topicAudio.play():topicAudio.pause()}),topicAudio.addEventListener("play",()=>playPauseIcon.classList.replace("fa-play","fa-pause")),topicAudio.addEventListener("pause",()=>playPauseIcon.classList.replace("fa-pause","fa-play")),topicAudio.addEventListener("ended",()=>{topicAudio.loop&&null===currentChapterStartTime||topicAudio.loop&&null!==currentChapterStartTime||playPauseIcon.classList.replace("fa-pause","fa-play")}),topicAudio.addEventListener("timeupdate",()=>{ 
- 				if(timelineSlider.value=topicAudio.currentTime,currentTimeEl.textContent=formatTime(topicAudio.currentTime),currentChapterEndTime&&topicAudio.currentTime>=currentChapterEndTime) 
- 					if(topicAudio.loop){topicAudio.currentTime=currentChapterStartTime,topicAudio.play(); 
- 				} else{ 
- 					topicAudio.pause(),currentChapterEndTime=null,currentChapterStartTime=null; 
- 					const e=document.querySelector(".chapter-button.playing"); 
- 					e&&e.classList.remove("playing") 
- 				} 
+ 			topicAudio.addEventListener("loadedmetadata",()=>{totalDurationEl.textContent=formatTime(topicAudio.duration),timelineSlider.max=topicAudio.duration}),topicAudio.addEventListener("error",()=>{playPauseButton.disabled=!0,playPauseIcon.className="fas fa-times",totalDurationEl.textContent="Error"}),playPauseButton.addEventListener("click",()=>{currentChapterEndTime=null,currentChapterStartTime=null,topicAudio.paused?topicAudio.play():topicAudio.pause()}),topicAudio.addEventListener("play",()=>playPauseIcon.classList.replace("fa-play","fa-pause")),topicAudio.addEventListener("pause",()=>playPauseIcon.classList.replace("fa-pause","fa-play")),topicAudio.addEventListener("ended",()=>{
+                const isLoopingSelection = selectedChapters.length > 0 && loopButton.classList.contains('active');
+                if (!isLoopingSelection && !x3LoopState.active) {
+                    playPauseIcon.classList.replace("fa-pause","fa-play");
+                }
+            }),topicAudio.addEventListener("timeupdate",()=>{ 
+ 				if(timelineSlider.value=topicAudio.currentTime,currentTimeEl.textContent=formatTime(topicAudio.currentTime),currentChapterEndTime&&topicAudio.currentTime>=currentChapterEndTime) {
+                    if (x3LoopState.active) {
+                        x3LoopState.playCount++;
+                        if (x3LoopState.playCount < 3) {
+                            topicAudio.currentTime = currentChapterStartTime;
+                        } else {
+                            x3LoopState.playCount = 0;
+                            x3LoopState.currentIndex++;
+                            if (x3LoopState.currentIndex < x3LoopState.queue.length) {
+                                const nextChapter = x3LoopState.queue[x3LoopState.currentIndex];
+                                currentChapterStartTime = nextChapter.start;
+                                currentChapterEndTime = nextChapter.end || topicAudio.duration;
+                                topicAudio.currentTime = currentChapterStartTime;
+                            } else {
+                                x3LoopState.active = false;
+                                playX3Button.classList.remove('active');
+                                playPauseIcon.classList.replace("fa-pause", "fa-play");
+                                topicAudio.pause();
+                            }
+                        }
+                    } else if(loopButton.classList.contains('active')){
+                        if (selectedChapters.length > 0) {
+                             topicAudio.currentTime = selectedChapters[0].start;
+                        } else {
+                            topicAudio.currentTime = currentChapterStartTime;
+                        }
+                        topicAudio.play();
+                    } else { 
+ 					    topicAudio.pause(),currentChapterEndTime=null,currentChapterStartTime=null; 
+ 					    const e=document.querySelector(".chapter-button.playing"); 
+ 					    e&&e.classList.remove("playing") 
+ 				    }
+                }
  			}),timelineSlider.addEventListener("input",()=>{currentChapterEndTime=null,currentChapterStartTime=null,topicAudio.currentTime=timelineSlider.value}),chaptersButton.addEventListener("click",e=>{e.stopPropagation(),chaptersDropdown.classList.toggle("hidden")}),chaptersDropdown.addEventListener("click",e=>{ 
- 				if("BUTTON"===e.target.tagName){ 
- 					const t=document.querySelector(".chapter-button.playing"); 
- 					t&&t.classList.remove("playing"),e.target.classList.add("playing"),currentChapterStartTime=parseFloat(e.target.dataset.start),currentChapterEndTime=e.target.dataset.end?parseFloat(e.target.dataset.end):null,topicAudio.currentTime=currentChapterStartTime,topicAudio.play(),chaptersDropdown.classList.add("hidden") 
- 				} 
+ 				if (e.target.classList.contains('chapter-title')) {
+                    const chapterDiv = e.target.closest('div');
+                    const checkbox = chapterDiv.querySelector('.chapter-checkbox');
+                    const start = parseFloat(checkbox.dataset.start);
+                    const end = checkbox.dataset.end ? parseFloat(checkbox.dataset.end) : null;
+                    
+                    document.querySelectorAll('.chapter-checkbox').forEach(cb => cb.checked = false);
+                    selectedChapters = [];
+                    currentChapterStartTime = start;
+                    currentChapterEndTime = end;
+                    topicAudio.currentTime = currentChapterStartTime;
+                    topicAudio.play();
+                    chaptersDropdown.classList.add("hidden");
+                } else if (e.target.type === 'checkbox') {
+                    selectedChapters = [];
+                    document.querySelectorAll('.chapter-checkbox:checked').forEach(cb => {
+                        selectedChapters.push({
+                            start: parseFloat(cb.dataset.start),
+                            end: cb.dataset.end ? parseFloat(cb.dataset.end) : topicAudio.duration
+                        });
+                    });
+                    selectedChapters.sort((a, b) => a.start - b.start);
+                }
  			}); 
  			
  			rewindButton.addEventListener('click', () => {
@@ -557,7 +610,7 @@
  			const speeds=[1,1.25,1.5,2]; 
  			let currentSpeedIndex=0; 
  			speedButton.addEventListener("click",()=>{currentSpeedIndex=(currentSpeedIndex+1)%speeds.length;const e=speeds[currentSpeedIndex];topicAudio.playbackRate=e,speedButton.textContent=`${e}x`});
- 			loopButton.addEventListener("click",()=>{topicAudio.loop=!topicAudio.loop,loopButton.classList.toggle("active")});
+ 			loopButton.addEventListener("click",()=>{loopButton.classList.toggle("active")});
  			document.addEventListener("click",e=>{chaptersMenuContainer.contains(e.target)||chaptersDropdown.classList.add("hidden")}); 
  			 
  			editModeToggle.addEventListener("change",()=>{ 
@@ -777,6 +830,39 @@
                 }
                 window.open(videoUrl, '_blank');
                 topicAudio.pause();
+            });
+
+            playSelectionButton.addEventListener('click', () => {
+                if (selectedChapters.length > 0) {
+                    x3LoopState.active = false;
+                    playX3Button.classList.remove('active');
+                    currentChapterStartTime = selectedChapters[0].start;
+                    currentChapterEndTime = selectedChapters[selectedChapters.length - 1].end;
+                    topicAudio.currentTime = currentChapterStartTime;
+                    loopButton.classList.add('active');
+                    topicAudio.play();
+                } else {
+                    alert('Por favor, selecciona al menos un epígrafe para reproducir.');
+                }
+            });
+            
+            playX3Button.addEventListener('click', () => {
+                x3LoopState.active = !x3LoopState.active;
+                playX3Button.classList.toggle('active', x3LoopState.active);
+
+                if (x3LoopState.active) {
+                    loopButton.classList.remove('active');
+                    selectedChapters = [];
+                    x3LoopState.queue = [...currentTopic.chapters];
+                    x3LoopState.currentIndex = 0;
+                    x3LoopState.playCount = 0;
+
+                    const firstChapter = x3LoopState.queue[0];
+                    currentChapterStartTime = firstChapter.start;
+                    currentChapterEndTime = firstChapter.end || topicAudio.duration;
+                    topicAudio.currentTime = currentChapterStartTime;
+                    topicAudio.play();
+                }
             });
 
             startSessionButton.addEventListener('click', () => {
