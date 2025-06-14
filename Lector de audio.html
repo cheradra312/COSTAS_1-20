@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramienta de Lectura de Texto Avanzada</title>
+    <!-- Tailwind CSS para un diseño moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Fuente Inter de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilo para la palabra resaltada */
+        .highlight {
+            background-color: #fef08a; /* Amarillo claro */
+            color: #713f12; /* Marrón oscuro */
+            border-radius: 4px;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            padding: 2px 1px;
+            margin: -2px -1px;
+        }
+        /* Estilo para la ventana de texto con desplazamiento */
+        #text-reader-display-wrapper {
+            height: 15rem; /* Altura aumentada para mejor visualización */
+            overflow-y: hidden; /* Oculta el desbordamiento y la barra de scroll */
+            background-color: #f9fafb; /* Fondo ligeramente gris */
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            position: relative;
+        }
+        select:disabled, button:disabled {
+            background-color: #e5e7eb;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-6xl bg-white rounded-xl shadow-2xl p-6 md:p-8">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Lector de Temario</h1>
+        </div>
+        
+        <!-- Controles de selección y reproducción -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mb-4 items-end">
+            <!-- Selectores -->
+            <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="topic-select" class="block mb-2 text-sm font-medium text-gray-700">Tema:</label>
+                    <select id="topic-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></select>
+                </div>
+                <div>
+                    <label for="epigrafe-select" class="block mb-2 text-sm font-medium text-gray-700">Epígrafe:</label>
+                    <select id="epigrafe-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled></select>
+                </div>
+            </div>
+            <!-- Controles -->
+            <div class="lg:col-span-3 flex items-end gap-2">
+                 <div class="flex-grow flex flex-col sm:flex-row gap-2">
+                    <button id="rewind-btn" title="Párrafo anterior" class="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white font-bold p-3 rounded-lg shadow-md transition-transform transform hover:scale-105" disabled><i class="fas fa-backward"></i></button>
+                    <button id="play-pause-btn" class="w-full sm:w-auto flex-grow bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105 flex items-center justify-center gap-2" disabled>
+                        <i id="play-pause-icon" class="fas fa-play"></i><span id="play-pause-text">Leer</span>
+                    </button>
+                    <button id="stop-btn" class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-bold p-3 rounded-lg shadow-md transition-transform transform hover:scale-105" disabled><i class="fas fa-stop"></i></button>
+                    <button id="forward-btn" title="Siguiente Párrafo" class="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white font-bold p-3 rounded-lg shadow-md transition-transform transform hover:scale-105" disabled><i class="fas fa-forward"></i></button>
+                </div>
+                 <div>
+                    <label for="repeat-select" class="block mb-2 text-sm font-medium text-gray-700">Repetir Párrafo:</label>
+                    <select id="repeat-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="1">1 vez</option>
+                        <option value="2">2 veces</option>
+                        <option value="3">3 veces</option>
+                        <option value="4">4 veces</option>
+                        <option value="5">5 veces</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensaje de estado -->
+        <div id="reader-status" class="text-center text-sm text-gray-500 mb-4 min-h-[20px]">Cargando temario...</div>
+
+        <!-- Visualizador de texto -->
+        <div id="text-reader-display-wrapper">
+            <div id="text-reader-display" class="text-lg md:text-xl leading-relaxed"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const topicSelect = document.getElementById('topic-select');
+            const epigrafeSelect = document.getElementById('epigrafe-select');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const playPauseIcon = document.getElementById('play-pause-icon');
+            const playPauseText = document.getElementById('play-pause-text');
+            const stopBtn = document.getElementById('stop-btn');
+            const rewindBtn = document.getElementById('rewind-btn');
+            const forwardBtn = document.getElementById('forward-btn');
+            const repeatSelect = document.getElementById('repeat-select');
+            const textReaderDisplay = document.getElementById('text-reader-display');
+            const readerStatus = document.getElementById('reader-status');
+
+            let utterance = null;
+            let temarioDoc = null;
+            let paragraphs = [];
+            let wordSpans = [];
+            let lastHighlightedSpan = null;
+            
+            let isSpeaking = false;
+            let isPaused = false;
+            
+            let currentParagraphIndex = 0;
+            let currentRepetition = 0;
+            
+            const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/cheradra312/COSTAS_1-20/main/Temario.html';
+
+            async function initialize() {
+                try {
+                    const response = await fetch(GITHUB_RAW_URL);
+                    if (!response.ok) throw new Error(`Error de red: ${response.statusText}`);
+                    const htmlText = await response.text();
+                    const parser = new DOMParser();
+                    temarioDoc = parser.parseFromString(htmlText, "text/html");
+                    
+                    for (let i = 1; i <= 20; i++) {
+                        const option = document.createElement('option');
+                        option.value = `MEA2T${i}`;
+                        option.textContent = `Tema ${i}`;
+                        topicSelect.appendChild(option);
+                    }
+                    
+                    await updateEpigrafeSelect();
+                    updateUIState('idle');
+                    readerStatus.textContent = "Temario cargado. Selecciona un tema y epígrafe.";
+                } catch (error) {
+                    console.error("Error fatal al cargar el temario:", error);
+                    readerStatus.textContent = "No se pudo cargar el temario desde GitHub.";
+                    textReaderDisplay.innerHTML = "<p>Por favor, comprueba la conexión a internet y la URL del repositorio.</p>";
+                }
+            }
+            
+            topicSelect.addEventListener('change', updateEpigrafeSelect);
+            epigrafeSelect.addEventListener('change', startReadingFromSelection);
+            playPauseBtn.addEventListener('click', handlePlayPause);
+            stopBtn.addEventListener('click', stopReading);
+            rewindBtn.addEventListener('click', () => seek(-1));
+            forwardBtn.addEventListener('click', () => seek(1));
+
+            async function updateEpigrafeSelect() {
+                stopReading();
+                const topicId = topicSelect.value;
+                if (!temarioDoc) return;
+                
+                epigrafeSelect.innerHTML = '';
+                const topicElement = temarioDoc.querySelector(`#${topicId}`);
+                if (!topicElement) return;
+
+                const allOption = document.createElement('option');
+                allOption.value = 'all';
+                allOption.textContent = 'Tema Completo';
+                epigrafeSelect.appendChild(allOption);
+
+                const epigrafes = topicElement.querySelectorAll('h2');
+                epigrafes.forEach((h2, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = h2.textContent.trim();
+                    epigrafeSelect.appendChild(option);
+                });
+                epigrafeSelect.disabled = false;
+                prepareAndDisplayText(); 
+            }
+            
+            function prepareAndDisplayText() {
+                const elements = getElementsForSelection();
+                if (elements) {
+                    paragraphs = elements.map(el => el.textContent.trim()).filter(p => p);
+                    prepareTextDisplayForReader(elements);
+                }
+            }
+
+            function startReadingFromSelection() {
+                stopReading();
+                prepareAndDisplayText();
+                setTimeout(() => {
+                    if (!speechSynthesis.speaking) {
+                       handlePlayPause();
+                    }
+                }, 100);
+            }
+
+            function handlePlayPause() {
+                if (isSpeaking) {
+                    if (isPaused) {
+                        speechSynthesis.resume();
+                    } else {
+                        speechSynthesis.pause();
+                    }
+                } else {
+                    startPlaybackQueue();
+                }
+            }
+
+            function stopReading() {
+                speechSynthesis.cancel();
+            }
+            
+            function getElementsForSelection() {
+                const topicId = topicSelect.value;
+                const epigrafeIndex = epigrafeSelect.value;
+                if (!temarioDoc) return null;
+                const topicElement = temarioDoc.querySelector(`#${topicId}`);
+                if (!topicElement) return null;
+
+                if (epigrafeIndex === 'all') {
+                    return Array.from(topicElement.children);
+                }
+                
+                const epigrafesH2 = topicElement.querySelectorAll('h2');
+                const startIndex = parseInt(epigrafeIndex, 10);
+                const startElement = epigrafesH2[startIndex];
+                if (!startElement) return null;
+                
+                let elementsForEpigrafe = [startElement];
+                let nextElement = startElement.nextElementSibling;
+                while (nextElement && nextElement.tagName !== 'H2') {
+                    elementsForEpigrafe.push(nextElement);
+                    nextElement = nextElement.nextElementSibling;
+                }
+                return elementsForEpigrafe;
+            }
+
+            function startPlaybackQueue() {
+                currentParagraphIndex = 0;
+                currentRepetition = 0;
+                playCurrentParagraph();
+            }
+
+            function playCurrentParagraph() {
+                if (currentParagraphIndex >= paragraphs.length) {
+                    stopReading();
+                    readerStatus.textContent = "Lectura completada.";
+                    return;
+                }
+                
+                updateUIState('speaking');
+                readerStatus.textContent = `Leyendo párrafo ${currentParagraphIndex + 1}... (Repetición ${currentRepetition + 1})`;
+                
+                const textToSpeak = paragraphs[currentParagraphIndex];
+                utterance = new SpeechSynthesisUtterance(textToSpeak);
+                
+                const spanishVoice = speechSynthesis.getVoices().find(v => v.lang.startsWith('es'));
+                if (spanishVoice) utterance.voice = spanishVoice;
+
+                utterance.onstart = () => { isSpeaking = true; isPaused = false; updateUIState('speaking'); };
+                utterance.onpause = () => { isPaused = true; updateUIState('paused'); };
+                utterance.onresume = () => { isPaused = false; updateUIState('speaking'); };
+                
+                utterance.onboundary = (event) => {
+                    if (event.name !== 'word') return;
+                    if (lastHighlightedSpan) lastHighlightedSpan.classList.remove('highlight');
+                    
+                    const paragraphElement = textReaderDisplay.children[currentParagraphIndex];
+                    if(!paragraphElement) return;
+
+                    const currentWordSpan = findSpanInParagraph(paragraphElement, event.charIndex);
+                    
+                    if (currentWordSpan) {
+                        currentWordSpan.classList.add('highlight');
+                        currentWordSpan.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                        lastHighlightedSpan = currentWordSpan;
+                    }
+                };
+
+                utterance.onend = () => {
+                    if (lastHighlightedSpan) lastHighlightedSpan.classList.remove('highlight');
+                    lastHighlightedSpan = null;
+                    
+                    currentRepetition++;
+                    const totalRepetitions = parseInt(repeatSelect.value, 10);
+
+                    if (currentRepetition < totalRepetitions) {
+                         playCurrentParagraph();
+                    } else {
+                        currentParagraphIndex++;
+                        currentRepetition = 0;
+                        playCurrentParagraph();
+                    }
+                };
+                
+                speechSynthesis.speak(utterance);
+            }
+            
+            function seek(direction) {
+                if (!isSpeaking) return;
+                
+                const newIndex = currentParagraphIndex + direction;
+                if (newIndex >= 0 && newIndex < paragraphs.length) {
+                    currentParagraphIndex = newIndex;
+                    currentRepetition = 0;
+                    speechSynthesis.cancel();
+                    // Let the oncancel event handle UI and then restart
+                    setTimeout(playCurrentParagraph, 100);
+                }
+            }
+            
+            function prepareTextDisplayForReader(elements) {
+                textReaderDisplay.innerHTML = '';
+                wordSpans = [];
+
+                elements.forEach(el => {
+                    const newElement = document.createElement(el.tagName);
+                    const wordsAndSpaces = el.textContent.split(/(\s+)/);
+                    
+                    wordsAndSpaces.forEach(part => {
+                        if (part.trim() !== '') {
+                            const span = document.createElement('span');
+                            span.textContent = part;
+                            newElement.appendChild(span);
+                        } else {
+                            newElement.appendChild(document.createTextNode(part));
+                        }
+                    });
+                    textReaderDisplay.appendChild(newElement);
+                });
+            }
+
+            function findSpanInParagraph(paragraphElement, charIndex) {
+                 const spans = paragraphElement.querySelectorAll('span');
+                 let accumulatedLength = 0;
+                 for (const span of spans) {
+                    const word = span.textContent;
+                    const nextAccumulatedLength = accumulatedLength + word.length;
+                    if(charIndex >= accumulatedLength && charIndex < nextAccumulatedLength) {
+                        return span;
+                    }
+                    // Find the space after the word to increment the length
+                    let nextNode = span.nextSibling;
+                    let spaceLength = 0;
+                    if(nextNode && nextNode.nodeType === Node.TEXT_NODE) {
+                       spaceLength = nextNode.textContent.length;
+                    }
+                    accumulatedLength = nextAccumulatedLength + spaceLength;
+                 }
+                 return null;
+            }
+
+            function updateUIState(state) {
+                isSpeaking = (state === 'speaking' || state === 'paused');
+                isPaused = (state === 'paused');
+
+                switch(state) {
+                    case 'idle':
+                        playPauseIcon.className = 'fas fa-play';
+                        playPauseText.textContent = 'Leer';
+                        playPauseBtn.disabled = !temarioDoc;
+                        stopBtn.disabled = true;
+                        rewindBtn.disabled = true;
+                        forwardBtn.disabled = true;
+                        break;
+                    case 'speaking':
+                        playPauseIcon.className = 'fas fa-pause';
+                        playPauseText.textContent = 'Pausar';
+                        playPauseBtn.disabled = false;
+                        stopBtn.disabled = false;
+                        rewindBtn.disabled = false;
+                        forwardBtn.disabled = false;
+                        break;
+                    case 'paused':
+                         playPauseIcon.className = 'fas fa-play';
+                        playPauseText.textContent = 'Continuar';
+                        playPauseBtn.disabled = false;
+                        stopBtn.disabled = false;
+                        rewindBtn.disabled = true;
+                        forwardBtn.disabled = true;
+                        break;
+                }
+            }
+            
+            // Central place to clean up state when speech stops for any reason
+             window.speechSynthesis.oncancel = () => {
+                isSpeaking = false;
+                isPaused = false;
+                updateUIState('idle');
+                if (lastHighlightedSpan) {
+                    lastHighlightedSpan.classList.remove('highlight');
+                    lastHighlightedSpan = null;
+                }
+            };
+            
+            // Initial load
+            initialize();
+        });
+    </script>
+</body>
+</html>
