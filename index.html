@@ -55,7 +55,7 @@
 					<button id="toggle-video-button" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-red-600 flex items-center gap-2">
                         <i class="fas fa-video"></i><span class="hidden sm:inline">Ver Vídeo</span>
                     </button>
-                    <button id="toggle-oral-pdf-button" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 flex items-center gap-2">
+                    <button id="toggle-oral-button" class="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 flex items-center gap-2">
                         <i class="fas fa-question-circle"></i><span class="hidden sm:inline">Preguntas Oral</span>
                     </button>
 					<button id="toggle-pdf-button" class="bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-600 flex items-center gap-2">
@@ -136,6 +136,7 @@
                             </div>
                         </div>
                     </div>
+                    <iframe id="flashcards-frame" class="w-full h-full border-0 rounded-xl shadow-lg hidden" style="min-height: 90vh;"></iframe>
                 </div>
  			</div> 
  		</div> 
@@ -181,6 +182,7 @@
  			let userCustomChapters = {};
             let pdfDoc = null, currentPageNum = 1;
             let oralPdfDoc = null, oralCurrentPageNum = 1;
+            let oralViewState = 0; // 0: map, 1: flashcards, 2: oral pdf
 
  			function initializeFirebase() { 
  				let firebaseConfig; 
@@ -374,7 +376,7 @@
  			const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),rewindButton=document.getElementById("rewind-button"),forwardButton=document.getElementById("forward-button"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),addChapterButton = document.getElementById("add-chapter-button"),passwordModalOverlay=document.getElementById("password-modal-overlay"),passwordInput=document.getElementById("password-input"),confirmEditButton=document.getElementById("confirm-edit-button"),cancelEditButton=document.getElementById("cancel-edit-button"),passwordError=document.getElementById("password-error"),newChapterTitleInput=document.getElementById("new-chapter-title-input"),restoreDefaultsButton = document.getElementById("restore-defaults-button"); 
  			const pdfViewerContainer = document.getElementById('pdf-viewer-container'), pdfCanvas = document.getElementById('pdf-canvas'), pageNumEl = document.getElementById('page-num'), pageCountEl = document.getElementById('page-count'), prevPageBtn = document.getElementById('prev-page'), nextPageBtn = document.getElementById('next-page'), pdfLoadingOverlay = document.getElementById('pdf-loading-overlay'), loadingText = document.getElementById('loading-text'), togglePdfButton = document.getElementById('toggle-pdf-button'), contentFrame = document.getElementById('content-frame');
             const toggleVideoButton = document.getElementById('toggle-video-button'), changeSessionButton = document.getElementById('change-session-button'), sessionModalOverlay = document.getElementById('session-modal-overlay'), sessionIdInput = document.getElementById('session-id-input'), startSessionButton = document.getElementById('start-session-button');
-            const toggleOralPdfButton = document.getElementById('toggle-oral-pdf-button'), oralPdfViewerContainer = document.getElementById('oral-pdf-viewer-container');
+            const toggleOralButton = document.getElementById('toggle-oral-button'), oralPdfViewerContainer = document.getElementById('oral-pdf-viewer-container'), flashcardsFrame = document.getElementById('flashcards-frame');
 
  			topics.forEach((e,t)=>{ 
  				const o=document.createElement("button"),n=colorPalette[e.color]; 
@@ -521,6 +523,7 @@
                 contentFrame.src = "";
                 pdfViewerContainer.classList.add('hidden');
                 oralPdfViewerContainer.classList.add('hidden');
+                flashcardsFrame.classList.add('hidden');
                 contentFrame.classList.remove('hidden');
                 topControlBar.style.opacity=0;
                 setTimeout(()=>topControlBar.style.display="none",300); 
@@ -717,6 +720,7 @@
 
             togglePdfButton.addEventListener('click', () => {
                 oralPdfViewerContainer.classList.add('hidden');
+                flashcardsFrame.classList.add('hidden');
                 const isPdfVisible = !pdfViewerContainer.classList.contains('hidden');
                 if (isPdfVisible) {
                     pdfViewerContainer.classList.add('hidden');
@@ -731,22 +735,31 @@
                      }
                 }
             });
-
-            toggleOralPdfButton.addEventListener('click', () => {
+            
+            toggleOralButton.addEventListener('click', () => {
                 pdfViewerContainer.classList.add('hidden');
-                const isOralPdfVisible = !oralPdfViewerContainer.classList.contains('hidden');
+                
+                oralViewState = (oralViewState + 1) % 3;
+                
+                const topicId = currentTopic.file.replace(/_desplegable\.html$/i, '').toUpperCase();
 
-                if(isOralPdfVisible) {
+                if (oralViewState === 1) { // Show Flashcards
                     oralPdfViewerContainer.classList.add('hidden');
-                    contentFrame.classList.remove('hidden');
-                } else {
+                    flashcardsFrame.classList.remove('hidden');
+                    contentFrame.classList.add('hidden');
+                    flashcardsFrame.src = `https://cheradra312.github.io/COSTAS_1-20/flashcards%20preguntas.html#${topicId.toLowerCase()}`;
+                } else if (oralViewState === 2) { // Show Oral PDF
+                    flashcardsFrame.classList.add('hidden');
                     oralPdfViewerContainer.classList.remove('hidden');
                     contentFrame.classList.add('hidden');
                     const oralPdfUrl = 'https://raw.githubusercontent.com/cheradra312/COSTAS_1-20/main/Facilitador%20CICCPE%20Preguntas%20oral%20MEA2%20(versi%C3%B3n%202025-01).pdf';
-                    const topicId = currentTopic.file.replace(/_desplegable\.html$/i, '');
                      if (!oralPdfDoc) { 
                         loadPdfAndFind(oralPdfUrl, topicId, document.getElementById('oral-pdf-canvas'), document.getElementById('oral-page-num'), document.getElementById('oral-page-count'), oralPrevPageBtn, oralNextPageBtn, document.getElementById('oral-pdf-loading-overlay'), document.getElementById('oral-loading-text'));
                      }
+                } else { // Hide all and show map
+                    oralPdfViewerContainer.classList.add('hidden');
+                    flashcardsFrame.classList.add('hidden');
+                    contentFrame.classList.remove('hidden');
                 }
             });
 
@@ -760,7 +773,7 @@
                 if (currentTopic.videoId.startsWith('http')) {
                     videoUrl = currentTopic.videoId;
                 } else {
-                    videoUrl = `https://drive.google.com/file/d/${currentTopic.videoId}/view`; // Changed to /view
+                    videoUrl = `https://drive.google.com/file/d/${currentTopic.videoId}/view`;
                 }
                 window.open(videoUrl, '_blank');
                 topicAudio.pause();
