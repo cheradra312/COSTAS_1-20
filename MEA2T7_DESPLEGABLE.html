@@ -115,8 +115,8 @@
         }
         .collapsible-content {
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            padding-left: 1.75rem;
+            max-height: 0;
+            transition: max-height 0.5s ease-in-out;
         }
         .collapsible-trigger.open .collapsible-icon {
             transform: rotate(90deg);
@@ -140,7 +140,7 @@
                 <i class="fas fa-chevron-right collapsible-icon"></i>
                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Adaptación de Situaciones Existentes</h3>
             </div>
-            <div class="collapsible-content hidden">
+            <div class="collapsible-content">
                 <ul>
                     <li>La <span class="law-pill">ley de Costas</span> establece un <strong><u>cuidadoso régimen transitorio</u></strong> que permite la <u>adaptación de las situaciones existentes</u> con anterioridad a la entrada en vigor de la ley a la nueva regulación contenida en ella.</li>
                     <li>
@@ -148,14 +148,14 @@
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p>En el marco del respeto a los <strong><u>derechos legalmente adquiridos</u></strong>, la ley se aplica de la siguiente forma:</p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                             <ul class="nested-list">
                                 <li>
                                     <div class="collapsible-trigger">
                                         <i class="fas fa-chevron-right collapsible-icon"></i>
                                         <p>▪️ <u>Zonas no urbanizadas</u> (en los que los propietarios del suelo no tienen un derecho de aprovechamiento consolidado conforme a la legislación urbanística):</p>
                                     </div>
-                                    <div class="collapsible-content hidden">
+                                    <div class="collapsible-content">
                                         <ul class="nested-list">
                                             <li>▫️ La ley se aplica <strong><u>plenamente</u></strong> sobre la zona de servidumbre de protección y de influencia.</li>
                                         </ul>
@@ -166,7 +166,7 @@
                                         <i class="fas fa-chevron-right collapsible-icon"></i>
                                         <p>▪️ <u>Zonas urbanas o urbanizables</u> (en las que sí se han consolidado tales derechos de aprovechamiento):</p>
                                     </div>
-                                    <div class="collapsible-content hidden">
+                                    <div class="collapsible-content">
                                         <ul class="nested-list">
                                             <li>▫️ <strong><u>No se aplican</u></strong> las determinaciones sobre la zona de influencia.</li>
                                             <li>▫️ La anchura de la servidumbre de protección se limita a <span class="pill pill-blue">20 m</span> (la misma extensión que correspondía a la servidumbre de salvamento en la ley anterior de 1969 derogada por la de 1988).</li>
@@ -182,7 +182,7 @@
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p>Se regula con precisión la situación de las <strong><u>edificaciones existentes</u></strong> que no sean compatibles con la nueva ley:</p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                             <ul class="nested-list">
                                 <li>▪️ Si se construyeron <strong><u>ilegalmente</u></strong>, se abre la posibilidad de <u>legalizarlas por razones de interés público</u>.</li>
                                 <li>▪️ Si se construyeron <strong><u>legalmente</u></strong> y están en <strong><u>dominio público</u></strong>, se <u>mantiene la concesión hasta su vencimiento</u>.</li>
@@ -200,11 +200,22 @@
                 <div class="icon-bg"><i class="fas fa-file-contract"></i></div>
                 <h2>2. LA DISPOSICIÓN TRANSITORIA PRIMERA DE LA LEY 22/1988</h2>
             </div>
+            
+            <!-- Collapsible PDF Viewer -->
+            <div class="collapsible-trigger">
+                 <i class="fas fa-chevron-right collapsible-icon"></i>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-file-pdf mr-2 text-red-600"></i>Ver PDF del Régimen Transitorio</h3>
+            </div>
+            <div class="collapsible-content">
+                <iframe src="https://cdn.jsdelivr.net/gh/cheradra312/COSTAS_1-20@2a798f88f104ccd46cdbd8e913692d8d5c035fc2/Regimen%20Transitorio%20costas.pdf" width="100%" height="800px" style="border: 1px solid #e2e8f0; border-radius: 0.5rem; margin-top: 1rem;"></iframe>
+            </div>
+            <hr class="my-6">
+
             <div class="collapsible-trigger">
                  <i class="fas fa-chevron-right collapsible-icon"></i>
                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-gavel mr-2"></i>1. Propietarios con Sentencia Judicial Firme</h3>
             </div>
-            <div class="collapsible-content hidden">
+            <div class="collapsible-content">
                 <ul>
                     <li>Los propietarios, por sentencia judicial firme, de espacios en la zona marítimo-terrestre, playa y mar territorial, anterior a la entrada en vigor de la ley, pasarán a ser titulares de un <strong><u>derecho de ocupación y aprovechamiento del DPM-T</u></strong>.</li>
                     <li>
@@ -212,7 +223,7 @@
                              <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><strong><i class="fas fa-file-signature mr-2"></i>Solicitud de Concesión:</strong></p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                             <ul class="nested-list">
                                 <li>▪️ A cuyo efecto deberán solicitar la concesión en el plazo de <span class="pill pill-blue">1 año</span>.</li>
                                 <li>▪️ Transcurrido el plazo de 1 año sin que haya solicitado la concesión, ésta se otorgará <strong>de oficio</strong> por el MITECO, salvo renuncia expresa del interesado, y <u>computará desde el 29 de julio de 1989</u>.</li>
@@ -224,7 +235,7 @@
                              <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><strong><i class="fas fa-cogs mr-2"></i>Condiciones de la Concesión:</strong></p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                             <ul class="nested-list">
                                 <li>▪️ Se otorgará por <span class="pill pill-blue">30 años</span>, prorrogable por otros 30.</li>
                                 <li>▪️ Respetando los usos y aprovechamientos existentes y <strong><u>sin obligación de abonar canon</u></strong>.</li>
@@ -239,7 +250,7 @@
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p>El anterior propietario tendrá <strong><u>derecho preferente durante 60 años</u></strong>:</p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                             <ul class="nested-list">
                                 <li>▪️ Para la obtención de las concesiones para nuevos usos o aprovechamientos que puedan otorgarse sobre la totalidad de la superficie de la antigua propiedad privada.</li>
                                 <li>▪️ Dichas concesiones se <u>ajustarán íntegramente a lo previsto en la Ley</u>, incluyendo la limitación de plazo y la obligación de abonar canon.</li>
@@ -253,14 +264,14 @@
                  <i class="fas fa-chevron-right collapsible-icon"></i>
                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-registered mr-2"></i>2. Titulares Inscritos en el Registro (Art. 34 Ley Hipotecaria)</h3>
             </div>
-            <div class="collapsible-content hidden">
+            <div class="collapsible-content">
                  <ul>
                     <li>
                         <div class="collapsible-trigger">
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p>Los titulares de los terrenos de la zona marítimo-terrestre o playa que no hayan podido ser ocupados por la Administración al practicar un deslinde anterior a esta ley por estar inscritos en el Registro y amparados por el artículo 34 de la ley hipotecaria:</p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                             <ul class="nested-list">
                                 <li>▪️ Pasarán a ser titulares de un <strong><u>derecho de ocupación y aprovechamiento del DPM-T por 30 años</u></strong>.</li>
                                 <li>▪️ <u>Respetando los usos</u> y aprovechamiento existentes.</li>
@@ -273,7 +284,7 @@
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><strong><i class="fas fa-industry mr-2"></i>Casos Especiales:</strong></p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                             <ul class="nested-list">
                                <li>▪️ <u>Industrias</u>: Si los terrenos se destinan a industrias incluidas en el <span class="law-pill">RDL 1/2016</span>, la concesión se otorgará previo <u>informe del órgano ambiental</u> de la C.A. que será <u>determinante</u>. Si la Administración del Estado se aparta, deberá detallar las razones de interés general. Si el órgano no emite informe en 3 meses, se podrán proseguir las actuaciones.</li>
                                <li>▪️ <u>Imposibilidad de inscripción</u>: Si la inscripción registral del último titular no puede practicarse por afectación de la finca al DPM-T, <u>no será obstáculo</u> para la tramitación de la concesión siempre que los titulares acrediten la posesión mediante escritura pública.</li>
@@ -289,14 +300,14 @@
                  <i class="fas fa-chevron-right collapsible-icon"></i>
                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-map-marked-alt mr-2"></i>3. Tramos de Costa no Deslindados</h3>
             </div>
-            <div class="collapsible-content hidden">
+            <div class="collapsible-content">
                 <ul>
                      <li>
                         <div class="collapsible-trigger">
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                              <p>En los tramos de costa en que el DPM-T no esté deslindado o lo esté parcialmente a la entrada en vigor de esta ley:</p>
                         </div>
-                         <div class="collapsible-content hidden">
+                         <div class="collapsible-content">
                              <ul class="nested-list">
                                 <li>▪️ Se procederá a la práctica del deslinde, cuya aprobación declara la <strong><u>posesión y titularidad dominical a favor del Estado</u></strong>.</li>
                                 <li>▪️ Las inscripciones en el Registro de la Propiedad <u>no podrán prevalecer</u> frente a la naturaleza demanial de los bienes deslindados, aunque hayan sido ocupados por obras.</li>
@@ -308,7 +319,7 @@
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p>Si bien, los titulares registrales de los terrenos, amparados por el artículo 34 de la ley hipotecaria, que resulten comprendidos en el deslinde practicado:</p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                             <ul class="nested-list">
                                <li>▪️ Pasarán a ser titulares de un <strong>derecho de ocupación y aprovechamiento</strong> del DPM-T en los términos previstos en el apartado 2 de esta disposición.</li>
                                <li>▪️ Tendrán un <strong><u>derecho preferente durante 10 años</u></strong> para la obtención de las concesiones para nuevos usos o aprovechamientos.</li>
@@ -320,7 +331,7 @@
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p>Los anteriores titulares registrales de aquellos terrenos que de haberse practicado el deslinde conforme a la ley del 69 hubieran quedado excluidos del DPM-T:</p>
                         </div>
-                         <div class="collapsible-content hidden">
+                         <div class="collapsible-content">
                              <ul class="nested-list">
                                <li>▪️ Pasarán a tener los <u>derechos del <strong>apartado 4</strong></u> de esta disposición transitoria.</li>
                                <li>▪️ <u>Respetando los usos y aprovechamientos</u> existentes en el momento de la aprobación del deslinde.</li>
@@ -332,7 +343,7 @@
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p>Aquellos titulares de terrenos que vean reconocida su titularidad mediante <strong>sentencia judicial firme</strong>, o acrediten <strong>tracto registral ininterrumpido desde 1880</strong>:</p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                                <ul class="nested-list">
                                     <li>▪️ Obtendrán los <u>derechos establecidos en el <strong>apartado 4</strong></u> de esta disposición transitoria.</li>
                                </ul>
@@ -347,7 +358,7 @@
                  <i class="fas fa-chevron-right collapsible-icon"></i>
                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-sync-alt mr-2"></i>4. Tramos de Costa que Requieren Nuevo Deslinde</h3>
             </div>
-            <div class="collapsible-content hidden">
+            <div class="collapsible-content">
                 <ul>
                     <li>En los tramos de costa que estén deslindados a la entrada en vigor de esta ley, pero sea necesario practicarse uno nuevo para adecuarlo a la nueva ley, los terrenos comprendidos entre la antigua y la nueva delimitación quedarán sujetos al <u>régimen del <strong>apartado 1</strong></u> de esta disposición.</li>
                     <li>En este caso la concesión de oficio <u>computará desde la fecha del deslinde</u>.</li>
@@ -358,7 +369,7 @@
                  <i class="fas fa-chevron-right collapsible-icon"></i>
                 <h3 class="text-xl font-bold text-gray-700"><i class="far fa-clock mr-2"></i>Prórroga de Concesiones (Ley 2/2013)</h3>
             </div>
-            <div class="collapsible-content hidden">
+            <div class="collapsible-content">
                  <ul>
                     <li>El artículo segundo de la <span class="law-pill">Ley 2/2013</span> establece que las concesiones otorgadas al amparo de la disposición transitoria primera de la <span class="law-pill">Ley 22/1988</span> se pueden prorrogar hasta un <strong><u>límite máximo de 75 años</u></strong>, excepto aquellas que se sitúen en la zona de servicio de los puertos.</li>
                      <li>En el caso de concesiones para usos destinados a instalaciones e industrias incluidas en el <span class="law-pill">RDL 1/2016</span>, la prórroga será concedida previo <strong><u>informe del órgano ambiental</u></strong> de la Comunidad Autónoma. El informe determinará los efectos para el medio ambiente e incluirá las condiciones para garantizar una adecuada protección. Este informe tendrá <strong><u>carácter determinante</u></strong>. Si la AGE se aparta de su contenido deberá motivar las razones de interés general.</li>
@@ -376,14 +387,14 @@
                  <i class="fas fa-chevron-right collapsible-icon"></i>
                 <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-balance-scale mr-2"></i>Análisis del Tribunal Constitucional (Sentencia 149/1991)</h3>
             </div>
-            <div class="collapsible-content hidden">
+            <div class="collapsible-content">
                 <ul>
                     <li>
                         <div class="collapsible-trigger">
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><strong><i class="fas fa-file-alt mr-2"></i>Naturaleza de los Títulos Privados:</strong></p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                             <ul class="nested-list">
                                 <li>▪️ El Tribunal Constitucional analiza el origen y la naturaleza de los títulos privados sobre terrenos enclavados en el dominio público y cuya subsistencia resulta <u>incompatible con el artículo 132.2 de la constitución</u>.</li>
                                  <li>▪️ Aun cuando exista un reconocimiento de titularidades dominicales por sentencia judicial firme, éstas recaen sobre bienes que <strong><u>eran y son de dominio público</u></strong> y por imperativo constitucional deben cesar.</li>
@@ -395,7 +406,7 @@
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><strong><i class="fas fa-exchange-alt mr-2"></i>La Concesión como Indemnización:</strong></p>
                         </div>
-                        <div class="collapsible-content hidden">
+                        <div class="collapsible-content">
                             <ul class="nested-list">
                                 <li>▪️ Esta naturaleza dominical del derecho declarado por sentencia judicial, a pesar de las limitaciones, obliga a considerar que su transformación en concesión implica una <strong><u>muy singular forma de expropiación</u></strong>, cuya razón de utilidad pública es incuestionable.</li>
                                  <li>▪️ La indemnización la constituye la <u>concesión que se otorgará de oficio</u>, si el interesado no la solicita.</li>
@@ -408,7 +419,7 @@
                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><strong><i class="fas fa-search-dollar mr-2"></i>Justificación de la Reducción de Compensación:</strong></p>
                         </div>
-                         <div class="collapsible-content hidden">
+                         <div class="collapsible-content">
                              <ul class="nested-list">
                                 <li>▪️ El Tribunal Constitucional también justifica la reducción de la compensación en el caso de inscripción registral por la <strong><u>mayor debilidad del título</u></strong>, que no da fe de la realidad física del bien.</li>
                                 <li>▪️ Y por la posibilidad de que los titulares registrales puedan ejercitar acciones dirigidas a obtener la declaración de su propiedad, cuestión más clara en las inscripciones amparadas por el artículo 34 de la ley hipotecaria, de manera que sus titulares podrán obtener el <u>reconocimiento de sus derechos</u>, quedando en la misma situación que los propietarios con sentencias firmes.</li>
@@ -430,14 +441,15 @@
                     event.stopPropagation();
                     
                     const content = this.nextElementSibling;
-                    
+                    const icon = this.querySelector('.collapsible-icon');
+
                     this.classList.toggle('open');
                     
                     if (content && content.classList.contains('collapsible-content')) {
-                        if (content.classList.contains('hidden')) {
-                            content.classList.remove('hidden');
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
                         } else {
-                            content.classList.add('hidden');
+                            content.style.maxHeight = content.scrollHeight + "px";
                         }
                     }
                 });
