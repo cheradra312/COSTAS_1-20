@@ -29,7 +29,8 @@
  		#edit-mode-toggle { -webkit-appearance: none; appearance: none; height: 1.25rem; width: 2.25rem; } 
  		#edit-mode-toggle:checked::after { transform: translateX(1rem); } 
  		#edit-mode-toggle::after { content: ''; display: inline-block; width: 1rem; height: 1rem; border-radius: 50%; background: white; transition: transform 0.2s ease-in-out; box-shadow: 0 1px 3px rgba(0,0,0,0.2); } 
- 		.modal-overlay { transition: opacity 0.3s ease-in-out; } 
+ 		.modal-overlay { transition: opacity 0.3s ease-in-out; }
+        .dragging { opacity: 0.5; background: #e0f2fe; }
  	</style> 
  </head> 
  <body class="p-2 md:p-4"> 
@@ -164,7 +165,19 @@
  					<button id="confirm-edit-button" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Aceptar</button> 
  				</div> 
  			</div> 
- 		</div> 
+ 		</div>
+
+        <!-- MODAL DE CONFIRMACIÓN DE BORRADO -->
+        <div id="delete-confirm-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 modal-overlay">
+            <div class="bg-white p-6 rounded-lg shadow-2xl w-full max-w-sm text-center">
+                <h2 class="text-lg font-bold mb-4">Confirmar Eliminación</h2>
+                <p class="text-sm text-gray-600 mb-4">¿Estás seguro de que quieres eliminar este epígrafe?</p>
+                <div class="flex justify-center gap-4">
+                    <button id="cancel-delete-btn" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300">Cancelar</button>
+                    <button id="confirm-delete-btn" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Eliminar</button>
+                </div>
+            </div>
+        </div>
  		
  		<audio id="topic-audio" src=""></audio> 
  	</div> 
@@ -185,8 +198,9 @@
             let pdfDoc = null, currentPageNum = 1;
             let oralPdfDoc = null, oralCurrentPageNum = 1;
             let oralViewState = 0;
-            let selectedChapters = [];
+            let selectionLoopState = { active: false, queue: [], currentIndex: 0 };
             let x3LoopState = { active: false, queue: [], currentIndex: 0, playCount: 0 };
+            let indexToDelete = -1;
 
  			function initializeFirebase() { 
  				let firebaseConfig; 
@@ -380,7 +394,7 @@
  			const gridContainer=document.getElementById("topics-grid"),mainMenuView=document.getElementById("main-menu-view"),mapViewerVIew=document.getElementById("map-viewer-view"),backButton=document.getElementById("back-button"),topControlBar=document.getElementById("top-control-bar"),chaptersMenuContainer=document.getElementById("chapters-menu-container"),chaptersButton=document.getElementById("chapters-button"),chaptersDropdown=document.getElementById("chapters-dropdown"),topicAudio=document.getElementById("topic-audio"),playPauseButton=document.getElementById("play-pause-button"),playPauseIcon=document.getElementById("play-pause-icon"),rewindButton=document.getElementById("rewind-button"),forwardButton=document.getElementById("forward-button"),timelineSlider=document.getElementById("timeline-slider"),currentTimeEl=document.getElementById("current-time"),totalDurationEl=document.getElementById("total-duration"),speedButton=document.getElementById("speed-button"),loopButton=document.getElementById("loop-button"),editorPanel=document.getElementById("editor-panel"),editorList=document.getElementById("editor-list"),editModeToggle=document.getElementById("edit-mode-toggle"),saveDataButton=document.getElementById("save-data-button"),saveIcon=document.getElementById("save-icon"),saveText=document.getElementById("save-text"),saveNotification=document.getElementById("save-notification"),addChapterButton = document.getElementById("add-chapter-button"),passwordModalOverlay=document.getElementById("password-modal-overlay"),passwordInput=document.getElementById("password-input"),confirmEditButton=document.getElementById("confirm-edit-button"),cancelEditButton=document.getElementById("cancel-edit-button"),passwordError=document.getElementById("password-error"),newChapterTitleInput=document.getElementById("new-chapter-title-input"),restoreDefaultsButton = document.getElementById("restore-defaults-button"); 
  			const pdfViewerContainer = document.getElementById('pdf-viewer-container'), pdfCanvas = document.getElementById('pdf-canvas'), pageNumEl = document.getElementById('page-num'), pageCountEl = document.getElementById('page-count'), prevPageBtn = document.getElementById('prev-page'), nextPageBtn = document.getElementById('next-page'), pdfLoadingOverlay = document.getElementById('pdf-loading-overlay'), loadingText = document.getElementById('loading-text'), togglePdfButton = document.getElementById('toggle-pdf-button'), contentFrame = document.getElementById('content-frame');
             const toggleVideoButton = document.getElementById('toggle-video-button'), changeSessionButton = document.getElementById('change-session-button'), sessionModalOverlay = document.getElementById('session-modal-overlay'), sessionIdInput = document.getElementById('session-id-input'), startSessionButton = document.getElementById('start-session-button');
-            const toggleOralButton = document.getElementById('toggle-oral-button'), oralPdfViewerContainer = document.getElementById('oral-pdf-viewer-container'), flashcardsFrame = document.getElementById('flashcards-frame'), playSelectionButton = document.getElementById('play-selection-button'), playX3Button = document.getElementById('play-x3-button');
+            const toggleOralButton = document.getElementById('toggle-oral-button'), oralPdfViewerContainer = document.getElementById('oral-pdf-viewer-container'), flashcardsFrame = document.getElementById('flashcards-frame'), playSelectionButton = document.getElementById('play-selection-button'), playX3Button = document.getElementById('play-x3-button'), deleteConfirmModal = document.getElementById('delete-confirm-modal'), confirmDeleteBtn = document.getElementById('confirm-delete-btn'), cancelDeleteBtn = document.getElementById('cancel-delete-btn');
 
  			topics.forEach((e,t)=>{ 
  				const o=document.createElement("button"),n=colorPalette[e.color]; 
@@ -417,27 +431,32 @@
  				if(editedChapters.length > 0) { 
  					editedChapters.forEach((chapter, index) => { 
  						const item = document.createElement("div"); 
- 						item.className = "edit-chapter-item p-2 border-b"; 
- 						item.innerHTML = ` 
- 							<div class="flex items-center gap-2"> 
- 								<input type="text" value="${chapter.title.replace(/"/g, '&quot;')}" class="w-full font-semibold text-sm bg-gray-100 p-1 rounded border" data-index="${index}"> 
- 								<button data-index="${index}" class="delete-chapter-button text-red-500 hover:text-red-700 p-1"><i class="fas fa-trash-alt"></i></button> 
- 							</div> 
- 							<div class="flex items-center justify-between mt-1 text-xs"> 
- 								<div> 
- 									<button data-index="${index}" data-type="start" class="mark-button bg-sky-500 text-white px-2 py-1 rounded-md hover:bg-sky-600">Inicio</button> 
- 									<span class="ml-2 font-mono" id="start-time-${index}">${chapter.start ? formatTime(chapter.start) : "--:--"}</span> 
- 								</div> 
- 								<div> 
- 									<button data-index="${index}" data-type="end" class="mark-button bg-pink-500 text-white px-2 py-1 rounded-md hover:bg-pink-600">Fin</button> 
- 									<span class="ml-2 font-mono" id="end-time-${index}">${chapter.end ? formatTime(chapter.end) : "--:--"}</span> 
- 								</div> 
- 							</div>`; 
+                        item.className = "edit-chapter-item p-2 border-b flex items-center";
+                        item.draggable = true;
+                        item.dataset.index = index;
+ 						item.innerHTML = `
+                            <i class="fas fa-grip-vertical text-gray-400 mr-3 cursor-move"></i>
+                            <div class="flex-grow">
+                                <input type="text" value="${chapter.title.replace(/"/g, '&quot;')}" class="w-full font-semibold text-sm bg-gray-100 p-1 rounded border" data-index="${index}">
+                                <div class="flex items-center justify-between mt-1 text-xs">
+                                    <div>
+                                        <button data-index="${index}" data-type="start" class="mark-button bg-sky-500 text-white px-2 py-1 rounded-md hover:bg-sky-600">Inicio</button>
+                                        <span class="ml-2 font-mono" id="start-time-${index}">${chapter.start ? formatTime(chapter.start) : "--:--"}</span>
+                                    </div>
+                                    <div>
+                                        <button data-index="${index}" data-type="end" class="mark-button bg-pink-500 text-white px-2 py-1 rounded-md hover:bg-pink-600">Fin</button>
+                                        <span class="ml-2 font-mono" id="end-time-${index}">${chapter.end ? formatTime(chapter.end) : "--:--"}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button data-index="${index}" class="delete-chapter-button text-red-500 hover:text-red-700 p-1 ml-2"><i class="fas fa-trash-alt"></i></button>
+                        `; 
  						editorList.appendChild(item); 
  					}); 
  				} else { 
  					editorList.innerHTML='<p class="text-gray-500 text-sm">Este tema no tiene capítulos. Añade uno para empezar.</p>'; 
  				} 
+                setupDragAndDrop();
  			} 
 
             async function renderPage(num, pdfInstance, canvas, pageNumEl, prevBtn, nextBtn) {
@@ -535,9 +554,15 @@
  			 
  			const formatTime=e=>isNaN(e)?"00:00":`${String(Math.floor(e/60)).padStart(2,"0")}:${String(Math.floor(e%60)).padStart(2,"0")}`; 
  			topicAudio.addEventListener("loadedmetadata",()=>{totalDurationEl.textContent=formatTime(topicAudio.duration),timelineSlider.max=topicAudio.duration}),topicAudio.addEventListener("error",()=>{playPauseButton.disabled=!0,playPauseIcon.className="fas fa-times",totalDurationEl.textContent="Error"}),playPauseButton.addEventListener("click",()=>{currentChapterEndTime=null,currentChapterStartTime=null,topicAudio.paused?topicAudio.play():topicAudio.pause()}),topicAudio.addEventListener("play",()=>playPauseIcon.classList.replace("fa-play","fa-pause")),topicAudio.addEventListener("pause",()=>playPauseIcon.classList.replace("fa-pause","fa-play")),topicAudio.addEventListener("ended",()=>{
-                const isLoopingSelection = selectedChapters.length > 0 && loopButton.classList.contains('active');
-                if (!isLoopingSelection && !x3LoopState.active) {
+                if (x3LoopState.active) {
+                    topicAudio.dispatchEvent(new Event('timeupdate'));
+                    return;
+                }
+                const isLoopingSelection = selectionLoopState.active;
+                if (!isLoopingSelection) {
                     playPauseIcon.classList.replace("fa-pause","fa-play");
+                } else {
+                     topicAudio.dispatchEvent(new Event('timeupdate'));
                 }
             }),topicAudio.addEventListener("timeupdate",()=>{ 
  				if(timelineSlider.value=topicAudio.currentTime,currentTimeEl.textContent=formatTime(topicAudio.currentTime),currentChapterEndTime&&topicAudio.currentTime>=currentChapterEndTime) {
@@ -545,6 +570,7 @@
                         x3LoopState.playCount++;
                         if (x3LoopState.playCount < 3) {
                             topicAudio.currentTime = currentChapterStartTime;
+                            topicAudio.play();
                         } else {
                             x3LoopState.playCount = 0;
                             x3LoopState.currentIndex++;
@@ -553,6 +579,7 @@
                                 currentChapterStartTime = nextChapter.start;
                                 currentChapterEndTime = nextChapter.end || topicAudio.duration;
                                 topicAudio.currentTime = currentChapterStartTime;
+                                topicAudio.play();
                             } else {
                                 x3LoopState.active = false;
                                 playX3Button.classList.remove('active');
@@ -560,12 +587,30 @@
                                 topicAudio.pause();
                             }
                         }
-                    } else if(loopButton.classList.contains('active')){
-                        if (selectedChapters.length > 0) {
-                             topicAudio.currentTime = selectedChapters[0].start;
-                        } else {
+                    } else if(selectionLoopState.active) {
+                        selectionLoopState.currentIndex++;
+                        if (selectionLoopState.currentIndex < selectionLoopState.queue.length) {
+                            const nextChapter = selectionLoopState.queue[selectionLoopState.currentIndex];
+                            currentChapterStartTime = nextChapter.start;
+                            currentChapterEndTime = nextChapter.end || topicAudio.duration;
                             topicAudio.currentTime = currentChapterStartTime;
+                            topicAudio.play();
+                        } else { // Reached the end of the selection
+                            if (loopButton.classList.contains('active')) {
+                                selectionLoopState.currentIndex = 0;
+                                const firstChapter = selectionLoopState.queue[0];
+                                currentChapterStartTime = firstChapter.start;
+                                currentChapterEndTime = firstChapter.end || topicAudio.duration;
+                                topicAudio.currentTime = currentChapterStartTime;
+                                topicAudio.play();
+                            } else {
+                                selectionLoopState.active = false;
+                                playPauseIcon.classList.replace("fa-pause", "fa-play");
+                                topicAudio.pause();
+                            }
                         }
+                    } else if(loopButton.classList.contains('active')){
+                        topicAudio.currentTime = currentChapterStartTime;
                         topicAudio.play();
                     } else { 
  					    topicAudio.pause(),currentChapterEndTime=null,currentChapterStartTime=null; 
@@ -588,14 +633,7 @@
                     topicAudio.play();
                     chaptersDropdown.classList.add("hidden");
                 } else if (e.target.type === 'checkbox') {
-                    selectedChapters = [];
-                    document.querySelectorAll('.chapter-checkbox:checked').forEach(cb => {
-                        selectedChapters.push({
-                            start: parseFloat(cb.dataset.start),
-                            end: cb.dataset.end ? parseFloat(cb.dataset.end) : topicAudio.duration
-                        });
-                    });
-                    selectedChapters.sort((a, b) => a.start - b.start);
+                    // This space is intentionally left blank. The play-selection button will handle the logic.
                 }
  			}); 
  			
@@ -655,17 +693,33 @@
 
  			editorList.addEventListener("click",e=>{ 
  				const t=e.target.closest(".mark-button, .delete-chapter-button"); 
- 				if(t){ 
- 					const o=t.dataset.index; 
- 					if (t.classList.contains('mark-button')) { 
- 						const n=t.dataset.type, a=Math.round(100*topicAudio.currentTime)/100; 
- 						editedChapters[o][n]=a,document.getElementById(`${n}-time-${o}`).textContent=formatTime(a); 
- 					} else if (t.classList.contains('delete-chapter-button')) { 
- 						editedChapters.splice(o, 1); 
- 						renderEditorList(); 
- 					} 
- 				} 
+ 				if(!t) return;
+                
+                const index = t.dataset.index;
+
+                if (t.classList.contains('delete-chapter-button')) {
+                    indexToDelete = index;
+                    deleteConfirmModal.classList.remove('hidden');
+                } else if (t.classList.contains('mark-button')) {
+                    const type = t.dataset.type;
+                    const currentTime = Math.round(100 * topicAudio.currentTime) / 100;
+                    editedChapters[index][type] = currentTime;
+                    document.getElementById(`${type}-time-${index}`).textContent = formatTime(currentTime);
+                }
  			}); 
+
+            confirmDeleteBtn.addEventListener('click', () => {
+                if (indexToDelete > -1) {
+                    editedChapters.splice(indexToDelete, 1);
+                    renderEditorList();
+                }
+                deleteConfirmModal.classList.add('hidden');
+                indexToDelete = -1;
+            });
+            cancelDeleteBtn.addEventListener('click', () => {
+                deleteConfirmModal.classList.add('hidden');
+                indexToDelete = -1;
+            });
 
  			editorList.addEventListener('input', e => { 
  				if (e.target.tagName === 'INPUT' && e.target.type === 'text') { 
@@ -836,10 +890,15 @@
                 if (selectedChapters.length > 0) {
                     x3LoopState.active = false;
                     playX3Button.classList.remove('active');
-                    currentChapterStartTime = selectedChapters[0].start;
-                    currentChapterEndTime = selectedChapters[selectedChapters.length - 1].end;
+                    
+                    selectionLoopState.active = true;
+                    selectionLoopState.queue = [...selectedChapters];
+                    selectionLoopState.currentIndex = 0;
+                    
+                    const firstChapter = selectionLoopState.queue[0];
+                    currentChapterStartTime = firstChapter.start;
+                    currentChapterEndTime = firstChapter.end || topicAudio.duration;
                     topicAudio.currentTime = currentChapterStartTime;
-                    loopButton.classList.add('active');
                     topicAudio.play();
                 } else {
                     alert('Por favor, selecciona al menos un epígrafe para reproducir.');
@@ -852,6 +911,7 @@
 
                 if (x3LoopState.active) {
                     loopButton.classList.remove('active');
+                    selectionLoopState.active = false;
                     selectedChapters = [];
                     x3LoopState.queue = [...currentTopic.chapters];
                     x3LoopState.currentIndex = 0;
@@ -877,6 +937,63 @@
                 localStorage.removeItem('sessionId');
                 window.location.reload();
             });
+
+            function setupDragAndDrop() {
+                const items = editorList.querySelectorAll('.edit-chapter-item');
+                let draggedItem = null;
+
+                items.forEach(item => {
+                    item.addEventListener('dragstart', () => {
+                        draggedItem = item;
+                        setTimeout(() => {
+                            item.classList.add('dragging');
+                        }, 0);
+                    });
+
+                    item.addEventListener('dragend', () => {
+                        setTimeout(() => {
+                            if (draggedItem) {
+                                draggedItem.classList.remove('dragging');
+                            }
+                            draggedItem = null;
+                        }, 0);
+                    });
+
+                    item.addEventListener('dragover', e => {
+                        e.preventDefault();
+                        const afterElement = getDragAfterElement(editorList, e.clientY);
+                        if (afterElement == null) {
+                            editorList.appendChild(draggedItem);
+                        } else {
+                            editorList.insertBefore(draggedItem, afterElement);
+                        }
+                    });
+                });
+
+                editorList.addEventListener('drop', () => {
+                    const newOrder = [];
+                    editorList.querySelectorAll('.edit-chapter-item').forEach(item => {
+                        const originalIndex = parseInt(item.dataset.index);
+                        newOrder.push(editedChapters[originalIndex]);
+                    });
+                    editedChapters = newOrder;
+                    renderEditorList(); // Re-render to update indices and listeners
+                });
+            }
+
+            function getDragAfterElement(container, y) {
+                const draggableElements = [...container.querySelectorAll('.edit-chapter-item:not(.dragging)')];
+
+                return draggableElements.reduce((closest, child) => {
+                    const box = child.getBoundingClientRect();
+                    const offset = y - box.top - box.height / 2;
+                    if (offset < 0 && offset > closest.offset) {
+                        return { offset: offset, element: child };
+                    } else {
+                        return closest;
+                    }
+                }, { offset: Number.NEGATIVE_INFINITY }).element;
+            }
  		}); 
  	</script> 
  </body> 
