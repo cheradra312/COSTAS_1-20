@@ -198,7 +198,7 @@
             let pdfDoc = null, currentPageNum = 1;
             let oralPdfDoc = null, oralCurrentPageNum = 1;
             let oralViewState = 0;
-            let selectionLoopState = { active: false, queue: [], currentIndex: 0 };
+            let selectedChapters = [];
             let x3LoopState = { active: false, queue: [], currentIndex: 0, playCount: 0 };
             let indexToDelete = -1;
 
@@ -558,11 +558,9 @@
                     topicAudio.dispatchEvent(new Event('timeupdate'));
                     return;
                 }
-                const isLoopingSelection = selectionLoopState.active;
+                const isLoopingSelection = selectedChapters.length > 0 && loopButton.classList.contains('active');
                 if (!isLoopingSelection) {
                     playPauseIcon.classList.replace("fa-pause","fa-play");
-                } else {
-                     topicAudio.dispatchEvent(new Event('timeupdate'));
                 }
             }),topicAudio.addEventListener("timeupdate",()=>{ 
  				if(timelineSlider.value=topicAudio.currentTime,currentTimeEl.textContent=formatTime(topicAudio.currentTime),currentChapterEndTime&&topicAudio.currentTime>=currentChapterEndTime) {
@@ -587,30 +585,12 @@
                                 topicAudio.pause();
                             }
                         }
-                    } else if(selectionLoopState.active) {
-                        selectionLoopState.currentIndex++;
-                        if (selectionLoopState.currentIndex < selectionLoopState.queue.length) {
-                            const nextChapter = selectionLoopState.queue[selectionLoopState.currentIndex];
-                            currentChapterStartTime = nextChapter.start;
-                            currentChapterEndTime = nextChapter.end || topicAudio.duration;
-                            topicAudio.currentTime = currentChapterStartTime;
-                            topicAudio.play();
-                        } else { // Reached the end of the selection
-                            if (loopButton.classList.contains('active')) {
-                                selectionLoopState.currentIndex = 0;
-                                const firstChapter = selectionLoopState.queue[0];
-                                currentChapterStartTime = firstChapter.start;
-                                currentChapterEndTime = firstChapter.end || topicAudio.duration;
-                                topicAudio.currentTime = currentChapterStartTime;
-                                topicAudio.play();
-                            } else {
-                                selectionLoopState.active = false;
-                                playPauseIcon.classList.replace("fa-pause", "fa-play");
-                                topicAudio.pause();
-                            }
-                        }
                     } else if(loopButton.classList.contains('active')){
-                        topicAudio.currentTime = currentChapterStartTime;
+                        if (selectedChapters.length > 0) {
+                             topicAudio.currentTime = selectedChapters[0].start;
+                        } else {
+                            topicAudio.currentTime = currentChapterStartTime;
+                        }
                         topicAudio.play();
                     } else { 
  					    topicAudio.pause(),currentChapterEndTime=null,currentChapterStartTime=null; 
@@ -633,7 +613,14 @@
                     topicAudio.play();
                     chaptersDropdown.classList.add("hidden");
                 } else if (e.target.type === 'checkbox') {
-                    // This space is intentionally left blank. The play-selection button will handle the logic.
+                    selectedChapters = [];
+                    document.querySelectorAll('.chapter-checkbox:checked').forEach(cb => {
+                        selectedChapters.push({
+                            start: parseFloat(cb.dataset.start),
+                            end: cb.dataset.end ? parseFloat(cb.dataset.end) : topicAudio.duration
+                        });
+                    });
+                    selectedChapters.sort((a, b) => a.start - b.start);
                 }
  			}); 
  			
@@ -890,15 +877,10 @@
                 if (selectedChapters.length > 0) {
                     x3LoopState.active = false;
                     playX3Button.classList.remove('active');
-                    
-                    selectionLoopState.active = true;
-                    selectionLoopState.queue = [...selectedChapters];
-                    selectionLoopState.currentIndex = 0;
-                    
-                    const firstChapter = selectionLoopState.queue[0];
-                    currentChapterStartTime = firstChapter.start;
-                    currentChapterEndTime = firstChapter.end || topicAudio.duration;
+                    currentChapterStartTime = selectedChapters[0].start;
+                    currentChapterEndTime = selectedChapters[selectedChapters.length - 1].end;
                     topicAudio.currentTime = currentChapterStartTime;
+                    loopButton.classList.add('active');
                     topicAudio.play();
                 } else {
                     alert('Por favor, selecciona al menos un epígrafe para reproducir.');
@@ -911,7 +893,6 @@
 
                 if (x3LoopState.active) {
                     loopButton.classList.remove('active');
-                    selectionLoopState.active = false;
                     selectedChapters = [];
                     x3LoopState.queue = [...currentTopic.chapters];
                     x3LoopState.currentIndex = 0;
@@ -952,9 +933,7 @@
 
                     item.addEventListener('dragend', () => {
                         setTimeout(() => {
-                            if (draggedItem) {
-                                draggedItem.classList.remove('dragging');
-                            }
+                            draggedItem.classList.remove('dragging');
                             draggedItem = null;
                         }, 0);
                     });
