@@ -40,55 +40,22 @@
         }
         ul { list-style-type: none; padding-left: 0; }
         li { margin-top: 1rem; }
-        .collapsible-content > ul {
-            padding-left: 1.75rem;
-            margin-top: 0.75rem;
-            border-left: 3px dotted #cbd5e1;
-        }
-        .collapsible-content > ul > li {
-            position: relative;
-        }
-        .collapsible-content > ul > li::before {
-            content: '🔹';
-            position: absolute;
-            left: -1.75rem;
-            color: #3b82f6;
-        }
-        .pill {
-            display: inline-block;
-            padding: 0.1rem 0.6rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin: 0 0.2rem;
-        }
-        .pill-green { background-color: #dcfce7; color: #166534; }
-        .pill-red { background-color: #fee2e2; color: #991b1b; }
-        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
-        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
-        .pill-gray { background-color: #e5e7eb; color: #374151; }
-        .law-pill {
+        
+        .pill, .law-pill, .formula-pill, .actor-pill {
             display: inline-block;
             padding: 0.1rem 0.6rem;
             border-radius: 0.25rem;
             font-size: 0.8rem;
             font-weight: 700;
             margin: 0 0.2rem;
-            background-color: #f3e8ff; /* purple-100 */
-            color: #581c87; /* purple-800 */
-            border: 1px solid #c084fc; /* purple-400 */
         }
-        .directive-pill {
-            display: inline-block;
-            padding: 0.1rem 0.6rem;
-            border-radius: 0.25rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin: 0 0.2rem;
-            background-color: #dcfce7; /* green-100 */
-            color: #166534; /* green-800 */
-            border: 1px solid #4ade80; /* green-400 */
-        }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; border: 1px solid #93c5fd; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+        .pill-green { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .law-pill { background-color: #f3e8ff; color: #581c87; border: 1px solid #c084fc; }
+        .formula-pill { background-color: #ffedd5; color: #9a3412; border: 1px solid #fb923c; }
+        .actor-pill { background-color: #e5e7eb; color: #1f2937; border: 1px solid #9ca3af; }
         .icon {
             margin-right: 0.5rem;
             width: 1.25em;
@@ -107,6 +74,10 @@
             width: 100%;
             padding: 0.25rem 0;
         }
+        .collapsible-trigger > span {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
         .collapsible-icon {
             transition: transform 0.3s ease;
             margin-right: 0.75rem;
@@ -114,12 +85,13 @@
             color: #3b82f6;
         }
         .collapsible-content {
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
             padding-left: 1.75rem;
         }
         .collapsible-trigger.open .collapsible-icon {
             transform: rotate(90deg);
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -130,6 +102,7 @@
             <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-hard-hat"></i> MEA2T19: OBRAS PORTUARIAS (I) <i class="fas fa-anchor"></i></h1>
         </header>
 
+        <!-- Main Card 1 -->
         <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-book"></i></div>
@@ -147,7 +120,7 @@
                     <li><i class="fas fa-map-marked-alt text-blue-500 icon"></i>El <strong><u>ámbito de aplicación</u></strong> de estas recomendaciones será el proyecto, construcción y explotación de todas las obras marítimas y portuarias cualquiera que sea su clase o destino, siempre y cuando se encuentren en el <strong><u>litoral español</u></strong> y estén afectadas por los mismos oleajes que las fuentes de información disponibles analizadas.</li>
                     <li>
                         <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><i class="fas fa-exchange-alt text-yellow-600 icon"></i>Hasta la reciente publicación de la <span class="law-pill">ROM 0.0</span>, para definir las acciones a considerar en obras marítimas se utilizaba la <span class="law-pill">ROM 02.90</span>.</p>
                         </div>
                         <div class="collapsible-content hidden">
@@ -175,18 +148,18 @@
                                 <li>▪️ Para el dimensionamiento de una obra marítima se ha de definir el <strong><u>período de retorno (T)</u></strong> del temporal para obtener las acciones de cálculo sobre la estructura.</li>
                                 <li>
                                     <div class="collapsible-trigger">
-                                         <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
                                         <p>▪️ El periodo de retorno tanto en la fase de construcción como en su fase de servicio se obtiene a partir de:</p>
                                     </div>
                                     <div class="collapsible-content hidden">
                                         <ul class="nested-list">
                                             <li>▫️ La <strong><u>vida útil (n)</u></strong>.</li>
-                                            <li>▫️ El <strong><u>riesgo máximo admisible (E)</u></strong>, que es dependiente del <u>modo de fallo</u> de la estructura (gradual o instantáneo), la <u>posibilidad de pérdida de vidas humanas</u> y la <u>repercusión económica</u> en caso de inutilización.</li>
+                                            <li>▫️ El <strong><u>riesgo máximo admisible (E)</u></strong>, que es dependiente del <u>modo de fallo</u> (gradual o instantáneo), la <u>posibilidad de pérdida de vidas humanas</u> y la <u>repercusión económica</u> en caso de inutilización.</li>
                                         </ul>
                                     </div>
                                 </li>
-                                 <li>▪️ <u>Fase de construcción</u>: E = 1 - e<sup>-(n/T)</sup>.</li>
-                                 <li>▪️ <u>Fase de servicio</u>: E = 1 - (1 - 1/T)<sup>n</sup> (<strong>Teoría de Leo Borgmann</strong>).</li>
+                                 <li>▪️ <u>Fase de construcción</u>: <span class="formula-pill">E = 1 - e<sup>-(n/T)</sup></span>.</li>
+                                 <li>▪️ <u>Fase de servicio</u>: <span class="formula-pill">E = 1 - (1 - 1/T)<sup>n</sup></span> (<strong>Teoría de Leo Borgmann</strong>).</li>
                             </ul>
                         </div>
                     </li>
@@ -198,10 +171,10 @@
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
                                <li>
-                                    <div class="collapsible-trigger">
-                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                   <div class="collapsible-trigger">
+                                       <i class="fas fa-chevron-right collapsible-icon"></i>
                                        ▪️ Se establecen los siguientes <strong><u>índices</u></strong>:
-                                    </div>
+                                   </div>
                                     <div class="collapsible-content hidden">
                                         <ul class="nested-list">
                                             <li>▫️ <strong><u>IRE (Índice de Repercusión Económica)</u>:</strong> define la <strong><u>vida útil</u></strong> de la obra.</li>
@@ -210,25 +183,25 @@
                                     </div>
                                </li>
                                <li>▪️ En este caso únicamente se contempla la <strong><u>fase de servicio</u></strong>.</li>
-                               <li>▪️ Se utiliza también la fórmula de Leo Borgmann, pero sustituyendo el riesgo por la <strong><u>Probabilidad de fallo</u></strong>: P<sub>f</sub> = 1 - (1 - 1/T)<sup>n</sup>.</li>
+                               <li>▪️ Se utiliza también la fórmula de Leo Borgmann, pero sustituyendo el riesgo por la <strong><u>Probabilidad de fallo</u></strong>: <span class="formula-pill">P<sub>f</sub> = 1 - (1 - 1/T)<sup>n</sup></span>.</li>
                                <li>
                                    <div class="collapsible-trigger">
-                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <i class="fas fa-chevron-right collapsible-icon"></i>
                                        <p>▪️ <u>En función del IRE</u>, las obras marítimas se clasifican en obras con:</p>
                                    </div>
                                     <div class="collapsible-content hidden">
                                         <ul class="nested-list">
-                                           <li>▫️ Repercusión económica <strong>baja</strong> (<span class="pill pill-green">IRE < 5</span>, vida útil 15 años).</li>
-                                           <li>▫️ <strong>Media</strong> (<span class="pill pill-yellow">5 < IRE < 20</span>, vida útil 25 años).</li>
-                                           <li>▫️ <strong>Alta</strong> (<span class="pill pill-red">IRE > 20</span>, vida útil 50 años).</li>
-                                           <li>▫️ <strong>IRE = (CRD + CRI) / C<sub>0</sub></strong>, donde CRD es el coste de reconstrucción, CRI es el coste por inutilización y C<sub>0</sub> es un coste de referencia fijado en 3 M€.</li>
+                                           <li>▫️ Repercusión económica <strong>baja</strong> (<span class="pill pill-green">IRE < 5</span>, vida útil <span class="pill pill-blue">15 años</span>).</li>
+                                           <li>▫️ <strong>Media</strong> (<span class="pill pill-yellow">5 < IRE < 20</span>, vida útil <span class="pill pill-blue">25 años</span>).</li>
+                                           <li>▫️ <strong>Alta</strong> (<span class="pill pill-red">IRE > 20</span>, vida útil <span class="pill pill-blue">50 años</span>).</li>
+                                           <li>▫️ <span class="formula-pill"><strong>IRE = (CRD + CRI) / C<sub>0</sub></strong></span>, donde C<sub>0</sub> es un coste de referencia fijado en <span class="pill pill-blue">3 M€</span>.</li>
                                         </ul>
                                     </div>
                                </li>
                                 <li>
                                    <div class="collapsible-trigger">
-                                        <i class="fas fa-chevron-right collapsible-icon"></i>
-                                       <p>▪️ <u>El ISA</u> = ISA1 + ISA2 + ISA3 (<u>posibilidad de pérdida de vidas humanas</u>, <u>daños en medio ambiente y patrimonio</u>, y <u>alarma social</u>). En función del ISA, las obras marítimas se clasifican en:</p>
+                                       <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ <u>El ISA</u> = ISA1 + ISA2 + ISA3 (<u>posibilidad de pérdida de vidas humanas</u>, <u>daños en medio ambiente y patrimonio</u>, y <u>alarma social</u>). En función del ISA, las obras se clasifican en:</p>
                                    </div>
                                    <div class="collapsible-content hidden">
                                        <ul class="nested-list">
@@ -239,7 +212,7 @@
                                        </ul>
                                    </div>
                                </li>
-                               <li>▪️ Además, con estos dos valores, IRE e ISA, se define el <strong><u>método que hay que aplicar para el cálculo</u></strong> de la obra (seguridad global, coeficientes parciales, etc.).</li>
+                               <li>▪️ Además, con estos dos valores, IRE e ISA, se define el <strong><u>método que hay que aplicar para el cálculo</u></strong> de la obra (seguridad global, coeficientes parciales, grupos de probabilidad y probabilidad conjunta).</li>
                             </ul>
                         </div>
                     </li>
@@ -248,6 +221,7 @@
             </div>
         </div>
         
+        <!-- Main Card 2 -->
         <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-exclamation-triangle"></i></div>
@@ -255,15 +229,15 @@
             </div>
             <div class="collapsible-trigger">
                  <i class="fas fa-chevron-right collapsible-icon"></i>
-                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+                <span>Ver Estados Límite y Períodos de Retorno</span>
             </div>
             <div class="collapsible-content hidden">
                 <ul>
-                    <li>El <strong><u>estado límite</u></strong> se podría definir como el <u>estado de proyecto</u> en el que la obra en su conjunto, o en alguno de sus elementos, queda <strong><u>fuera de servicio</u></strong> por incumplimiento de los requisitos de seguridad, de servicio y de explotación especificados en el proyecto.</li>
+                    <li><i class="fas fa-traffic-light icon text-yellow-500"></i>El <strong><u>estado límite</u></strong> se podría definir como el <u>estado de proyecto</u> en el que la obra en su conjunto, o en alguno de sus elementos, queda <strong><u>fuera de servicio</u></strong> por incumplimiento de los requisitos de seguridad, de servicio y de explotación especificados en el proyecto.</li>
                     <li>
                         <div class="collapsible-trigger">
                              <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p>Los <strong><u>estados límites</u></strong> se clasifican en:</p>
+                            <p><i class="fas fa-list-ol icon text-blue-600"></i>Los <strong><u>estados límites</u></strong> se clasifican en:</p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
@@ -273,11 +247,12 @@
                             </ul>
                         </div>
                     </li>
-                    <li>El <strong><u>periodo de retorno (T)</u></strong>, se puede definir como el <strong><u>tiempo medio</u></strong> que transcurre entre dos excedencias consecutivas de un valor de la variable considerada. También se define como el intervalo medio de tiempo en que el <strong><u>valor extremo</u></strong> de la misma se supera una sola vez.</li>
+                    <li><i class="fas fa-history icon text-purple-600"></i>El <strong><u>periodo de retorno (T)</u></strong>, se puede definir como el <strong><u>tiempo medio</u></strong> que transcurre entre dos excedencias consecutivas de un valor de la variable considerada. También se define como el intervalo medio de tiempo en que el <strong><u>valor extremo</u></strong> de la misma se supera una sola vez.</li>
                 </ul>
             </div>
         </div>
 
+        <!-- Main Card 3 -->
         <div class="card">
              <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-database"></i></div>
@@ -285,28 +260,30 @@
             </div>
             <div class="collapsible-trigger">
                  <i class="fas fa-chevron-right collapsible-icon"></i>
-                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+                <span>Ver Bases de Datos y Clima Marítimo</span>
             </div>
             <div class="collapsible-content hidden">
                 <ul>
                     <li>
                         <div class="collapsible-trigger">
                              <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p>El estudio de <strong><u>clima marítimo</u></strong> se puede realizar en base a <strong><u>4 fuentes de datos</u></strong> de oleaje:</p>
+                            <p><i class="fas fa-server icon text-gray-700"></i>El estudio de <strong><u>clima marítimo</u></strong> se puede realizar en base a <strong><u>4 fuentes de datos</u></strong> de oleaje:</p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
                                <li>
                                    <div class="collapsible-trigger">
-                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <i class="fas fa-chevron-right collapsible-icon"></i>
                                        <p><strong><i class="fas fa-eye text-blue-500 icon"></i><u>Datos visuales de oleaje del NCDC</u>:</strong></p>
                                    </div>
                                    <div class="collapsible-content hidden">
                                        <ul class="nested-list">
-                                           <li>▫️ Son observaciones tomadas por barcos en ruta, barcos meteorológicos, observaciones de boyas, etc.</li>
-                                           <li>▫️ La <u>altura de ola</u> suministrada se asemeja a la altura de ola significante <strong>H<sub>1/3</sub></strong>.</li>
-                                           <li>▫️ Los <u>principales inconvenientes</u> son: heterogeneidad en la toma de datos; procesado de los mismos; y baja densidad en zonas poco transitadas.</li>
-                                           <li>▫️ La <u>gran ventaja</u> reside en la <strong>cantidad y extensión de las observaciones</strong>, además de proporcionar datos direccionales.</li>
+                                           <li>▫️ <span class="actor-pill">NCDC (National Climatic Data Center)</span> situado en Asheville, Carolina del Norte, EEUU.</li>
+                                           <li>▫️ Son <u>observaciones tomadas</u> por barcos en ruta, barcos meteorológicos, observaciones de boyas, etc.</li>
+                                           <li>▫️ Los datos vienen diferenciados según el tipo de oleaje, <strong><u>Sea</u></strong> o <strong><u>Swell</u></strong>, proporcionando altura, período, dirección y coordenadas.</li>
+                                           <li>▫️ La <u>altura de ola</u> suministrada se asemeja a la altura de ola significante <strong>H<sub>1/3</sub></strong> (media aritmética del tercio de olas más altas), que por otra parte es la más corrientemente utilizada en el estudio de los procesos litorales.</li>
+                                           <li>▫️ Los <u>principales inconvenientes</u> achacables a los datos del NCDC son de tres tipos: <strong>heterogeneidad</strong> en la toma de datos; <strong>procesado</strong> de los mismos, dado que pasa por dos escalones, el realizado por el propio NCDC y el efectuado por cada organismo receptor; y <strong>baja densidad</strong> de los datos en zonas poco transitadas por barcos o en las proximidades de la costa.</li>
+                                           <li>▫️ La <u>gran ventaja</u> que posee este banco de datos reside en la <strong><u>cantidad y extensión de las observaciones</u></strong> en espacio y tiempo, además de proporcionar datos direccionales.</li>
                                        </ul>
                                    </div>
                                </li>
@@ -317,31 +294,38 @@
                                    </div>
                                     <div class="collapsible-content hidden">
                                         <ul class="nested-list">
-                                           <li>▫️ La Red de Boyas en Aguas Profundas está formada por 13 boyas Seawatch y 3 Wavescan con sensor de oleaje direccional.</li>
-                                           <li>▫️ Los instrumentos están ubicados en profundidades entre 200 y 800 metros.</li>
+                                           <li>▫️ La Red de Boyas en Aguas Profundas de <span class="actor-pill">Puertos de Estado</span> está formada por <span class="pill pill-blue">13</span> boyas Seawatch y <span class="pill pill-blue">3</span> Wavescan con sensor de oleaje direccional.</li>
+                                           <li>▫️ Los instrumentos están ubicados en puntos con profundidades entre <span class="pill pill-blue">200 y 800 metros</span> y miden tanto oleaje como parámetros oceanográficos y meteorológicos.</li>
+                                           <li>▫️ Los datos son transmitidos cada hora vía satélite y se pueden consultar en la página web de Puertos del Estado.</li>
                                        </ul>
                                    </div>
                                </li>
-                                <li><strong><i class="fas fa-desktop text-purple-500 icon"></i><u>Datos procedentes de modelado numérico de predicción</u></strong> (proyecto español WANA y proyectos europeos WASA e HIPOCAS).</li>
-                                <li><strong><i class="fas fa-water text-gray-500 icon"></i><u>Datos de mareas</u></strong> (red REDMAR de Puertos del Estado desde 1992 y datos del IEO desde 1944).</li>
+                                <li><strong><i class="fas fa-desktop text-purple-500 icon"></i><u>Datos procedentes de modelado numérico de predicción</u></strong> (proyecto español WANA y proyectos europeos WASA e HIPOCAS). Los datos procedentes de modelado numérico tienen que ser calibrados con datos reales obtenidos en boyas.</li>
+                                <li><strong><i class="fas fa-water text-gray-500 icon"></i><u>Datos de mareas</u></strong> (red REDMAR de <span class="actor-pill">Puertos del Estado</span> desde <span class="pill pill-blue">1992</span>, constituida por unos 40 mareógrafos. El <span class="actor-pill">IEO</span> tiene series de datos desde <span class="pill pill-blue">1944</span>).</li>
                             </ul>
                         </div>
                     </li>
                     <li>
                         <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p>En España son de aplicación las <strong><u>Recomendaciones para obras marítimas <span class="law-pill">ROM 0.3-91 OLEAJE</span></u></strong>.</p>
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>En España son de aplicación las <strong><u>Recomendaciones para obras marítimas <span class="law-pill">ROM 0.3-91 OLEAJE</span></u></strong> para el proyecto, construcción, y explotación de todas las obras marítimas y portuarias ubicadas en el litoral español.</p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
-                               <li>▪️ Incluyen un Anejo para la <strong><u>caracterización y previsión aproximada del Clima Marítimo</u></strong> en el litoral español.</li>
+                               <li>▪️ Las Recomendaciones incluyen un Anejo donde se reúne toda la información y criterios necesarios para la <strong><u>caracterización y previsión aproximada del Clima Marítimo</u></strong> en el litoral español, y por tanto para la definición de oleajes de proyecto en aguas profundas, tanto para condiciones extremas como para condiciones normales de operación.</li>
+                               <li>▪️ Asimismo, permite establecer el <strong><u>espectro de cálculo</u></strong> del oleaje para condiciones extremas en dicho ámbito geográfico.</li>
                                 <li>
                                    <div class="collapsible-trigger">
-                                        <i class="fas fa-chevron-right collapsible-icon"></i>
-                                       <p>▪️ Se establece una <strong><u>zonificación del litoral español en 10 áreas</u></strong> diferenciadas (Bilbao-Gijón, Coruña, etc.), definidas en base a características climáticas homogéneas.</p>
+                                       <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <p>▪️ Se establece una <strong><u>zonificación del litoral español en 10 áreas</u></strong> diferenciadas (Bilbao-Gijón, Coruña, etc.), definidas en base a características climáticas homogéneas, a la configuración de la costa y al emplazamiento de la información instrumental disponible.</p>
+                                   </div>
+                                    <div class="collapsible-content hidden">
+                                       <ul class="nested-list">
+                                           <li>▫️ Se fija la metodología de determinación del clima marítimo para cada una de las zonas establecidas en base al análisis estadístico de la información de oleaje disponible: Datos Visuales y Datos Instrumentales de la Red Española de Medida y Registro del Oleaje (REMRO, actualizada por la Red de Boyas Costeras REDCOS).</li>
+                                       </ul>
                                    </div>
                                 </li>
-                               <li>▪️ Se incluyen las relaciones de <strong><u>caracterización del oleaje</u></strong> en cada una de las áreas definidas (distribución conjunta altura/dirección, análisis estadístico unidimensional y bidimensional, etc.).</li>
+                               <li>▪️ Se incluyen las <strong><u>relaciones de caracterización del oleaje</u></strong> en cada una de las áreas definidas: distribución conjunta altura de ola visual/dirección (rosas de oleaje), frecuencias de presentación sectoriales, análisis estadístico unidimensional y bidimensional, y análisis estadístico espectral.</li>
                                <li>▪️ Se presentan gráficamente los resultados en formato de <strong><u>Atlas de Clima Marítimo</u></strong>.</li>
                             </ul>
                         </div>
@@ -350,6 +334,7 @@
             </div>
         </div>
         
+        <!-- Main Card 4 -->
         <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-chart-bar"></i></div>
@@ -357,13 +342,13 @@
             </div>
              <div class="collapsible-trigger">
                  <i class="fas fa-chevron-right collapsible-icon"></i>
-                 <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+                 <span>Ver Análisis Estadístico</span>
             </div>
             <div class="collapsible-content hidden">
                 <ul>
                     <li>
-                        <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
                              <p>Los regímenes de oleaje se clasifican en <strong><u>dos tipos</u></strong>:</p>
                         </div>
                         <div class="collapsible-content hidden">
@@ -380,10 +365,10 @@
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
-                               <li>▪️ A la hora de dimensionar una estructura, es necesario estimar la <strong><u>altura de ola significante</u></strong> para un cierto periodo de retorno.</li>
-                               <li>▪️ Para determinarla se necesita modelar el comportamiento estadístico de los valores de la serie, para lo cual se seleccionan aquellos <strong><u>máximos relativos</u></strong> suficientemente alejados (<strong>población extremal</strong>).</li>
+                               <li>▪️ A la hora de dimensionar una estructura sometida a la acción del oleaje es necesario estimar la <strong><u>altura de ola significante</u></strong> para un cierto periodo de retorno.</li>
+                               <li>▪️ Para determinarla se necesita modelar el comportamiento estadístico de los valores de la serie, para lo cual se seleccionan aquellos <strong><u>máximos relativos</u></strong> que estén suficientemente alejados entre sí como para garantizar su independencia, que forman lo que se conoce como <strong>población extremal</strong>.</li>
                                 <li>▪️ Esta población se ajusta a una función de distribución de probabilidad (<strong><u>Weibull</u></strong> en general).</li>
-                                <li>▪️ La <span class="law-pill">ROM 0.3-91</span> define el régimen extremal como la función de distribución de los valores extremos del oleaje.</li>
+                                <li>▪️ La <span class="law-pill">ROM 0.3-91</span> define el régimen extremal del oleaje como la función de distribución de los valores extremos del oleaje. Relaciona los valores máximos previsibles con la probabilidad de que dichos valores no sean superados en un año.</li>
                             </ul>
                         </div>
                     </li>
@@ -394,9 +379,9 @@
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
-                                <li>▪️ Se puede definir como el conjunto de <strong><u>estados de oleaje que más probablemente se pueden encontrar</u></strong>.</li>
+                                <li>▪️ Se puede definir como régimen medio de una serie temporal al conjunto de <strong><u>estados de oleaje que más probablemente se pueden encontrar</u></strong>.</li>
                                 <li>▪️ La distribución elegida para describir el régimen medio de las series de oleaje es también <strong><u>Weibull</u></strong> en general.</li>
-                                <li>▪️ Está directamente relacionado con las <strong><u>condiciones medias de operatividad</u></strong> de una determinada actividad.</li>
+                                <li>▪️ El régimen medio está directamente relacionado con las <strong><u>condiciones medias de operatividad</u></strong> de una determinada actividad.</li>
                             </ul>
                         </div>
                     </li>
@@ -419,11 +404,7 @@
                     this.classList.toggle('open');
                     
                     if (content && content.classList.contains('collapsible-content')) {
-                        if (content.classList.contains('hidden')) {
-                            content.classList.remove('hidden');
-                        } else {
-                            content.classList.add('hidden');
-                        }
+                        content.classList.toggle('hidden');
                     }
                 });
             });
