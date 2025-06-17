@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa Conceptual: El Puerto</title>
+    <title>Mapa Conceptual: El Puerto (Desplegable)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -40,55 +40,24 @@
         }
         ul { list-style-type: none; padding-left: 0; }
         li { margin-top: 1rem; }
-        .collapsible-content > ul {
-            padding-left: 1.75rem;
-            margin-top: 0.75rem;
-            border-left: 3px dotted #cbd5e1;
-        }
-        .collapsible-content > ul > li {
-            position: relative;
-        }
-        .collapsible-content > ul > li::before {
-            content: '🔹';
-            position: absolute;
-            left: -1.75rem;
-            color: #3b82f6;
-        }
-        .pill {
-            display: inline-block;
-            padding: 0.1rem 0.6rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin: 0 0.2rem;
-        }
-        .pill-green { background-color: #dcfce7; color: #166534; }
-        .pill-red { background-color: #fee2e2; color: #991b1b; }
-        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
-        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
-        .pill-gray { background-color: #e5e7eb; color: #374151; }
-        .law-pill {
+        
+        .pill, .law-pill, .directive-pill, .actor-pill, .formula-pill, .definition-pill {
             display: inline-block;
             padding: 0.1rem 0.6rem;
             border-radius: 0.25rem;
             font-size: 0.8rem;
             font-weight: 700;
             margin: 0 0.2rem;
-            background-color: #f3e8ff; /* purple-100 */
-            color: #581c87; /* purple-800 */
-            border: 1px solid #c084fc; /* purple-400 */
         }
-        .directive-pill {
-            display: inline-block;
-            padding: 0.1rem 0.6rem;
-            border-radius: 0.25rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin: 0 0.2rem;
-            background-color: #dcfce7; /* green-100 */
-            color: #166534; /* green-800 */
-            border: 1px solid #4ade80; /* green-400 */
-        }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; border: 1px solid #93c5fd; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+        .pill-green { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .law-pill { background-color: #f3e8ff; color: #581c87; border: 1px solid #c084fc; }
+        .directive-pill { background-color: #dcfce7; color: #166534; border: 1px solid #4ade80; }
+        .actor-pill { background-color: #e5e7eb; color: #1f2937; border: 1px solid #9ca3af; }
+        .formula-pill { background-color: #ffedd5; color: #9a3412; border: 1px solid #fb923c; }
+        .definition-pill { background-color: #cffafe; color: #155e75; border: 1px solid #22d3ee; }
         .icon {
             margin-right: 0.5rem;
             width: 1.25em;
@@ -114,12 +83,23 @@
             color: #3b82f6;
         }
         .collapsible-content {
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
             padding-left: 1.75rem;
+            border-left: 2px dotted #9ca3af;
+            margin-left: 0.25rem;
+            margin-top: 0.5rem;
         }
-        .collapsible-trigger.open .collapsible-icon {
+        .collapsible-trigger.open > .collapsible-icon {
             transform: rotate(90deg);
+        }
+        .collapsible-content ul {
+             padding-left: 1rem;
+        }
+        .collapsible-content .nested-list {
+             border-left-color: #e5e7eb;
+        }
+        /* Clase para ocultar los elementos, igual que en el archivo de ejemplo */
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -130,6 +110,7 @@
             <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-anchor"></i> MEA2T18: EL PUERTO <i class="fas fa-ship"></i></h1>
         </header>
 
+        <!-- Main Card 1 -->
         <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-info-circle"></i></div>
@@ -137,7 +118,7 @@
             </div>
             <div class="collapsible-trigger">
                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+                <span>Ver detalles</span>
             </div>
             <div class="collapsible-content hidden">
                 <ul>
@@ -145,10 +126,10 @@
                     <li>
                         <div class="collapsible-trigger">
                              <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><i class="fas fa-layer-group text-gray-600 icon"></i>Mediante la existencia de <strong><u>tres zonas principales</u></strong>:</p>
+                             <p><i class="fas fa-layer-group text-gray-600 icon"></i>Mediante la existencia de <strong><u>tres zonas principales</u></strong>:</p>
                         </div>
                         <div class="collapsible-content hidden">
-                            <ul class="nested-list">
+                             <ul class="nested-list">
                                 <li>▪️ La <strong><u>zona marítima</u></strong> o de acceso.</li>
                                 <li>▪️ La <strong><u>zona terrestre</u></strong> para maniobras.</li>
                                 <li>▪️ La <strong><u>zona de enlace</u></strong> con los modos terrestres.</li>
@@ -161,7 +142,7 @@
                             <p><i class="fas fa-cogs text-yellow-700 icon"></i>La mayor parte de los puertos cumplen <strong><u>funciones económicas</u></strong>, principalmente:</p>
                         </div>
                         <div class="collapsible-content hidden">
-                            <ul class="nested-list">
+                             <ul class="nested-list">
                                 <li>▪️ <strong><u>Comercio</u></strong>.</li>
                                 <li>▪️ <strong><u>Pesca</u></strong>.</li>
                             </ul>
@@ -172,20 +153,21 @@
             </div>
         </div>
         
+        <!-- Main Card 2 -->
         <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-flag"></i></div>
                 <h2>2. EL SISTEMA PORTUARIO ESPAÑOL</h2>
             </div>
-             <div class="collapsible-trigger">
+            <div class="collapsible-trigger">
                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+                 <span>Distinción de Puertos y Marco de Gestión</span>
             </div>
             <div class="collapsible-content hidden">
-                <ul>
+                 <ul>
                     <li>
                         <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><i class="fas fa-balance-scale text-gray-700 icon"></i>El <span class="law-pill">TRLPEMM</span> distingue entre:</p>
                         </div>
                         <div class="collapsible-content hidden">
@@ -193,7 +175,7 @@
                                 <li>▪️ <strong><u>Puertos de titularidad autonómica</u></strong> (básicamente <u>pesqueros, deportivos y de refugio</u>).</li>
                                 <li>
                                     <div class="collapsible-trigger">
-                                         <i class="fas fa-chevron-right collapsible-icon"></i>
+                                        <i class="fas fa-chevron-right collapsible-icon"></i>
                                         <p>▪️ <strong><u>Puertos de titularidad estatal</u></strong> calificados como de <strong><u>interés general</u></strong> por reunir alguna de las siguientes características:</p>
                                     </div>
                                     <div class="collapsible-content hidden">
@@ -211,8 +193,8 @@
                     </li>
                     <li>
                         <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><i class="fas fa-sitemap text-blue-600 icon"></i>El <strong><u>Sistema Portuario español de titularidad estatal</u></strong> está integrado por <strong><u>46 puertos de interés general</u></strong>, gestionados por <strong><u>28 Autoridades Portuarias</u></strong>, cuya <u>coordinación y control</u> de eficiencia, corresponde al Organismo Público <strong><u>Puertos del Estado</u></strong>, órgano dependiente del MITMS que tiene atribuida la ejecución de la política portuaria del Gobierno.</p>
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-sitemap text-blue-600 icon"></i>El <strong><u>Sistema Portuario español de titularidad estatal</u></strong> está integrado por <strong><u>46 puertos de interés general</u></strong>, gestionados por <strong><u>28 Autoridades Portuarias</u></strong>, cuya <u>coordinación y control</u> de eficiencia, corresponde al Organismo Público <strong><span class="actor-pill">Puertos del Estado</span></strong>.</p>
                         </div>
                          <div class="collapsible-content hidden">
                              <ul class="nested-list">
@@ -222,8 +204,8 @@
                     </li>
                     <li>
                         <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><i class="fas fa-user-tie text-purple-600 icon"></i>Dentro de este marco, se pretende que la gestión de los puertos de interés general responda al llamado <strong><u>modelo "landlord"</u></strong>, en el que:</p>
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><i class="fas fa-user-tie text-purple-600 icon"></i>Se pretende que la gestión responda al <span class="definition-pill"><strong>modelo "landlord"</strong></span>:</p>
                         </div>
                          <div class="collapsible-content hidden">
                              <ul class="nested-list">
@@ -236,25 +218,26 @@
             </div>
         </div>
 
+        <!-- Main Card 3 -->
         <div class="card">
              <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-book-open"></i></div>
                 <h2>3. REAL DECRETO LEGISLATIVO 2/2011 (TRLPEMM)</h2>
             </div>
-            <div class="collapsible-trigger">
-                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+             <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <span>Estructura del TRLPEMM</span>
             </div>
-            <div class="collapsible-content hidden">
-                <ul>
+             <div class="collapsible-content hidden">
+                 <ul>
                     <li>El <span class="law-pill">TRLPEMM</span> está estructurado en <strong><u>tres libros</u></strong>.</li>
                     <li>
                         <div class="collapsible-trigger">
                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><strong><i class="fas fa-anchor text-blue-700 icon"></i><u>Libro Primero</u>:</strong> se refiere al <strong><u>sistema portuario de titularidad estatal</u></strong> y se organiza en títulos dedicados a:</p>
+                            <p><strong><i class="fas fa-anchor text-blue-700 icon"></i><u>Libro Primero</u>:</strong> <strong><u>sistema portuario de titularidad estatal</u></strong></p>
                         </div>
                         <div class="collapsible-content hidden">
-                            <ul class="nested-list">
+                             <ul class="nested-list">
                                <li>▪️ La <u>gestión</u> y su régimen de funcionamiento.</li>
                                <li>▪️ El régimen de <u>planificación y construcción</u> de los puertos.</li>
                                <li>▪️ El <u>dominio público</u> portuario estatal.</li>
@@ -265,11 +248,11 @@
                     </li>
                     <li>
                         <div class="collapsible-trigger">
-                            <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><strong><i class="fas fa-ship text-cyan-700 icon"></i><u>Libro Segundo</u>:</strong> dedicado a la <strong><u>Marina Mercante</u></strong>, se organiza en títulos dedicados a:</p>
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-ship text-cyan-700 icon"></i><u>Libro Segundo</u>:</strong> <strong><u>Marina Mercante</u></strong></p>
                         </div>
                         <div class="collapsible-content hidden">
-                            <ul class="nested-list">
+                             <ul class="nested-list">
                                <li>▪️ La <u>explotación naviera</u> y régimen de navegaciones.</li>
                                <li>▪️ La <u>administración marítima</u>.</li>
                                <li>▪️ El <u>servicio de practicaje</u> y a las <u>tasas</u>.</li>
@@ -277,9 +260,9 @@
                         </div>
                     </li>
                      <li>
-                        <div class="collapsible-trigger">
+                         <div class="collapsible-trigger">
                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><strong><i class="fas fa-user-shield text-red-700 icon"></i><u>Libro Tercero</u>:</strong> tiene por objeto el <strong><u>régimen de policía</u></strong>, comprendiendo en títulos diferenciados:</p>
+                            <p><strong><i class="fas fa-user-shield text-red-700 icon"></i><u>Libro Tercero</u>:</strong> <strong><u>régimen de policía</u></strong></p>
                         </div>
                          <div class="collapsible-content hidden">
                              <ul class="nested-list">
@@ -293,25 +276,26 @@
             </div>
         </div>
 
-         <div class="card">
+         <!-- Main Card 4 -->
+        <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-euro-sign"></i></div>
                 <h2>4. FINANCIACIÓN DE PUERTOS</h2>
             </div>
              <div class="collapsible-trigger">
                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+                 <span>Ver detalles de financiación</span>
             </div>
-            <div class="collapsible-content hidden">
+             <div class="collapsible-content hidden">
                 <ul>
-                    <li>El <span class="law-pill">TRLPEMM</span> establece que el régimen económico deberá responder al principio de <strong><u>autosuficiencia económica</u></strong> del sistema portuario y de cada Autoridad Portuaria.</li>
+                    <li>El <span class="law-pill">TRLPEMM</span> establece el principio de <strong><u>autosuficiencia económica</u></strong>.</li>
                     <li>
                         <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><strong><i class="fas fa-coins text-yellow-500 icon"></i><u>Recursos Económicos de Puertos del Estado</u>:</strong></p>
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><strong><i class="fas fa-coins text-yellow-500 icon"></i><u>Recursos Económicos de Puertos del Estado</u>:</strong></p>
                         </div>
                         <div class="collapsible-content hidden">
-                            <ul class="nested-list">
+                             <ul class="nested-list">
                                 <li>▪️ <u>Productos y rentas</u> de su patrimonio.</li>
                                 <li>▪️ <u>4% (2% en islas, Sevilla, Ceuta y Melilla)</u> de los ingresos por tasas portuarias.</li>
                                  <li>▪️ <u>Ingresos generados</u> por sus actividades.</li>
@@ -322,8 +306,8 @@
                         </div>
                     </li>
                      <li>
-                        <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><strong><i class="fas fa-money-bill-wave text-green-500 icon"></i><u>Recursos Económicos de las Autoridades Portuarias</u>:</strong></p>
                         </div>
                          <div class="collapsible-content hidden">
@@ -331,25 +315,30 @@
                                 <li>▪️ <u>Conceptualmente los mismos</u> que Puertos del Estado, salvo:</li>
                                  <li>▪️ <u>96% (98% en islas, Sevilla, Ceuta y Melilla)</u> de las tasas portuarias.</li>
                                   <li>▪️ Lo obtenido a través del <u>régimen sancionador</u>.</li>
-                                   <li>▪️ El <u>carácter excepcional</u> de aportaciones de los Presupuestos Generales.</li>
+                                   <li>▪️ El <u>carácter excepcional</u> de aportaciones de los Presupuestos Generales del Estado.</li>
                             </ul>
                         </div>
                     </li>
                      <li>
-                        <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><strong><i class="fas fa-tags text-purple-500 icon"></i><u>Tasas Portuarias</u></strong> (en 2023):</p>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><strong><i class="fas fa-tags text-purple-500 icon"></i><u>Tasas Portuarias</u></strong> (en <span class="pill pill-blue">2023</span>):</p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
                                <li>
-                                    <div class="collapsible-trigger">
+                                   <div class="collapsible-trigger">
                                         <i class="fas fa-chevron-right collapsible-icon"></i>
-                                        ▪️ <strong><u>De utilización</u></strong> (<span class="pill pill-blue">56%</span>), que se subdividen en:
-                                    </div>
+                                       <p>▪️ <strong><u>De utilización</u></strong> (<span class="pill pill-blue">56%</span>)</p>
+                                   </div>
                                     <div class="collapsible-content hidden">
                                         <ul class="nested-list">
-                                           <li>▫️ Tasas de buque, de embarcaciones deportivas, del pasaje, de la mercancía, de la pesca fresca, y por utilización especial.</li>
+                                           <li>▫️ tasas de buque,</li>
+                                           <li>▫️ de embarcaciones deportivas y de recreo,</li>
+                                           <li>▫️ del pasaje,</li>
+                                           <li>▫️ de la mercancía,</li>
+                                           <li>▫️ de la pesca fresca,</li>
+                                           <li>▫️ y por utilización especial de la zona de tránsito.</li>
                                         </ul>
                                     </div>
                                </li>
@@ -359,62 +348,66 @@
                             </ul>
                         </div>
                     </li>
-                     <li>Además, se obtienen otros ingresos por <strong><u>servicios comerciales</u></strong> prestados por las Autoridades Portuarias (suministros, grúas, etc.), que suponen aproximadamente el <strong><u>13% de los ingresos totales</u></strong>.</li>
-                     <li>El importe neto de la cifra de negocio anual supera los <strong><u>1.200 millones de euros</u></strong>, de los cuales <u>más del 40%</u> corresponden a Barcelona, Valencia, Baleares y Algeciras.</li>
+                     <li>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p>Otros ingresos por <strong><u>servicios comerciales</u></strong> (<span class="pill pill-blue">~13%</span>)</p>
+                        </div>
+                        <div class="collapsible-content hidden">
+                            <ul class="nested-list">
+                                <li>▪️ Suministros de agua y energía eléctrica, recogida de desechos, pesaje en báscula, pasarelas móviles, grúas, depósitos de almacenamiento, etc.</li>
+                            </ul>
+                        </div>
+                     </li>
+                     <li>El importe neto de la cifra de negocio anual supera los <strong><u>1.200 millones de euros</u></strong>, de los cuales <u>más del 40%</u> corresponden a la suma de las autoridades portuarias de Barcelona, Valencia, Baleares y Algeciras.</li>
                 </ul>
             </div>
         </div>
 
+        <!-- Main Card 5 -->
         <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-users-cog"></i></div>
                 <h2>5. MODELOS DE GESTIÓN</h2>
             </div>
-             <div class="collapsible-trigger">
-                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                 <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+              <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <span>Ver variaciones de explotación</span>
             </div>
-            <div class="collapsible-content hidden">
-                <ul>
-                    <li>
-                        <div class="collapsible-trigger">
-                            <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p>La explotación portuaria tiene <strong><u>cuatro variaciones</u></strong> según el papel del Estado:</p>
-                        </div>
-                        <div class="collapsible-content hidden">
-                            <ol class="list-decimal list-inside mt-2 ml-4 space-y-2">
-                               <li><strong><u>Puerto de servicio (service port)</u>:</strong> el estado <u>invierte, administra y opera</u> las instalaciones portuarias (modelo antiguo e ineficiente).</li>
-                               <li><strong><u>Puerto facilitador o puerto herramienta (tool port)</u>:</strong> el Estado <u>provee las infraestructuras, superestructuras y el equipo</u>, pero <u>cede las operaciones</u> a una empresa privada.</li>
-                               <li><strong><u>Puerto propietario (land lord port)</u>:</strong> el Estado <u>provee las infraestructuras</u> existentes y <u>concesiona los espacios</u> para que un operador privado invierta, administre y opere (<strong><u>modelo español</u></strong>).</li>
-                               <li><strong><u>Privatización completa</u>:</strong> el Estado <u>vende los espacios portuarios</u> a un operador privado (<strong><u>modelo del Reino Unido</u></strong>).</li>
-                            </ol>
-                        </div>
-                    </li>
-                </ul>
+             <div class="collapsible-content hidden">
+                <p>La explotación portuaria tiene <strong><u>cuatro variaciones</u></strong> según el papel del Estado:</p>
+                <ol class="list-decimal list-inside mt-2 ml-4 space-y-2">
+                   <li><strong><u>Puerto de servicio (service port)</u>:</strong> el estado <u>invierte, administra y opera</u> las instalaciones portuarias (modelo antiguo e ineficiente).</li>
+                   <li><strong><u>Puerto facilitador o puerto herramienta (tool port)</u>:</strong> el Estado <u>provee las infraestructuras, superestructuras y el equipo</u>, pero <u>cede las operaciones</u> a una empresa privada.</li>
+                   <li><strong><u>Puerto propietario (land lord port)</u>:</strong> el Estado <u>provee las infraestructuras</u> existentes y <u>concesiona los espacios</u> para que un operador privado invierta, administre y opere (<strong><u>modelo español</u></strong>).</li>
+                   <li><strong><u>Privatización completa</u>:</strong> el Estado <u>vende los espacios portuarios</u> a un operador privado (<strong><u>modelo del Reino Unido</u></strong>).</li>
+                </ol>
             </div>
         </div>
 
-        <div class="card">
+        <!-- Main Card 6 -->
+         <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-tasks"></i></div>
                 <h2>6. PLANIFICACIÓN PORTUARIA. FUNDAMENTOS Y PLANES</h2>
             </div>
              <div class="collapsible-trigger">
-                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                 <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <span>Ver sistema de planificación</span>
             </div>
-            <div class="collapsible-content hidden">
+             <div class="collapsible-content hidden">
                 <ul>
-                    <li><i class="fas fa-file-alt text-gray-700 icon"></i>Los <strong><u>sistemas de Planificación Portuaria</u></strong> vienen definidos en el <span class="law-pill">TRLPEMM</span>, donde se definen los tipos de Planes a realizar.</li>
-                    <li><i class="fas fa-landmark text-blue-700 icon"></i>El <u>MITMS</u> aprobará el <strong><u>modelo de desarrollo estratégico</u></strong>, los <strong><u>criterios de actuación</u></strong>, así como los <strong><u>objetivos generales</u></strong> de gestión del conjunto del sistema portuario.</li>
-                    <li><i class="fas fa-project-diagram text-purple-700 icon"></i>Para ello, <u>Puertos del Estado</u> en colaboración con las Autoridades Portuarias elaborará el <strong><u>Marco Estratégico</u></strong> del sistema portuario de interés general.</li>
-                    <li><i class="fas fa-cogs text-yellow-700 icon"></i>Este marco será ejecutado a través de los <strong><u>Planes de Empresa</u></strong> y podrá ser desarrollado por medio de <strong><u>Planes Estratégicos</u></strong> y <strong><u>Planes Directores de Infraestructuras</u></strong>.</li>
-                     <li><i class="fas fa-industry text-orange-700 icon"></i>El <strong><u>Plan Director de Infraestructuras</u></strong> es el instrumento ante la necesidad de la <u>construcción de un nuevo puerto</u> y/o la <u>ampliación de uno existente</u>.</li>
-                     <li><i class="far fa-calendar-alt text-green-700 icon"></i>Anualmente, la Autoridad Portuaria deberá elaborar un <strong><u>Plan de Empresa</u></strong>, de acuerdo con los objetivos definidos en los instrumentos de planificación.</li>
+                    <li><i class="fas fa-file-alt text-gray-700 icon"></i>Los <strong><u>sistemas de Planificación Portuaria</u></strong> vienen definidos en el <span class="law-pill">TRLPEMM</span>.</li>
+                    <li><i class="fas fa-landmark text-blue-700 icon"></i>El <u>MITMS</u> aprobará el <strong><u>modelo de desarrollo estratégico</u></strong>, los <strong><u>criterios de actuación</u></strong> y los <strong><u>objetivos generales</u></strong>.</li>
+                    <li><i class="fas fa-project-diagram text-purple-700 icon"></i><span class="actor-pill">Puertos del Estado</span> y las <span class="actor-pill">Autoridades Portuarias</span> elaborarán el <strong><u>Marco Estratégico</u></strong>.</li>
+                    <li><i class="fas fa-cogs text-yellow-700 icon"></i>Este marco se ejecuta a través de <strong><u>Planes de Empresa</u></strong> y se desarrolla con <strong><u>Planes Estratégicos</u></strong> y <strong><u>Planes Directores de Infraestructuras</u></strong>.</li>
+                     <li><i class="fas fa-industry text-orange-700 icon"></i>El <strong><u>Plan Director de Infraestructuras</u></strong> se usa para la <u>construcción de un nuevo puerto</u> y/o la <u>ampliación de uno existente</u>.</li>
+                     <li><i class="far fa-calendar-alt text-green-700 icon"></i>Anualmente, la Autoridad Portuaria elabora un <strong><u>Plan de Empresa</u></strong>.</li>
                 </ul>
             </div>
         </div>
 
+        <!-- Main Card 7 -->
         <div class="card">
              <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-chart-line"></i></div>
@@ -426,57 +419,58 @@
             </div>
             <div class="collapsible-content hidden">
                 <ul>
-                     <li>En 2023 el total del tráfico de mercancías alcanzó los <strong><u>544 millones de toneladas</u></strong> (-3% respecto 2022).</li>
-                    <li>Por importancia: <strong><u>mercancía general</u> (48%)</strong>, <strong><u>graneles líquidos</u> (32%)</strong> y <strong><u>graneles sólidos</u> (17%)</strong>.</li>
-                     <li>Del total de toneladas movidas, un <u>26% lo fueron en <strong>tránsito</strong></u> y un <u>13% se embarcaron o desembarcaron a bordo de vehículos industriales de tráfico <strong>ro-ro</strong></u>.</li>
-                    <li>El modo más habitual de transporte de la mercancía general es el <u>contenedor <strong>TEU</strong></u>.</li>
-                    <li>Por Autoridades Portuarias, <strong><u>Algeciras continúa liderando el ranking (19%)</u></strong>, seguida por Valencia (14%) y Barcelona (12%).</li>
+                     <li>En <span class="pill pill-blue">2023</span> el total del tráfico ha alcanzado los <strong><u>544 millones de toneladas</u></strong> (<span class="pill pill-red">-3%</span> vs 2022).</li>
+                    <li>Por importancia: <strong><u>mercancía general</u> (<span class="pill pill-blue">48%</span>)</strong>, <strong><u>graneles líquidos</u> (<span class="pill pill-blue">32%</span>)</strong> y <strong><u>graneles sólidos</u> (<span class="pill pill-blue">17%</span>)</strong>.</li>
+                     <li>Del total, un <u>26% fue en <strong>tránsito</strong></u> y un <u>13% en tráfico <strong>ro-ro</strong></u>.</li>
+                    <li>El modo más habitual es el <u>contenedor <strong>TEU</strong></u>.</li>
+                    <li>Por Autoridades Portuarias, <strong><u>Algeciras lidera el ranking (19%)</u></strong>, seguida por Valencia (14%) y Barcelona (12%).</li>
                 </ul>
             </div>
-            <hr class="my-6">
-             <div class="collapsible-trigger">
+            <hr class="my-4">
+            <div class="collapsible-trigger">
                  <i class="fas fa-chevron-right collapsible-icon"></i>
                  <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-users mr-2"></i>Tráfico de Pasajeros</h3>
             </div>
             <div class="collapsible-content hidden">
                  <ul>
-                    <li>En 2023 se superaron los <strong><u>12 millones de cruceristas</u></strong> (+47% respecto 2022).</li>
-                    <li>El volumen total de pasajeros fue en el entorno de los <strong><u>39 millones de viajeros</u></strong> (+19% respecto 2022).</li>
-                     <li>La <u>extensa oferta española</u>, unida a las tensiones en otros países, ha <strong><u>incrementado las escalas</u></strong> de las navieras en los puertos españoles, con valores que han superado a las cifras pre-pandemia.</li>
+                    <li>En <span class="pill pill-blue">2023</span> se superaron los <strong><u>12 millones de cruceristas</u></strong> (<span class="pill pill-green">+47%</span> vs 2022).</li>
+                    <li>El volumen total fue de unos <strong><u>39 millones de viajeros</u></strong> (<span class="pill pill-green">+19%</span> vs 2022).</li>
+                     <li>La <u>extensa oferta española</u> ha <strong><u>incrementado las escalas</u></strong>, superando cifras pre-pandemia.</li>
                 </ul>
             </div>
-            <hr class="my-6">
+             <hr class="my-4">
              <div class="collapsible-trigger">
                  <i class="fas fa-chevron-right collapsible-icon"></i>
                  <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-arrow-up mr-2"></i>Previsiones Futuras</h3>
             </div>
             <div class="collapsible-content hidden">
                 <ul>
-                     <li>La deseada <u>futura disminución de las presentes tensiones geopolíticas</u>, con las <u>tasas de crecimiento actuales</u> y el <u>incremento de la vocación exportadora</u>, hacen pensar que en los próximos años <strong><u>continuará creciendo el tráfico portuario</u></strong> en nuestro país.</li>
+                     <li>La <u>futura disminución de las tensiones geopolíticas</u>, las <u>tasas de crecimiento</u> y la <u>vocación exportadora</u>, hacen pensar que <strong><u>continuará creciendo el tráfico portuario</u></strong>.</li>
                 </ul>
             </div>
         </div>
         
+        <!-- Main Card 8 -->
         <div class="card">
              <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-ruler-combined"></i></div>
                 <h2>8. ESTUDIO DE CAPACIDAD. ORDENACIÓN DE TERMINALES</h2>
             </div>
-            <div class="collapsible-trigger">
-                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+             <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                 <span>Ver detalles de capacidad y ordenación</span>
             </div>
             <div class="collapsible-content hidden">
                 <ul>
-                    <li><i class="fas fa-water text-blue-500 icon"></i>La <strong><u>zona marítima o de acceso</u></strong> está constituida por las obras y la señalización que permite la entrada de las embarcaciones. Su <u>capacidad</u> está limitada por el <u>ancho de los canales, diámetro de la dársena y sus calados</u>.</li>
-                     <li><i class="fas fa-warehouse text-gray-700 icon"></i>La <strong><u>zona terrestre</u></strong> está integrada principalmente por los muelles ubicados en las diferentes terminales de mercancías. Su <u>capacidad</u> está determinada por el <u>largo de los muelles y por el rendimiento y productividad de su equipamiento</u>.</li>
+                    <li><i class="fas fa-water text-blue-500 icon"></i>La <strong><u>zona marítima o de acceso</u></strong> está constituida por las obras y la señalización. Su <u>capacidad</u> está limitada por el <u>ancho de los canales, diámetro de la dársena y sus calados</u>.</li>
+                     <li><i class="fas fa-warehouse text-gray-700 icon"></i>La <strong><u>zona terrestre</u></strong> está integrada por los muelles. Su <u>capacidad</u> está determinada por el <u>largo de los muelles y por el rendimiento de su equipamiento</u>.</li>
                      <li>
-                        <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><i class="fas fa-globe-americas text-purple-600 icon"></i>Los puertos comerciales se clasifican en <strong><u>dos categorías</u></strong> según el tipo de tráfico:</p>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><i class="fas fa-globe-americas text-purple-600 icon"></i>Los puertos comerciales se clasifican en <strong><u>dos categorías</u></strong>:</p>
                         </div>
                         <div class="collapsible-content hidden">
-                            <ul class="nested-list">
+                             <ul class="nested-list">
                                 <li>▪️ Los de <strong><u>altura</u></strong>, que atienden <u>flujos internacionales</u>.</li>
                                 <li>▪️ Los de <strong><u>cabotaje</u></strong>, que se orientan a <u>movimientos entre puertos nacionales</u>.</li>
                             </ul>
@@ -484,8 +478,8 @@
                     </li>
                     <li>
                         <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><i class="fas fa-map-signs text-green-600 icon"></i>La <strong><u>importancia de un puerto</u></strong> marítimo radica en su:</p>
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <p><i class="fas fa-map-signs text-green-600 icon"></i>La <strong><u>importancia de un puerto</u></strong> radica en su:</p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
@@ -498,25 +492,25 @@
             </div>
         </div>
     </div>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const triggers = document.querySelectorAll('.collapsible-trigger');
 
             triggers.forEach(trigger => {
                 trigger.addEventListener('click', function (event) {
-                    // Evita que el evento de clic se propague a los triggers padres
+                    // Evita que el evento de clic se propague a los triggers padres.
                     event.stopPropagation();
                     
                     const content = this.nextElementSibling;
                     
-                    this.classList.toggle('open');
-                    
                     if (content && content.classList.contains('collapsible-content')) {
-                        if (content.classList.contains('hidden')) {
-                            content.classList.remove('hidden');
-                        } else {
-                            content.classList.add('hidden');
-                        }
+                        // Alterna la clase 'open' para la rotación del icono.
+                        this.classList.toggle('open');
+                        
+                        // Alterna la clase 'hidden' para mostrar u ocultar el contenido.
+                        // Este es el método que usa tu archivo de ejemplo y es el más robusto.
+                        content.classList.toggle('hidden');
                     }
                 });
             });
