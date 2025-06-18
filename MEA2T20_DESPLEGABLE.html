@@ -40,55 +40,22 @@
         }
         ul { list-style-type: none; padding-left: 0; }
         li { margin-top: 1rem; }
-        .collapsible-content > ul {
-            padding-left: 1.75rem;
-            margin-top: 0.75rem;
-            border-left: 3px dotted #cbd5e1;
-        }
-        .collapsible-content > ul > li {
-            position: relative;
-        }
-        .collapsible-content > ul > li::before {
-            content: '�';
-            position: absolute;
-            left: -1.75rem;
-            color: #3b82f6;
-        }
-        .pill {
-            display: inline-block;
-            padding: 0.1rem 0.6rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin: 0 0.2rem;
-        }
-        .pill-green { background-color: #dcfce7; color: #166534; }
-        .pill-red { background-color: #fee2e2; color: #991b1b; }
-        .pill-blue { background-color: #dbeafe; color: #1e4d91; }
-        .pill-yellow { background-color: #fef9c3; color: #854d0e; }
-        .pill-gray { background-color: #e5e7eb; color: #374151; }
-        .law-pill {
+        
+        .pill, .law-pill, .formula-pill, .actor-pill {
             display: inline-block;
             padding: 0.1rem 0.6rem;
             border-radius: 0.25rem;
             font-size: 0.8rem;
             font-weight: 700;
             margin: 0 0.2rem;
-            background-color: #f3e8ff; /* purple-100 */
-            color: #581c87; /* purple-800 */
-            border: 1px solid #c084fc; /* purple-400 */
         }
-        .directive-pill {
-            display: inline-block;
-            padding: 0.1rem 0.6rem;
-            border-radius: 0.25rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin: 0 0.2rem;
-            background-color: #dcfce7; /* green-100 */
-            color: #166534; /* green-800 */
-            border: 1px solid #4ade80; /* green-400 */
-        }
+        .pill-blue { background-color: #dbeafe; color: #1e4d91; border: 1px solid #93c5fd; }
+        .pill-red { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+        .pill-yellow { background-color: #fef9c3; color: #854d0e; border: 1px solid #fde047; }
+        .pill-green { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
+        .law-pill { background-color: #f3e8ff; color: #581c87; border: 1px solid #c084fc; }
+        .formula-pill { background-color: #ffedd5; color: #9a3412; border: 1px solid #fb923c; }
+        .actor-pill { background-color: #e5e7eb; color: #1f2937; border: 1px solid #9ca3af; }
         .icon {
             margin-right: 0.5rem;
             width: 1.25em;
@@ -107,6 +74,10 @@
             width: 100%;
             padding: 0.25rem 0;
         }
+        .collapsible-trigger > span {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
         .collapsible-icon {
             transition: transform 0.3s ease;
             margin-right: 0.75rem;
@@ -114,12 +85,13 @@
             color: #3b82f6;
         }
         .collapsible-content {
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
             padding-left: 1.75rem;
         }
         .collapsible-trigger.open .collapsible-icon {
             transform: rotate(90deg);
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -130,6 +102,7 @@
             <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-2"><i class="fas fa-hard-hat"></i> MEA2T20: OBRAS PORTUARIAS (II) <i class="fas fa-anchor"></i></h1>
         </header>
 
+        <!-- Main Card 1 -->
         <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-book"></i></div>
@@ -137,14 +110,14 @@
             </div>
             <div class="collapsible-trigger">
                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Definición y Caracterización</h3>
+                <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-info-circle mr-2 text-blue-600"></i>Definición, Caracterización y Diseño en Planta</h3>
             </div>
             <div class="collapsible-content hidden">
                 <ul>
                     <li>
                         <div class="collapsible-trigger">
                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><i class="fas fa-stream text-gray-600 icon"></i>Las <strong><u>obras portuarias</u></strong> se clasifican en <strong><u>dos grandes grupos</u></strong> según su posición en relación al mar:</p>
+                             <p><i class="fas fa-stream text-gray-600 icon"></i>Las <strong><u>obras portuarias</u></strong> se clasifican en <strong><u>dos grandes grupos</u></strong> según su posición en relación al mar:</p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
@@ -155,52 +128,41 @@
                     </li>
                     <li>
                         <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><i class="fas fa-water text-blue-500 icon"></i><strong><u>Canales de acceso</u>:</strong></p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
-                               <li>▪️ En algunos lugares los buques antes de entrar en puerto deben recorrer zonas de <u>escasa profundidad natural</u>, por lo que es necesario construir mediante <strong><u>dragado</u></strong> un canal de acceso.</li>
+                               <li>▪️ En algunos lugares los buques antes de entrar en puerto deben recorrer zonas de <u>escasa profundidad natural</u>, por lo que es necesario construir mediante <strong><u>dragado</u></strong> un canal de acceso que comience en una zona de profundidad natural suficiente y termine en la bocana del puerto.</li>
                                <li>▪️ Su <strong><u>traza</u></strong> debe ser tal que permita una <strong><u>navegación segura</u></strong> aún con fuerte temporal, <u>evitándose curvas de pequeño radio</u>.</li>
-                               <li>▪️ La <strong><u>anchura</u></strong> recomendada es de <span class="pill pill-blue">5 mangas</span> del mayor buque si no se permite el cruce, y <span class="pill pill-blue">8 mangas</span> en caso contrario.</li>
-                               <li>
-                                   <div class="collapsible-trigger">
-                                        <i class="fas fa-chevron-right collapsible-icon"></i>
-                                       <p>▪️ La <strong><u>profundidad</u></strong> será la suma de:</p>
-                                   </div>
-                                   <div class="collapsible-content hidden">
-                                       <ul class="nested-list">
-                                           <li>▫️ El <u>calado</u> del mayor buque previsto.</li>
-                                           <li>▫️ Los <u>sobrecalados</u> debidos al trimado dinámico (squat) y al oleaje.</li>
-                                           <li>▫️ Un <u>resguardo</u>.</li>
-                                       </ul>
-                                   </div>
-                               </li>
+                               <li>▪️ La <strong><u>anchura</u></strong> recomendada es de <span class="pill pill-blue">5 mangas</span> del mayor buque previsto si no se permite el cruce de dos barcos, y de <span class="pill pill-blue">8 mangas</span> en caso contrario.</li>
+                               <li>▪️ La <strong><u>profundidad</u></strong> será la suma del calado del mayor buque previsto, más los <u>sobrecalados</u> debidos al trimado dinámico (squat) y al oleaje, más un resguardo.</li>
                                <li>▪️ En un mar con marea, la profundidad necesaria debe quedar <u>garantizada en bajamar viva equinoccial</u>.</li>
+                               <li>▪️ Los canales deben estar <strong><u>señalizados</u></strong>.</li>
                             </ul>
                         </div>
                     </li>
                      <li>
-                        <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
+                         <div class="collapsible-trigger">
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><i class="fas fa-shield-alt text-gray-700 icon"></i><strong><u>Diques de abrigo</u>:</strong></p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
-                                <li>▪️ En los puertos que no se encuentran naturalmente abrigados, deben disponerse para obtener una <strong><u>superficie de agua suficientemente grande no agitada</u></strong>.</li>
-                                <li>▪️ Estas obras no existen en los puertos que tienen abrigo natural o en los puertos fluviales (Pasajes, Santander, Avilés, Ferrol, Marín y Sevilla).</li>
-                                <li>▪️ Generalmente es necesario disponer <strong><u>dos diques</u></strong>: uno para el abrigo principal del temporal dominante, y el otro, denominado <strong><u>contradique</u></strong>.</li>
+                                <li>▪️ En los puertos que no se encuentran naturalmente abrigados, deben disponerse unos diques de abrigo con el fin de obtener una <strong><u>superficie de agua suficientemente grande no agitada</u></strong>, en la que se permitan realizar las operaciones portuarias en las debidas condiciones de seguridad.</li>
+                                <li>▪️ Estas obras <u>no existen</u> en los puertos que tienen abrigo natural o en los puertos fluviales. De los puertos importantes españoles, no tienen dique de abrigo <span class="actor-pill">Pasajes</span>, <span class="actor-pill">Santander</span>, <span class="actor-pill">Avilés</span>, <span class="actor-pill">Ferrol</span>, <span class="actor-pill">Marín</span> y <span class="actor-pill">Sevilla</span>.</li>
+                                <li>▪️ Como a cada punto de la costa llegan temporales de diversas direcciones, generalmente para conseguir un abrigo adecuado es necesario disponer <strong><u>dos diques</u></strong>; uno para el abrigo principal del temporal dominante, y el otro, denominado <strong><u>contradique</u></strong>, para el abrigo de los temporales que proceden de otra dirección.</li>
                                 <li>
                                     <div class="collapsible-trigger">
                                         <i class="fas fa-chevron-right collapsible-icon"></i>
-                                        <p>▪️ En su diseño hay que tener en cuenta <strong><u>diversos factores</u></strong>:</p>
+                                        <p>▪️ En el diseño de los diques de abrigo hay que tener en cuenta <strong><u>diversos factores</u></strong>:</p>
                                     </div>
                                     <div class="collapsible-content hidden">
                                         <ul class="nested-list">
-                                            <li>▫️ <i class="fas fa-wave-square icon"></i>Características del <strong>oleaje</strong> (alturas, periodos, direcciones).</li>
-                                            <li>▫️ <i class="fas fa-drafting-compass icon"></i><strong>Batimetría</strong> y características <strong>geotécnicas</strong> del terreno.</li>
-                                            <li>▫️ <i class="fas fa-cogs icon"></i><strong>Explotación portuaria</strong> (función, tráfico, mercancías, barcos, etc.).</li>
-                                            <li>▫️ <i class="fas fa-tools icon"></i><strong>Procesos constructivos</strong> (existencia de canteras, posibilidad de instalación de cajoneros, etc.).</li>
+                                            <li>▫️ <i class="fas fa-wave-square text-blue-500 icon"></i><u>Características del oleaje</u> (alturas de ola, periodos y direcciones).</li>
+                                            <li>▫️ <i class="fas fa-drafting-compass text-yellow-600 icon"></i><u>Batimetría y características geotécnicas</u> del terreno.</li>
+                                            <li>▫️ <i class="fas fa-cogs text-purple-600 icon"></i><u>Explotación portuaria</u> (función del puerto, volumen del tráfico, tipo de mercancías, tipos de barcos, etc.).</li>
+                                            <li>▫️ <i class="fas fa-tools text-red-600 icon"></i><u>Procesos constructivos</u> (existencia de canteras próximas, posibilidad de instalación de cajoneros o de parques de bloques, etc.).</li>
                                         </ul>
                                     </div>
                                 </li>
@@ -209,13 +171,13 @@
                     </li>
                     <li>
                         <div class="collapsible-trigger">
-                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><i class="fas fa-door-open text-orange-600 icon"></i><strong><u>Bocana</u>:</strong></p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
-                               <li>▪️ Es el <u>paso</u> entre los extremos o morros de los diques.</li>
-                               <li>▪️ Sus características fundamentales son su <strong><u>orientación, anchura y profundidad</u></strong>.</li>
+                               <li>▪️ Es el paso entre los extremos o morros de los diques.</li>
+                               <li>▪️ Las <u>tres características fundamentales</u> de una bocana son su <strong><u>orientación, anchura y profundidad</u></strong>.</li>
                                <li>▪️ Tiene que cumplir <strong><u>dos misiones contradictorias</u></strong>: no permitir que se introduzca fácilmente el oleaje exterior, y permitir que los barcos puedan entrar con facilidad en caso de temporal.</li>
                             </ul>
                         </div>
@@ -225,14 +187,15 @@
             </div>
         </div>
         
+        <!-- Main Card 2 -->
         <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-water"></i></div>
                 <h2>2. OBRAS EXTERIORES: DIQUES</h2>
             </div>
             <div class="collapsible-trigger">
-                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <span>Ver Tipos de Diques</span>
             </div>
             <div class="collapsible-content hidden">
                 <ul>
@@ -243,103 +206,104 @@
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
-                               <li>▪️ <strong><u>Diques rompeolas o en talud</u></strong> (el oleaje rompe, perdiendo energía).</li>
-                               <li>▪️ <strong><u>Diques reflejantes o verticales</u></strong> (el oleaje se refleja en el paramento vertical).</li>
-                               <li>▪️ <strong><u>Diques mixtos</u></strong> (se comportan como rompeolas o reflejantes según sea el nivel del mar).</li>
+                               <li>▪️ <strong><u>Diques rompeolas o en talud</u></strong>.</li>
+                               <li>▪️ <strong><u>Diques reflejantes o verticales</u></strong>.</li>
+                               <li>▪️ <strong><u>Diques mixtos</u></strong>.</li>
                             </ul>
                         </div>
                     </li>
                      <li>
                         <div class="collapsible-trigger">
                              <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><i class="fas fa-chart-area text-blue-500 icon"></i><strong><u>Diques rompeolas o en talud</u>:</strong></p>
+                             <p><i class="fas fa-chart-area text-blue-500 icon"></i><strong><u>Diques rompeolas o en talud</u>:</strong></p>
                         </div>
                          <div class="collapsible-content hidden">
                              <ul class="nested-list">
-                               <li>▪️ Tienen <strong><u>sección trapecial</u></strong> con taludes relativamente tendidos (cotg entre 1,25 y 2).</li>
-                               <li>▪️ Construidos por un <strong><u>núcleo de todo-uno</u></strong>, protegidos por una serie de <strong><u>mantos</u></strong> que cumplen la condición de filtro.</li>
-                                <li>▪️ Son obras <strong><u>deformables</u></strong> con <strong><u>fallo gradual</u></strong>, se calculan con alturas de ola H<sub>1/n</sub>, y admiten averías que son <u>fácilmente reparables</u>.</li>
+                               <li>▪️ Tienen <strong><u>sección trapecial</u></strong> con taludes relativamente tendidos (<span class="formula-pill">cotg entre 1,25 y 2</span>).</li>
+                               <li>▪️ Están construidos por un <strong><u>núcleo de todo-uno</u></strong>, protegidos por una serie de <strong><u>mantos</u></strong> que cumplen la condición de filtro.</li>
+                                <li>▪️ Son obras <strong><u>deformables</u></strong> con <strong><u>fallo gradual</u></strong>, se calculan con alturas de ola <span class="formula-pill">H<sub>1/n</sub></span>, y admiten averías <u>fácilmente reparables</u>.</li>
                                 <li>▪️ <strong><u>No son atracables</u></strong> si no se les adosa un muelle.</li>
-                                <li>▪️ Pueden ser <strong><u>rebasables o irrebasables</u></strong>.</li>
+                                <li>▪️ Pueden ser <strong><u>rebasables o irrebasables</u></strong>. Si existe un muelle adosado o una superficie de agua en la que no se pueden admitir agitaciones, el dique debe ser irrebasable.</li>
                             </ul>
                         </div>
                     </li>
                       <li>
-                        <div class="collapsible-trigger">
+                          <div class="collapsible-trigger">
                              <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><i class="fas fa-ruler-vertical text-gray-700 icon"></i><strong><u>Diques reflejantes o verticales</u>:</strong></p>
                         </div>
                          <div class="collapsible-content hidden">
                              <ul class="nested-list">
-                               <li>▪️ Constituidos por una <strong><u>banqueta de escollera</u></strong> sobre la que se cimenta una obra de fábrica con un <strong><u>paramento vertical</u></strong>.</li>
-                               <li>▪️ Para que se comporte como tal, el <u>oleaje no debe romper antes</u> de llegar al dique.</li>
-                                <li>▪️ Son obras <strong><u>rígidas</u></strong> con <strong><u>fallo instantáneo</u></strong> (vuelco), se calculan con alturas de ola H<sub>máx</sub>, y en caso de avería son <u>difíciles de reparar</u>.</li>
-                                 <li>▪️ En <u>grandes profundidades</u> es <strong><u>más económico</u></strong> un dique vertical, a no ser que la altura de ola sea muy elevada.</li>
+                               <li>▪️ Están constituidos por una <strong><u>banqueta de escollera</u></strong> sobre la que se cimenta una obra de fábrica con un <strong><u>paramento vertical</u></strong>.</li>
+                               <li>▪️ Para que el dique se comporte como tal, el <u>oleaje no debe romper antes</u> de llegar al dique, para lo que se recomienda que la cota de coronación de la banqueta esté a una profundidad de <span class="formula-pill">2H</span> en BMVE.</li>
+                                <li>▪️ Son obras <strong><u>rígidas</u></strong> con <strong><u>fallo instantáneo</u></strong> (vuelco), se calculan con alturas de ola <span class="formula-pill">H<sub>máx</sub></span>, y en caso de avería son <u>difíciles de reparar</u>.</li>
+                                 <li>▪️ En <u>grandes profundidades</u> es <strong><u>más económico</u></strong> un dique vertical, a no ser que la altura de ola de cálculo sea muy elevada.</li>
                                  <li>▪️ <strong><u>Son atracables</u></strong> sin necesidad de adosar muelle.</li>
                             </ul>
                         </div>
                     </li>
-                     <li><i class="fas fa-exchange-alt text-yellow-600 icon"></i><strong><u>Diques mixtos</u>:</strong> Están constituidos por una obra de fábrica vertical que apoya sobre una banqueta de escollera. Salvo casos muy especiales, <u>no se emplean</u> en la actualidad.</li>
+                     <li><i class="fas fa-exchange-alt text-yellow-600 icon"></i><strong><u>Diques mixtos</u>:</strong> estos diques están constituidos por una obra de fábrica vertical que apoya sobre una banqueta de escollera, de modo que en pleamares se comportan como un dique vertical y en bajamares como un dique en talud. Salvo casos muy especiales, <u>no se emplean</u> en la actualidad.</li>
                 </ul>
             </div>
         </div>
 
+        <!-- Main Card 3 -->
         <div class="card">
              <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-warehouse"></i></div>
                 <h2>3. OBRAS INTERIORES</h2>
             </div>
             <div class="collapsible-trigger">
-                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <span>Ver Dársenas y Obras de Atraque</span>
             </div>
             <div class="collapsible-content hidden">
                 <ul>
-                    <li><i class="fas fa-shield-alt icon text-green-600"></i>Se engloban dentro de este concepto aquellas que <strong><u>no están sometidas a la acción del oleaje</u></strong>, aunque no siempre estén en zonas totalmente abrigadas.</li>
+                    <li><i class="fas fa-shield-alt icon text-green-600"></i>Se engloban dentro de este concepto aquellas que <strong><u>no están sometidas a la acción del oleaje</u></strong>, aunque no siempre estén en zonas totalmente abrigadas. Las principales son las dársenas y las obras de atraque.</li>
                      <li>
-                        <div class="collapsible-trigger">
+                         <div class="collapsible-trigger">
                              <i class="fas fa-chevron-right collapsible-icon"></i>
                             <p><strong><i class="fas fa-water text-cyan-600 icon"></i><u>Dársenas</u>:</strong></p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
                                <li>▪️ Son <strong><u>superficies de agua abrigada</u></strong> limitadas por diques y obras de atraque.</li>
-                               <li>▪️ Si las carreras de marea son grandes (> 5m), las dársenas suelen ser <strong><u>esclusadas</u></strong> para mantener constante el nivel del agua.</li>
+                               <li>▪️ Si las carreras de marea son grandes (> 5m), las dársenas suelen ser <strong><u>esclusadas</u></strong> para mantener constante el nivel del agua. En los puertos fluviales, es necesario que sean esclusadas para independizar el nivel de la dársena del nivel del río.</li>
                                 <li>
                                    <div class="collapsible-trigger">
-                                        <i class="fas fa-chevron-right collapsible-icon"></i>
+                                       <i class="fas fa-chevron-right collapsible-icon"></i>
                                        <p>▪️ Sus <u>dimensiones fundamentales</u> son:</p>
                                    </div>
                                    <div class="collapsible-content hidden">
                                        <ul class="nested-list">
-                                           <li>▫️ <strong><u>Calado</u>:</strong> depende del mayor buque, carrera de marea, agitación, aterramientos y resguardo.</li>
-                                           <li>▫️ <strong><u>Anchura</u>:</strong> depende del número de atraques y la necesidad de navegación segura.</li>
-                                           <li>▫️ <strong><u>Longitud</u>:</strong> depende del número de puestos de atraque y la eslora del buque.</li>
+                                           <li>▫️ <i class="fas fa-ruler-vertical text-blue-600 icon"></i><strong><u>Calado</u>:</strong> depende del mayor buque, carrera de marea, agitación, aterramientos y resguardo.</li>
+                                           <li>▫️ <i class="fas fa-arrows-alt-h text-orange-600 icon"></i><strong><u>Anchura</u>:</strong> depende del número de atraques y la necesidad de que pueda navegar un buque mientras otros están atracados.</li>
+                                           <li>▫️ <i class="fas fa-ruler-horizontal text-green-600 icon"></i><strong><u>Longitud</u>:</strong> depende del número de puestos de atraque y de la eslora del buque.</li>
                                        </ul>
                                    </div>
                                </li>
-                               <li>▪️ Debe tenerse en cuenta que las dimensiones tienen una gran influencia en la posible <strong><u>resonancia de ondas largas</u></strong>.</li>
+                               <li>▪️ Debe tenerse en cuenta la influencia de las dimensiones en la posible <strong><u>resonancia de ondas largas</u></strong>, que es muy peligrosa.</li>
                             </ul>
                         </div>
                     </li>
                     <li>
                         <div class="collapsible-trigger">
-                             <i class="fas fa-chevron-right collapsible-icon"></i>
-                            <p><strong><i class="fas fa-anchor text-gray-800 icon"></i><u>Obras de atraque</u>:</strong></p>
+                            <i class="fas fa-chevron-right collapsible-icon"></i>
+                             <p><strong><i class="fas fa-anchor text-gray-800 icon"></i><u>Obras de atraque</u>:</strong></p>
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
-                               <li>▪️ Son las <strong><u>obras portuarias fundamentales</u></strong> donde se realizan las operaciones de carga y descarga.</li>
+                               <li>▪️ Son las <strong><u>obras portuarias fundamentales</u></strong> donde se realizan las operaciones principales de carga y descarga.</li>
                                <li>
-                                    <div class="collapsible-trigger">
+                                   <div class="collapsible-trigger">
                                         <i class="fas fa-chevron-right collapsible-icon"></i>
                                         <p>▪️ Su <strong><u>función más general es triple</u></strong>, proporcionando:</p>
                                     </div>
                                     <div class="collapsible-content hidden">
                                         <ul class="nested-list">
-                                           <li>▫️ Puntos o líneas de <strong><u>contacto</u></strong> con el buque.</li>
+                                           <li>▫️ Puntos o líneas de <strong><u>contacto</u></strong> con el costado del buque.</li>
                                            <li>▫️ Puntos de <strong><u>amarre</u></strong> al buque.</li>
-                                           <li>▫️ Una <strong><u>zona de servicio</u></strong> para medios y mercancías.</li>
+                                           <li>▫️ Una <strong><u>zona de servicio</u></strong> para situar los medios de carga y descarga y las áreas de depósito.</li>
                                         </ul>
                                     </div>
                                </li>
@@ -350,10 +314,10 @@
                                    </div>
                                    <div class="collapsible-content hidden">
                                        <ul class="nested-list">
-                                           <li>▫️ <strong><u>Duques de alba</u></strong> (sin zona de servicio).</li>
-                                           <li>▫️ <strong><u>Plataforma</u></strong> (con zona de servicio reducida unida a tierra por las instalaciones).</li>
-                                           <li>▫️ <strong><u>Pantalanes</u></strong> (con zona de servicio reducida unida a tierra mediante la propia obra).</li>
-                                           <li>▫️ <strong><u>Muelles</u></strong> (con zona de servicio extensa adosada al atraque y a tierra).</li>
+                                           <li>▫️ <i class="fas fa-thumbtack text-gray-500 icon"></i><strong><u>Duques de alba</u></strong> (sin zona de servicio).</li>
+                                           <li>▫️ <i class="fas fa-puzzle-piece text-blue-500 icon"></i><strong><u>Plataforma</u></strong> (con zona de servicio reducida unida a tierra por las instalaciones).</li>
+                                           <li>▫️ <i class="fas fa-project-diagram text-green-500 icon"></i><strong><u>Pantalanes</u></strong> (con zona de servicio reducida unida a tierra mediante la propia obra).</li>
+                                           <li>▫️ <i class="fas fa-warehouse text-purple-500 icon"></i><strong><u>Muelles</u></strong> (con zona de servicio extensa adosada al atraque y a tierra).</li>
                                        </ul>
                                    </div>
                                </li>
@@ -364,18 +328,19 @@
             </div>
         </div>
         
-         <div class="card">
+         <!-- Main Card 4 -->
+        <div class="card">
              <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-layer-group"></i></div>
                 <h2>4. SUPERFICIES PORTUARIAS</h2>
             </div>
-             <div class="collapsible-trigger">
-                 <i class="fas fa-chevron-right collapsible-icon"></i>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
                  <h3 class="text-xl font-bold text-gray-700"><i class="fas fa-fill-drip mr-2 text-yellow-600"></i>Rellenos</h3>
             </div>
             <div class="collapsible-content hidden">
                 <ul>
-                    <li>Con objeto de poder atender a las necesidades del tráfico, los puertos necesitan <strong><u>grandes superficies de tierra</u></strong> que se obtienen ganando terreno al mar mediante rellenos.</li>
+                    <li><i class="fas fa-drafting-compass icon"></i>Con objeto de poder atender debidamente a las necesidades del tráfico, los puertos necesitan <strong><u>grandes superficies de tierra</u></strong> que en la mayoría de los casos se obtienen ganando terreno al mar mediante rellenos.</li>
                      <li>
                         <div class="collapsible-trigger">
                              <i class="fas fa-chevron-right collapsible-icon"></i>
@@ -383,8 +348,9 @@
                         </div>
                         <div class="collapsible-content hidden">
                             <ul class="nested-list">
-                               <li>▪️ Es conveniente que los materiales sean <strong><u>granulares sin cohesión</u></strong>.</li>
-                               <li>▪️ La <strong><u>dificultad de compactación</u></strong> es muy grande, siendo posible una adecuada compactación por tongadas de las capas superiores con medios como la precarga.</li>
+                               <li>▪️ Es conveniente que los materiales sean <strong><u>granulares sin cohesión</u></strong>, pero en algunos casos se utilizan materiales cohesivos como arcillas o fangos.</li>
+                               <li>▪️ Las características de los materiales influirán en la <strong><u>capacidad portante</u></strong> y en la posibilidad de que se produzcan grandes <strong><u>asientos</u></strong>.</li>
+                               <li>▪️ La <strong><u>dificultad de compactación</u></strong> es muy grande, siendo únicamente posible una adecuada compactación por tongadas de las capas superiores con medios como la precarga.</li>
                                <li>▪️ Muchas averías son debidas a la <u>salida de los elementos más finos</u> por las juntas, por lo que es fundamental colocar <u>filtros adecuados</u>.</li>
                             </ul>
                         </div>
@@ -398,28 +364,29 @@
             </div>
             <div class="collapsible-content hidden">
                  <ul>
-                    <li>Tienen <strong><u>características especiales</u></strong> debido a la gran variabilidad de usos.</li>
-                    <li>Las pavimentaciones de las áreas de operación y almacenamiento están sometidas a la acción de <strong><u>cargas móviles</u></strong> de equipos con plena libertad de movimientos.</li>
-                    <li>En la actualidad, los pavimentos más empleados son <strong><u>losas continuas de hormigón</u></strong>, con sus correspondientes juntas.</li>
-                    <li>Como normativa, es de aplicación la <span class="law-pill">ROM 4.1-18</span>.</li>
+                    <li><i class="fas fa-car-side icon"></i>Tienen <strong><u>características especiales</u></strong> debido a la gran variabilidad de usos, combinando diferentes modos de transporte con depósitos y almacenamientos de mercancías muy variadas.</li>
+                    <li><i class="fas fa-truck-loading icon"></i>Las pavimentaciones de las áreas de operación y almacenamiento están sometidas a la acción de <strong><u>cargas móviles</u></strong> producidas por equipos con plena libertad de movimientos durante la carga y descarga y el transporte.</li>
+                    <li><i class="fas fa-layer-group icon"></i>En la actualidad, los pavimentos más empleados son <strong><u>losas continuas de hormigón</u></strong>, con sus correspondientes juntas. En algunos casos el hormigón se refuerza con fibras.</li>
+                    <li><i class="fas fa-file-alt icon"></i>Como normativa, es de aplicación la <span class="law-pill">ROM 4.1-18</span> (Recomendaciones para el proyecto y construcción de pavimentos portuarios).</li>
                 </ul>
             </div>
         </div>
 
+        <!-- Main Card 5 -->
         <div class="card">
             <div class="card-header">
                 <div class="icon-bg"><i class="fas fa-ship"></i></div>
                 <h2>5. PROFUNDIDADES ACCESORIAS, MANIOBRABILIDAD DE BUQUES</h2>
             </div>
-             <div class="collapsible-trigger">
-                 <i class="fas fa-chevron-right collapsible-icon"></i>
-                 <h3 class="text-xl font-bold text-gray-700">Contenido</h3>
+            <div class="collapsible-trigger">
+                <i class="fas fa-chevron-right collapsible-icon"></i>
+                <span>Ver Buque de Proyecto y Maniobrabilidad</span>
             </div>
-            <div class="collapsible-content hidden">
+             <div class="collapsible-content hidden">
                 <ul>
-                    <li><i class="fas fa-ruler-combined icon text-blue-600"></i>El <strong><u>Buque de Proyecto</u></strong> es el que se utiliza para el <u>dimensionamiento</u> de los accesos y áreas de flotación.</li>
-                    <li><i class="fas fa-project-diagram icon text-purple-600"></i>Será necesario definir como Buque de Proyecto un <strong><u>conjunto de buques representativos</u></strong> de los tipos de barcos y condiciones de carga, con objeto de asegurar que el dimensionamiento permita la operación en condiciones de seguridad de cualquiera de ellos.</li>
-                    <li><i class="fas fa-cogs icon text-yellow-600"></i>Para apreciar con cierta exactitud el movimiento que adquirirá un buque es indispensable conocer las <strong><u>fuerzas que influyen en él</u></strong> (propulsión, timón, ancla, amarras, viento, corrientes, olas, etc.).</li>
+                    <li><i class="fas fa-ruler-combined icon text-blue-600"></i>El <strong><u>Buque de Proyecto</u></strong> es el que se utiliza para el <u>dimensionamiento de los accesos y áreas de flotación</u>.</li>
+                    <li><i class="fas fa-project-diagram icon text-purple-600"></i>Dado que estas áreas serán utilizadas normalmente por distintos tipos de buques, será necesario definir como Buque de Proyecto un <strong><u>conjunto de buques representativos</u></strong>, con objeto de asegurar que el dimensionamiento permita la operación en condiciones de seguridad de cualquiera de ellos.</li>
+                    <li><i class="fas fa-cogs icon text-yellow-600"></i>Para poder apreciar con cierta exactitud el movimiento que adquirirá un buque es indispensable conocer las <strong><u>fuerzas que influyen en él</u></strong> (propulsión, timón, ancla, amarras, remolcadores, viento, corrientes, olas, etc.).</li>
                 </ul>
             </div>
         </div>
@@ -439,11 +406,7 @@
                     this.classList.toggle('open');
                     
                     if (content && content.classList.contains('collapsible-content')) {
-                        if (content.classList.contains('hidden')) {
-                            content.classList.remove('hidden');
-                        } else {
-                            content.classList.add('hidden');
-                        }
+                        content.classList.toggle('hidden');
                     }
                 });
             });
@@ -451,4 +414,3 @@
     </script>
 </body>
 </html>
-�
